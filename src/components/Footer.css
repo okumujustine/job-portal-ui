@@ -1,0 +1,11 @@
+.footer-bg {
+  background-color: #202020;
+  color: #aaa;
+}
+
+.footer-bottom {
+  border-top: 1px solid #333;
+  margin-top: 35px;
+  text-align: center;
+  padding: 30px 0;
+}

@@ -6,15 +6,31 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "antd": "^4.7.0",
+    "autoprefixer": "^9.8.6",
+    "axios": "^0.20.0",
+    "lodash.debounce": "^4.0.8",
+    "moment": "^2.29.1",
+    "postcss-cli": "^7.1.2",
+    "postcss-import": "^12.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-medium-image-zoom": "^4.3.1",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
+    "tailwindcss": "^1.7.6"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm run watch:css && react-scripts start",
+    "build": "npm run build:css && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:css": "postcss src/styles/tailwind.css -o src/styles/app.css",
+    "watch:css": "postcss src/styles/tailwind.css -o src/styles/app.css"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwind": "^4.0.0"
   }
 }
