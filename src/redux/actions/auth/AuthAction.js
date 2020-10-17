@@ -44,7 +44,6 @@ export const checkTokenExpiry = () => async (dispatch, getState) => {
     const { data } = await res;
     return data.success;
   } catch {
-    console.log("data", "refresh failed");
     const refresh_token = getState().AuthReducer.jobPortalRefreshToken;
     if (!refresh_token) {
       dispatch({ type: AUTH_ERROR });

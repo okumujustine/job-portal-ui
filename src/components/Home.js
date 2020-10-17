@@ -39,8 +39,8 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <div className="bg-red flex w-10/12 m-auto justify-between">
-        <div className="w-8/12 ">
+      <div className="bg-red flex flex-col lg:flex-row lg:w-10/12 lg:m-auto lg:justify-between">
+        <div className="lg:w-8/12 w-11/12 m-auto">
           <h3 className="after-banner-span-text">Recent Jobs</h3>
           <div>
             <DisplayJobs jobs={jobs} />
@@ -51,7 +51,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="w-3/12">
+        <div className="lg:w-3/12 lg:block ">
           <h3 className="after-banner-span-text">Job Spotlight</h3>
         </div>
       </div>

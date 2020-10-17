@@ -3,13 +3,12 @@ import React from "react";
 import "./Job.css";
 import FilterForm from "../../components/FilterForm";
 import Footer from "../../components/Footer";
+import JobTitleBar from "./JobTitleBar";
 
 export default function Jobs() {
   return (
     <>
-      <div className="title-bar">
-        <h1>cool</h1>
-      </div>
+      <JobTitleBar />
       <div className="mb-16">
         <FilterForm />
       </div>

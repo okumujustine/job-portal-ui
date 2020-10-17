@@ -8,13 +8,13 @@ import "react-medium-image-zoom/dist/styles.css";
 export default function DisplayJobs({ jobs }) {
   return (
     <React.Fragment>
-      <div className="flex flex-col" style={{ minHeight: "100vh" }}>
+      <div className="flex flex-col h-screen">
         {jobs.length === 0 && <p>No jobs found</p>}
         {jobs.map((job, index) => (
           <Link
-            to="/jobs"
+            to={{ pathname: `/jobdetails/${job.id}`, state: job }}
             key={index}
-            className="job-card w-full rounded overflow-hidden shadow-sm p-6 flex mr-1 ml-1 mb-2"
+            className=" job-card w-full rounded overflow-hidden shadow-sm p-6 flex mr-1 ml-1 mb-2 flex-col lg:flex-row md:flex-row xl:flex-row"
           >
             <Zoom>
               <div
@@ -28,7 +28,7 @@ export default function DisplayJobs({ jobs }) {
                 }}
               ></div>
             </Zoom>
-            <div className="flex-1 flex justify-between justify-around">
+            <div className="flex-1 flex md:justify-around lg:justify-around xl:justify-around">
               <div>
                 <h4 className="job-list-title font-bold capitalize">
                   {job.title}
@@ -45,7 +45,7 @@ export default function DisplayJobs({ jobs }) {
                     Experience {job.experience} {job.experience_status}(s){" "}
                   </small>
                 </div>
-                <div className="mt-1">
+                <div className="mt-1 flex">
                   {job.tag_one ? (
                     <small className="p-1 px-2 bg-yellow-200 text-yellow-800 rounded-xl lowercase">
                       {job.tag_one}
@@ -63,7 +63,7 @@ export default function DisplayJobs({ jobs }) {
                   ) : null}
                 </div>
               </div>
-              <div>
+              <div className="hidden lg:block md:block xl:block">
                 {job.employment_status === "Full Time" ? (
                   <small className="job-part-time p-1 ml-1 px-2 rounded-sm">
                     {job.employment_status}
