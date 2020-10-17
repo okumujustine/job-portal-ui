@@ -8,11 +8,11 @@ import "react-medium-image-zoom/dist/styles.css";
 export default function DisplayJobs({ jobs }) {
   return (
     <React.Fragment>
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col min-h-screen">
         {jobs.length === 0 && <p>No jobs found</p>}
         {jobs.map((job, index) => (
           <Link
-            to={{ pathname: `/jobdetails/${job.id}`, state: job }}
+            to={{ pathname: `/jobdetails/${job.slug}`, state: job }}
             key={index}
             className=" job-card w-full rounded overflow-hidden shadow-sm p-6 flex mr-1 ml-1 mb-2 flex-col lg:flex-row md:flex-row xl:flex-row"
           >

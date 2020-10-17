@@ -27,7 +27,7 @@ function App({ loadUser }) {
             <Route path="/jobs">
               <Jobs />
             </Route>
-            <Route path="/jobdetails/:id">
+            <Route path="/jobdetails/:slug">
               <JobDetails />
             </Route>
             <Route path="/about">
