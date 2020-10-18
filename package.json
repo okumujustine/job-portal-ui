@@ -9,6 +9,7 @@
     "antd": "^4.7.0",
     "autoprefixer": "^9.8.6",
     "axios": "^0.20.0",
+    "lodash": "^4.17.20",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.29.1",
     "postcss-cli": "^7.1.2",
