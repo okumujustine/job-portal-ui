@@ -4,6 +4,13 @@ export const config = {
   },
 };
 
+export const appTokenConfig = (token) => {
+  if (token) {
+    config.headers["Authorization"] = "Bearer " + token;
+  }
+  return config;
+};
+
 export const tokenConfig = (getState) => {
   const jobPortalToken = getState().AuthReducer.jobPortalToken;
   if (jobPortalToken) {
