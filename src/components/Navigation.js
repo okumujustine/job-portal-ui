@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import "./Navigation.css";
 import { connect } from "react-redux";
 
-function Navbar({ fixed, authState }) {
+function Navbar({ authState }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
 
   const authLinks = (
-    <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50">
+    <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
         <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           <a
@@ -80,7 +80,7 @@ function Navbar({ fixed, authState }) {
   );
 
   const loggedInLinks = (
-    <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50">
+    <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
         <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           <a
@@ -145,11 +145,15 @@ function Navbar({ fixed, authState }) {
                 Log Out
               </Link>
             </li>
+            {!authState.user ? null : authState.user.role === "admin" ? (
+              <p>admin</p>
+            ) : null}
           </ul>
         </div>
       </div>
     </nav>
   );
+
   return (
     <>
       {authState.isAuthenticated === null

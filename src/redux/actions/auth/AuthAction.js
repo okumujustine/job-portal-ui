@@ -72,6 +72,7 @@ export const loginUser = (user) => (dispatch) => {
   axios
     .post("http://127.0.0.1:8000/auth/login/", body, config)
     .then((res) => {
+      console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: {
@@ -82,12 +83,14 @@ export const loginUser = (user) => (dispatch) => {
             first_name: res.data.first_name,
             last_name: res.data.last_name,
             phone: res.data.phone,
+            role: res.data.role,
           },
         },
       });
-      // window.location.href = "/";
+      // setTimeout(() => (window.location = "/"), 500);
     })
     .catch((error) => {
+      console.log(error.response.data);
       dispatch({
         type: LOGIN_FAILED,
       });

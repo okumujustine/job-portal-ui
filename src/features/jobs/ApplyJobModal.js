@@ -1,23 +1,47 @@
 import React from "react";
 import { connect } from "react-redux";
 import axios from "axios";
+import _ from "lodash";
+import { useAlert } from "react-alert";
+
 import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { appTokenConfig } from "../../helperfuncs/token";
 
 function Modal({ showModal, setShowModal, job, authState }) {
   const [resume, setResume] = React.useState("");
+  const [applied, setApplied] = React.useState(false);
   const { user } = authState;
 
+  const alert = useAlert();
+
+  React.useEffect(() => {
+    if (user && !_.isEmpty(job)) {
+      axios
+        .post("http://localhost:8000/joblisting/userapplied/", {
+          job: job.id,
+          applicant: user.id,
+        })
+        .then((res) => {
+          if (res.data.length > 0) {
+            setApplied(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [user, job]);
+
+  // console.log(user.id, job.id);
   const sendApplication = async () => {
-    // setShowModal(false)
     const loggedInToken = await getLoggedInToken();
     if (!loggedInToken) {
-      alert("log in please!");
+      alert.error("log in please!");
       return;
     }
 
     if (!resume) {
-      alert("select a resume please");
+      alert.error("select a resume please!");
       return;
     }
 
@@ -36,10 +60,11 @@ function Modal({ showModal, setShowModal, job, authState }) {
         appTokenConfig(loggedInToken)
       )
       .then((res) => {
-        console.log(res);
+        setShowModal(false);
+        alert.show("application successful!");
       })
       .catch((err) => {
-        console.log(err);
+        alert.error("application failed, try again later!");
       });
   };
   return (
@@ -63,23 +88,33 @@ function Modal({ showModal, setShowModal, job, authState }) {
                   </button>
                 </div>
                 <div className="relative p-6 flex-auto">
-                  <div className="flex flex-col  items-center md:flex-row lg:flex-row xl:flex-row md:justify-between lg:justify-between">
-                    <div className="w-64 mb-6 md:mb-2 xl:mb-2">
-                      <label className="font-bold">First Name:</label>
-                      <p>{user.first_name}</p>
-                    </div>
-                    <div className="w-64 mb-6 lg:mb-2 md:mb-2 xl:mb-2">
-                      <label className="font-bold">Last Name: </label>
-                      <p>{user.last_name}</p>
-                    </div>
-                    <div className="w-64 mb-6 md:mb-2 xl:mb-2">
-                      <label className="font-bold">User Email: </label>
-                      <p>{user.email}</p>
+                  <div className="flex flex-col">
+                    <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row">
+                      <div className="w-64 mb-6 md:mb-2 xl:mb-2 pl-6">
+                        <label className="font-bold">First Name:</label>
+                        <p>{user.first_name}</p>
+                      </div>
+                      <div className="w-64 mb-6 lg:mb-2 md:mb-2 xl:mb-2">
+                        <label className="font-bold">Last Name: </label>
+                        <p>{user.last_name}</p>
+                      </div>
+                      <div className="w-64 mb-6 md:mb-2 xl:mb-2">
+                        <label className="font-bold">User Email: </label>
+                        <p>{user.email}</p>
+                      </div>
                     </div>
                     <input
+                      className="mt-4"
                       type="file"
                       onChange={(e) => setResume(e.target.files[0])}
                     />
+                    {applied && (
+                      <small className="pt-3 text-red-500">
+                        <b>
+                          <i>NB:"You applied for this job before"</i>
+                        </b>
+                      </small>
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
@@ -97,7 +132,7 @@ function Modal({ showModal, setShowModal, job, authState }) {
                     style={{ transition: "all .15s ease" }}
                     onClick={() => sendApplication()}
                   >
-                    Confirm
+                    Easy Apply
                   </button>
                 </div>
               </div>
