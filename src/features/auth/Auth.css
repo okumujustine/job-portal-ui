@@ -15,6 +15,39 @@
   border-radius: 3px;
 }
 
+.PhoneInputInputDiv {
+  padding: 6px 8px;
+  outline: none;
+  font-size: 14px;
+  color: #909090;
+  margin: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  background-color: #fcfcfc;
+  font-weight: 500;
+  border: 1px solid #e0e0e0;
+  opacity: 1;
+  border-radius: 3px;
+}
+
+.PhoneInputInput {
+  padding: 6px 8px;
+  outline: none;
+  font-size: 14px;
+  color: #909090;
+  margin: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  background-color: #fcfcfc;
+  font-weight: 500;
+  opacity: 1;
+  border-radius: 3px;
+}
+
 .auth-button {
   background-color: #26ae61;
   font-weight: 600;
@@ -34,4 +67,8 @@
 
 .auth-form {
   margin-top: 10%;
+}
+
+.auth-tabs-color {
+  color: #26ae61;
 }

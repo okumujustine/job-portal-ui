@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as workerTimers from "worker-timers";
 
 import {
   USER_LOADING,
@@ -96,3 +97,7 @@ export const loginUser = (user) => (dispatch) => {
       });
     });
 };
+
+// workerTimers.setInterval(() => {
+//   console.log("worker ---");
+// }, 1000);

@@ -22,6 +22,17 @@ module.exports = {
       current: "currentColor",
       black: "#000",
       white: "#fff",
+      jobGreen: {
+        100: "#26ae61",
+        200: "#26ae61",
+        300: "#26ae61",
+        400: "#26ae61",
+        500: "#26ae61",
+        600: "#26ae61",
+        700: "#26ae61",
+        800: "#26ae61",
+        900: "#26ae61",
+      },
       gray: {
         100: "#f7fafc",
         200: "#edf2f7",

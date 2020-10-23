@@ -131,7 +131,7 @@ function Navbar({ authState }) {
             </li>
             <li className="nav-item">
               <Link
-                to="/signup"
+                to="/applications"
                 className="navigation-button-link nav-bar-font px-3 py-2 flex items-center text-xs  font-bold leading-snug text-white hover:opacity-75 capitalize"
               >
                 Applications
