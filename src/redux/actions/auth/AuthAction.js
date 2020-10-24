@@ -90,10 +90,12 @@ export const loginUser = (user) => (dispatch) => {
       });
       // setTimeout(() => (window.location = "/"), 500);
     })
-    .catch((error) => {
-      console.log(error.response.data);
+    .catch((err) => {
+      const { error } = err.response.data;
+      console.log("error", error);
       dispatch({
         type: LOGIN_FAILED,
+        payload: { erroMessage: error },
       });
     });
 };

@@ -90,10 +90,10 @@ export default function Register() {
 
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error.response.data);
+      .catch((err) => {
+        const { error } = err.response.data;
         setIsError(true);
-        setDialogMessage("Internal server error, try again later!");
+        setDialogMessage(error);
         setOpenAuthDialog(true);
 
         setLoading(false);

@@ -1,15 +1,26 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { useAlert } from "react-alert";
 
 import { loginUser } from "../../redux/actions/auth/AuthAction";
 import "./Auth.css";
-import { Redirect } from "react-router-dom";
 
 function Login({ authState, loginUser }) {
-  const { isAuthenticated } = authState;
+  const { isAuthenticated, loginFailedError } = authState;
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+
+  const alert = useAlert();
+
+  React.useEffect(() => {
+    console.log("out", loginFailedError);
+    if (loginFailedError) {
+      console.log("in", loginFailedError);
+      alert.error(loginFailedError);
+    }
+  }, [authState]);
 
   if (isAuthenticated) {
     return <Redirect to="/" />;

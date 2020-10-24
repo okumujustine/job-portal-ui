@@ -13,6 +13,7 @@ const initialState = {
   isAuthenticated: null,
   isLoading: false,
   user: null,
+  loginFailedError: null,
 };
 
 export default (state = initialState, action) => {
@@ -30,8 +31,17 @@ export default (state = initialState, action) => {
         isLoading: false,
         user: action.payload,
       };
-    case AUTH_ERROR:
     case LOGIN_FAILED:
+      localStorage.removeItem("jobPortalToken");
+      localStorage.removeItem("jobPortalRefreshToken");
+      return {
+        token: null,
+        isAuthenticated: false,
+        isLoading: false,
+        user: null,
+        loginFailedError: action.payload.erroMessage,
+      };
+    case AUTH_ERROR:
       localStorage.removeItem("jobPortalToken");
       localStorage.removeItem("jobPortalRefreshToken");
       return {
