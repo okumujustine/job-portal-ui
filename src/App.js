@@ -13,6 +13,9 @@ import AboutUs from "./features/common/AboutUs";
 import NotFound from "./features/common/NotFound";
 import JobDetails from "./features/jobs/JobDetails";
 import Applications from "./features/jobs/Applications";
+import AdminApplications from "./features/admin/Applications";
+import Dashboard from "./features/admin/Dashboard";
+import AddJob from "./features/admin/AddJob";
 
 function App({ loadUser }) {
   React.useEffect(() => {
@@ -33,11 +36,20 @@ function App({ loadUser }) {
             <Route path="/applications">
               <Applications />
             </Route>
+            <Route path="/admin/applications">
+              <AdminApplications />
+            </Route>
+            <Route path="/admin/addjob">
+              <AddJob />
+            </Route>
             <Route path="/jobdetails/:slug">
               <JobDetails />
             </Route>
             <Route path="/about">
               <AboutUs />
+            </Route>
+            <Route path="/admin/dashboard">
+              <Dashboard />
             </Route>
             <Route path="/auth/email-verify/:email/:token">
               <VerfyEmail />

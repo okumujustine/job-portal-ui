@@ -29,6 +29,22 @@ export const loadUser = () => async (dispatch, getState) => {
     });
 };
 
+export const loadUserWhenAlreadyLoggedIn = () => async (dispatch, getState) => {
+  await dispatch(checkTokenExpiry());
+
+  axios
+    .get("http://127.0.0.1:8000/auth/user/", tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    })
+    .catch((error) => {
+      dispatch({ type: AUTH_ERROR });
+    });
+};
+
 export const checkTokenExpiry = () => async (dispatch, getState) => {
   const auth_token = getState().AuthReducer.jobPortalToken;
 

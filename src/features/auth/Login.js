@@ -49,6 +49,7 @@ function Login({ authState, loginUser }) {
       <div className="flex flex-col mt-6">
         <label>Password</label>
         <input
+          type="password"
           className="auth-form-input"
           placeholder="password"
           password="password"

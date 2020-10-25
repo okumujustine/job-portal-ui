@@ -1,0 +1,454 @@
+import * as React from "react";
+import DateTimePicker from "react-datetime-picker";
+import { useAlert } from "react-alert";
+import ReactQuill from "react-quill";
+import { connect } from "react-redux";
+import moment from "moment";
+import axios from "axios";
+import "react-quill/dist/quill.snow.css";
+
+import DashboardNavigation from "./DashboardNavigation";
+import { getLoggedInToken } from "../../helperfuncs/getToken";
+import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
+import { appTokenConfig } from "../../helperfuncs/token";
+
+function AddJob({ loadUserWhenAlreadyLoggedIn }) {
+  const [deadlineDate, setDeadlineDate] = React.useState(new Date());
+  const [category, setCategory] = React.useState(0);
+  const [jobCategories, setJobCategories] = React.useState([]);
+  const [title, setTitle] = React.useState("");
+  const [tagOne, setTagOne] = React.useState("");
+  const [tagTwo, setTagTwo] = React.useState("");
+  const [tagThree, setTagThree] = React.useState("");
+  const [gender, setGender] = React.useState("");
+  const [employmentStatus, onEmploymentStatus] = React.useState("");
+  const [minSalary, setMinSalary] = React.useState(0);
+  const [maxSalary, setMaxSalary] = React.useState(0);
+  const [currency, setCurrency] = React.useState("");
+  const [vaccancies, setVaccancies] = React.useState("");
+  const [experience, setExperience] = React.useState("");
+  const [experienceStatus, setExperienceStatus] = React.useState("");
+  const [companyName, setCompanyName] = React.useState("");
+  const [companyLocation, setCompanyLocation] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [companyLogo, setCompanyLogo] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
+  const alert = useAlert();
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link"],
+      ["clean"],
+      ["video"],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "video",
+  ];
+
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:8000/joblisting/categories/")
+      .then((res) => {
+        setJobCategories(res.data);
+      })
+      .catch((error) => {
+        errorAlert("error getting job categories, try again later");
+      });
+  }, []);
+
+  function errorAlert(reason) {
+    alert.error(reason);
+  }
+
+  const onAddJob = async (e) => {
+    e.preventDefault();
+
+    await loadUserWhenAlreadyLoggedIn();
+    const loggedInToken = await getLoggedInToken();
+    if (!loggedInToken) {
+      errorAlert("log in please!");
+      return;
+    }
+
+    if (!description) {
+      errorAlert("Select company logo please!");
+      return;
+    }
+    if (!category) {
+      errorAlert("Add job category!");
+      return;
+    }
+
+    if (!title) {
+      errorAlert("Add job title!");
+      return;
+    }
+
+    if (!deadlineDate) {
+      errorAlert("Add job deadline!");
+      return;
+    }
+
+    if (!gender) {
+      errorAlert("Add job gender!");
+      return;
+    }
+
+    if (!employmentStatus) {
+      errorAlert("Add employment status!");
+      return;
+    }
+
+    if (!minSalary) {
+      errorAlert("Add job minimum salary!");
+      return;
+    }
+
+    if (!maxSalary) {
+      errorAlert("Add job maximum salary!");
+      return;
+    }
+
+    if (!currency) {
+      errorAlert("Add slary currency!");
+      return;
+    }
+
+    if (!vaccancies) {
+      errorAlert("Add job vaccancies!");
+      return;
+    }
+
+    if (!experience) {
+      errorAlert("Add job experience!");
+      return;
+    }
+
+    if (!employmentStatus) {
+      errorAlert("Add employment status!");
+      return;
+    }
+
+    if (!companyLocation) {
+      errorAlert("Add company location!");
+      return;
+    }
+
+    if (!description) {
+      errorAlert("Add job description!");
+      return;
+    }
+
+    const addJobFormData = new FormData();
+
+    addJobFormData.append("category", category);
+    addJobFormData.append("title", title);
+    addJobFormData.append(
+      "dateline",
+      moment(deadlineDate).format("YYYY-MM-DD")
+    );
+    addJobFormData.append("tag_one", tagOne);
+    addJobFormData.append("tag_two", tagTwo);
+    addJobFormData.append("tag_three", tagThree);
+    addJobFormData.append("gender", gender);
+    addJobFormData.append("employment_status", employmentStatus);
+    addJobFormData.append("salary_range_from", minSalary);
+    addJobFormData.append("salary_range_to", maxSalary);
+    addJobFormData.append("salary_currency", currency);
+    addJobFormData.append("vacancies", vaccancies);
+    addJobFormData.append("experience", experience);
+    addJobFormData.append("experience_status", experienceStatus);
+    addJobFormData.append("company_name", companyName);
+    addJobFormData.append("company_location", companyLocation);
+    addJobFormData.append("company_logo", companyLogo, companyLogo.name);
+    addJobFormData.append("description", description);
+
+    for (var pair of addJobFormData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+
+    axios
+      .post(
+        "http://localhost:8000/joblisting/create/",
+        addJobFormData,
+        appTokenConfig(loggedInToken)
+      )
+      .then((res) => {
+        console.log(res);
+        alert.show("job successful added!");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert.error("failed to add job, try again later!");
+      });
+  };
+
+  return (
+    <div className="flex flex-row">
+      <div className="sticky left-0 w-2/12">
+        <DashboardNavigation />
+      </div>
+      <div className="w-10/12">
+        <form onSubmit={onAddJob} className="flex flex-col w-11/12 m-auto">
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Category:</label>
+              <select
+                className="auth-form-input"
+                defaultValue="Select job category"
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="Select job category" disabled>
+                  Select job category
+                </option>
+                {jobCategories.map((jobCat) => (
+                  <React.Fragment key={jobCat.id}>
+                    <option value={jobCat.id}>{jobCat.name}</option>
+                  </React.Fragment>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Title:</label>
+              <input
+                className="auth-form-input"
+                placeholder="title"
+                password="text"
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Deadline:</label>
+              <DateTimePicker
+                className="p-4"
+                disableClock={true}
+                value={deadlineDate}
+                onChange={setDeadlineDate}
+              />
+            </div>
+
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Tag one:</label>
+              <input
+                className="auth-form-input"
+                placeholder="title"
+                password="text"
+                onChange={(e) => setTagOne(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Tag two:</label>
+              <input
+                className="auth-form-input"
+                placeholder="category"
+                password="text"
+                onChange={(e) => setTagTwo(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Tag three:</label>
+              <input
+                className="auth-form-input"
+                placeholder="title"
+                password="text"
+                onChange={(e) => setTagThree(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Gender:</label>
+              <select
+                className="auth-form-input"
+                defaultValue="Select gender"
+                onChange={(e) => setGender(e.target.value)}
+              >
+                <option value="Select gender" disabled>
+                  Select gender
+                </option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Any">Any</option>
+              </select>
+            </div>
+
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Employment status:</label>
+              <select
+                className="auth-form-input"
+                defaultValue="Select employment status"
+                onChange={(e) => onEmploymentStatus(e.target.value)}
+              >
+                <option value="Select employment status" disabled>
+                  Select employment status
+                </option>
+                <option value="Part Time">Full Time</option>
+                <option value="Full Time">Part Time</option>
+                <option value="Freelance">Freelance</option>
+              </select>
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Min salary:</label>
+              <input
+                className="auth-form-input"
+                placeholder="category"
+                password="text"
+                onChange={(e) => setMinSalary(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Max salary:</label>
+              <input
+                className="auth-form-input"
+                placeholder="title"
+                password="text"
+                onChange={(e) => setMaxSalary(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Salary Currency:</label>
+              <select
+                className="auth-form-input"
+                defaultValue="Salary currency"
+                onChange={(e) => setCurrency(e.target.value)}
+              >
+                <option value="Salary currency" disabled>
+                  Salary currency
+                </option>
+                <option value="Ugx">Ugandan Shillings</option>
+                <option value="$">Dollars</option>
+              </select>
+            </div>
+
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Vacancies:</label>
+              <input
+                className="auth-form-input"
+                placeholder="title"
+                password="text"
+                onChange={(e) => setVaccancies(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Experience:</label>
+              <input
+                className="auth-form-input"
+                placeholder="experience"
+                password="text"
+                onChange={(e) => setExperience(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Experience status:</label>
+              <select
+                className="auth-form-input"
+                defaultValue="Experience status"
+                onChange={(e) => setExperienceStatus(e.target.value)}
+              >
+                <option value="Experience status" disabled>
+                  Experience status
+                </option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+              </select>
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Company name:</label>
+              <input
+                className="auth-form-input"
+                placeholder="company name"
+                password="text"
+                onChange={(e) => setCompanyName(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Company location:</label>
+              <input
+                className="auth-form-input"
+                placeholder="company location"
+                password="text"
+                onChange={(e) => setCompanyLocation(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-11/12">
+              <label>Company Logo:</label>
+              <input
+                className="auth-form-input"
+                type="file"
+                onChange={(e) => setCompanyLogo(e.target.files[0])}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-11/12">
+              <label>Description:</label>
+              <ReactQuill
+                className="bg-white"
+                placeholder="Type something here ..."
+                modules={modules}
+                formats={formats}
+                theme="snow"
+                value={description}
+                onChange={setDescription}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col my-6 w-11/12">
+              <button className="mt-6 auth-button" type="submit">
+                {loading ? "saving job ..." : "Add Job"}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+const mapStateToProps = (state) => ({
+  authState: state.AuthReducer,
+});
+export default connect(mapStateToProps, { loadUserWhenAlreadyLoggedIn })(
+  AddJob
+);

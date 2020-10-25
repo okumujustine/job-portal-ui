@@ -129,14 +129,25 @@ function Navbar({ authState }) {
                 <span className="ml-2">About</span>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link
-                to="/applications"
-                className="navigation-button-link nav-bar-font px-3 py-2 flex items-center text-xs  font-bold leading-snug text-white hover:opacity-75 capitalize"
-              >
-                Applications
-              </Link>
-            </li>
+            {!authState.user ? null : authState.user.role === "admin" ? (
+              <li className="nav-item">
+                <Link
+                  to="/admin/dashboard"
+                  className="navigation-button-link nav-bar-font px-3 py-2 flex items-center text-xs capitalize font-bold leading-snug text-white hover:opacity-75"
+                >
+                  Dashboard
+                </Link>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link
+                  to="/applications"
+                  className="navigation-button-link nav-bar-font px-3 py-2 flex items-center text-xs  font-bold leading-snug text-white hover:opacity-75 capitalize"
+                >
+                  Applications
+                </Link>
+              </li>
+            )}
             <li className="nav-item">
               <Link
                 to="/login"
@@ -145,9 +156,6 @@ function Navbar({ authState }) {
                 Log Out
               </Link>
             </li>
-            {!authState.user ? null : authState.user.role === "admin" ? (
-              <p>admin</p>
-            ) : null}
           </ul>
         </div>
       </div>

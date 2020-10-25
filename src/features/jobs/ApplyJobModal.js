@@ -6,9 +6,15 @@ import { useAlert } from "react-alert";
 
 import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { appTokenConfig } from "../../helperfuncs/token";
-import { loadUser } from "../../redux/actions/auth/AuthAction";
+import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 
-function Modal({ showModal, setShowModal, job, authState, loadUser }) {
+function Modal({
+  showModal,
+  setShowModal,
+  job,
+  authState,
+  loadUserWhenAlreadyLoggedIn,
+}) {
   const [resume, setResume] = React.useState("");
   const [applied, setApplied] = React.useState(false);
   const { user } = authState;
@@ -33,9 +39,8 @@ function Modal({ showModal, setShowModal, job, authState, loadUser }) {
     }
   }, [user, job]);
 
-  // console.log(user.id, job.id);
   const sendApplication = async () => {
-    await loadUser();
+    await loadUserWhenAlreadyLoggedIn();
     const loggedInToken = await getLoggedInToken();
     if (!loggedInToken) {
       alert.error("log in please!");
@@ -150,4 +155,4 @@ function Modal({ showModal, setShowModal, job, authState, loadUser }) {
 const mapStateToProps = (state) => ({
   authState: state.AuthReducer,
 });
-export default connect(mapStateToProps, { loadUser })(Modal);
+export default connect(mapStateToProps, { loadUserWhenAlreadyLoggedIn })(Modal);
