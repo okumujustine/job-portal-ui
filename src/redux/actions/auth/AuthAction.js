@@ -19,6 +19,7 @@ export const loadUser = () => async (dispatch, getState) => {
   axios
     .get("http://127.0.0.1:8000/auth/user/", tokenConfig(getState))
     .then((res) => {
+      console.log(res.data);
       dispatch({
         type: USER_LOADED,
         payload: res.data,

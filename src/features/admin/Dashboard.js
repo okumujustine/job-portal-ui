@@ -1,7 +1,8 @@
 import React from "react";
 import DashboardNavigation from "./DashboardNavigation";
+import { withRouter } from "react-router-dom";
 
-export default function Dashboard() {
+function Dashboard() {
   return (
     <div className="flex flex-row">
       <div className="sticky left-0 w-2/12">
@@ -13,3 +14,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export default withRouter(Dashboard);

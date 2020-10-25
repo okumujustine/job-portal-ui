@@ -13,6 +13,7 @@ const initialState = {
   isAuthenticated: null,
   isLoading: false,
   user: null,
+  role: localStorage.getItem("jobPortalUserRole"),
   loginFailedError: null,
 };
 
@@ -25,15 +26,18 @@ export default (state = initialState, action) => {
         isLoading: true,
       };
     case USER_LOADED:
+      localStorage.setItem("jobPortalUserRole", action.payload.role);
       return {
         ...state,
         isAuthenticated: true,
         isLoading: false,
         user: action.payload,
+        role: action.payload.role,
       };
     case LOGIN_FAILED:
       localStorage.removeItem("jobPortalToken");
       localStorage.removeItem("jobPortalRefreshToken");
+      localStorage.removeItem("jobPortalUserRole");
       return {
         token: null,
         isAuthenticated: false,
@@ -56,11 +60,13 @@ export default (state = initialState, action) => {
         "jobPortalRefreshToken",
         action.payload.jobPortalRefreshToken
       );
+      localStorage.setItem("jobPortalUserRole", action.payload.user.role);
       return {
         ...state,
         ...action.payload,
         isAuthenticated: true,
         isLoading: false,
+        role: action.payload.user.role,
       };
     case REFRESH_TOKEN_SUCCESS:
       localStorage.setItem("jobPortalToken", action.payload.jobPortalToken);

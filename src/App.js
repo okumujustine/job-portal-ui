@@ -16,6 +16,7 @@ import Applications from "./features/jobs/Applications";
 import AdminApplications from "./features/admin/Applications";
 import Dashboard from "./features/admin/Dashboard";
 import AddJob from "./features/admin/AddJob";
+import AdminProtection from "./features/common/AdminProtection";
 
 function App({ loadUser }) {
   React.useEffect(() => {
@@ -39,18 +40,14 @@ function App({ loadUser }) {
             <Route path="/admin/applications">
               <AdminApplications />
             </Route>
-            <Route path="/admin/addjob">
-              <AddJob />
-            </Route>
+            <AdminProtection path="/admin/addjob" component={AddJob} />
             <Route path="/jobdetails/:slug">
               <JobDetails />
             </Route>
             <Route path="/about">
               <AboutUs />
             </Route>
-            <Route path="/admin/dashboard">
-              <Dashboard />
-            </Route>
+            <AdminProtection path="/admin/dashboard" component={Dashboard} />
             <Route path="/auth/email-verify/:email/:token">
               <VerfyEmail />
             </Route>

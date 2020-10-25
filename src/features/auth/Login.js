@@ -15,9 +15,7 @@ function Login({ authState, loginUser }) {
   const alert = useAlert();
 
   React.useEffect(() => {
-    console.log("out", loginFailedError);
     if (loginFailedError) {
-      console.log("in", loginFailedError);
       alert.error(loginFailedError);
     }
   }, [authState]);
