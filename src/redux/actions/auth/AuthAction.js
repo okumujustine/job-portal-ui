@@ -19,7 +19,6 @@ export const loadUser = () => async (dispatch, getState) => {
   axios
     .get("http://127.0.0.1:8000/auth/user/", tokenConfig(getState))
     .then((res) => {
-      console.log(res.data);
       dispatch({
         type: USER_LOADED,
         payload: res.data,
@@ -90,7 +89,6 @@ export const loginUser = (user) => (dispatch) => {
   axios
     .post("http://127.0.0.1:8000/auth/login/", body, config)
     .then((res) => {
-      console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: {

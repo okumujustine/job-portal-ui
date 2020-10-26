@@ -45,7 +45,7 @@ export default function DisplayJobs({ jobs }) {
                     Experience {job.experience} {job.experience_status}(s){" "}
                   </small>
                 </div>
-                <div className="mt-1 flex">
+                <div className="mt-1 flex md:min-w-330 lg:min-w-330 xl:min-w-330">
                   {job.tag_one ? (
                     <small className="p-1 px-2 bg-yellow-200 text-yellow-800 rounded-xl lowercase">
                       {job.tag_one}

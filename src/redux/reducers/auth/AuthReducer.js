@@ -67,6 +67,7 @@ export default (state = initialState, action) => {
         isAuthenticated: true,
         isLoading: false,
         role: action.payload.user.role,
+        loginFailedError: null,
       };
     case REFRESH_TOKEN_SUCCESS:
       localStorage.setItem("jobPortalToken", action.payload.jobPortalToken);

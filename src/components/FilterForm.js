@@ -12,16 +12,18 @@ export default function FilterForm() {
   const [category, setCategory] = React.useState("");
   const [type, setType] = React.useState("");
   const [currentPage, setjobCurrentPage] = React.useState(1);
+  const [itemCount, setItemCount] = React.useState(0);
 
-  const getJobsData = (pageNumber = 1) => {
+  const getJobsData = (pageNumber) => {
     const searchData = { title, category, type };
     axios
       .get(`http://127.0.0.1:8000/joblisting/filter/?page=${pageNumber}`, {
         params: searchData,
       })
       .then((res) => {
-        setjobCurrentPage(res.current);
+        setjobCurrentPage(res.data.current);
         setJobs(res.data.results);
+        setItemCount(res.data.count);
       })
       .catch((error) => {
         setError("failed to load jobs, try again later!");
@@ -29,10 +31,11 @@ export default function FilterForm() {
   };
 
   React.useEffect(() => {
-    getJobsData();
+    getJobsData(1);
   }, []);
 
   const getJobsDataPaginate = (pageNumber = 1) => {
+    console.log(pageNumber);
     getJobsData(pageNumber);
   };
 
@@ -52,7 +55,7 @@ export default function FilterForm() {
             lastPageText="Last"
             linkClass="page-link"
             activePage={currentPage}
-            totalItemsCount={2}
+            totalItemsCount={itemCount}
             itemsCountPerPage={1}
             onChange={(pageNumber) => getJobsDataPaginate(pageNumber)}
           />
