@@ -219,19 +219,20 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
         <DashboardNavigation />
       </div>
       <div className="w-10/12">
-        {carloading ? (
-          <div className="flex justify-center items-center top-auto">
-            <Loader
-              type="TailSpin"
-              color="#26AE61"
-              height={50}
-              width={50}
-              timeout={50000}
-            />
-          </div>
-        ) : (
-          <form onSubmit={onAddJob} className="flex flex-col w-11/12 m-auto">
-            <div className="flex flex-row justify-around">
+        <form onSubmit={onAddJob} className="flex flex-col w-11/12 m-auto">
+          <div className="flex flex-row justify-around">
+            {loading ? (
+              <div className="flex mt-8 w-5/12">
+                <Loader
+                  type="TailSpin"
+                  color="#26AE61"
+                  height={30}
+                  width={30}
+                  timeout={50000}
+                />
+                <span className="pl-2">wait still loading category ...</span>
+              </div>
+            ) : (
               <div className="flex flex-col mt-6 w-5/12">
                 <label>Category:</label>
                 <select
@@ -249,219 +250,219 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
                   ))}
                 </select>
               </div>
+            )}
 
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Title:</label>
-                <input
-                  className="auth-form-input"
-                  placeholder="title"
-                  password="text"
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </div>
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Title:</label>
+              <input
+                className="auth-form-input"
+                placeholder="title"
+                password="text"
+                onChange={(e) => setTitle(e.target.value)}
+              />
             </div>
-            <div className="flex flex-row justify-around">
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Deadline:</label>
-                <DateTimePicker
-                  className="p-4"
-                  disableClock={true}
-                  value={deadlineDate}
-                  onChange={setDeadlineDate}
-                />
-              </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Deadline:</label>
+              <DateTimePicker
+                className="p-4"
+                disableClock={true}
+                value={deadlineDate}
+                onChange={setDeadlineDate}
+              />
+            </div>
 
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Tag one:</label>
-                <input
-                  className="auth-form-input"
-                  placeholder="title"
-                  password="text"
-                  onChange={(e) => setTagOne(e.target.value)}
-                />
-              </div>
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Tag one:</label>
+              <input
+                className="auth-form-input"
+                placeholder="title"
+                password="text"
+                onChange={(e) => setTagOne(e.target.value)}
+              />
             </div>
-            <div className="flex flex-row justify-around">
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Tag two:</label>
-                <input
-                  className="auth-form-input"
-                  placeholder="category"
-                  password="text"
-                  onChange={(e) => setTagTwo(e.target.value)}
-                />
-              </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Tag two:</label>
+              <input
+                className="auth-form-input"
+                placeholder="category"
+                password="text"
+                onChange={(e) => setTagTwo(e.target.value)}
+              />
+            </div>
 
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Tag three:</label>
-                <input
-                  className="auth-form-input"
-                  placeholder="title"
-                  password="text"
-                  onChange={(e) => setTagThree(e.target.value)}
-                />
-              </div>
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Tag three:</label>
+              <input
+                className="auth-form-input"
+                placeholder="title"
+                password="text"
+                onChange={(e) => setTagThree(e.target.value)}
+              />
             </div>
-            <div className="flex flex-row justify-around">
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Gender:</label>
-                <select
-                  className="auth-form-input"
-                  defaultValue="Select gender"
-                  onChange={(e) => setGender(e.target.value)}
-                >
-                  <option value="Select gender" disabled>
-                    Select gender
-                  </option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Any">Any</option>
-                </select>
-              </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Gender:</label>
+              <select
+                className="auth-form-input"
+                defaultValue="Select gender"
+                onChange={(e) => setGender(e.target.value)}
+              >
+                <option value="Select gender" disabled>
+                  Select gender
+                </option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Any">Any</option>
+              </select>
+            </div>
 
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Employment status:</label>
-                <select
-                  className="auth-form-input"
-                  defaultValue="Select employment status"
-                  onChange={(e) => onEmploymentStatus(e.target.value)}
-                >
-                  <option value="Select employment status" disabled>
-                    Select employment status
-                  </option>
-                  <option value="Part Time">Full Time</option>
-                  <option value="Full Time">Part Time</option>
-                  <option value="Freelance">Freelance</option>
-                </select>
-              </div>
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Employment status:</label>
+              <select
+                className="auth-form-input"
+                defaultValue="Select employment status"
+                onChange={(e) => onEmploymentStatus(e.target.value)}
+              >
+                <option value="Select employment status" disabled>
+                  Select employment status
+                </option>
+                <option value="Part Time">Full Time</option>
+                <option value="Full Time">Part Time</option>
+                <option value="Freelance">Freelance</option>
+              </select>
             </div>
-            <div className="flex flex-row justify-around">
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Min salary:</label>
-                <input
-                  className="auth-form-input"
-                  placeholder="category"
-                  password="text"
-                  onChange={(e) => setMinSalary(e.target.value)}
-                />
-              </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Min salary:</label>
+              <input
+                className="auth-form-input"
+                placeholder="category"
+                password="text"
+                onChange={(e) => setMinSalary(e.target.value)}
+              />
+            </div>
 
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Max salary:</label>
-                <input
-                  className="auth-form-input"
-                  placeholder="title"
-                  password="text"
-                  onChange={(e) => setMaxSalary(e.target.value)}
-                />
-              </div>
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Max salary:</label>
+              <input
+                className="auth-form-input"
+                placeholder="title"
+                password="text"
+                onChange={(e) => setMaxSalary(e.target.value)}
+              />
             </div>
-            <div className="flex flex-row justify-around">
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Salary Currency:</label>
-                <select
-                  className="auth-form-input"
-                  defaultValue="Salary currency"
-                  onChange={(e) => setCurrency(e.target.value)}
-                >
-                  <option value="Salary currency" disabled>
-                    Salary currency
-                  </option>
-                  <option value="Ugx">Ugandan Shillings</option>
-                  <option value="$">Dollars</option>
-                </select>
-              </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Salary Currency:</label>
+              <select
+                className="auth-form-input"
+                defaultValue="Salary currency"
+                onChange={(e) => setCurrency(e.target.value)}
+              >
+                <option value="Salary currency" disabled>
+                  Salary currency
+                </option>
+                <option value="Ugx">Ugandan Shillings</option>
+                <option value="$">Dollars</option>
+              </select>
+            </div>
 
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Vacancies:</label>
-                <input
-                  className="auth-form-input"
-                  placeholder="title"
-                  password="text"
-                  onChange={(e) => setVaccancies(e.target.value)}
-                />
-              </div>
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Vacancies:</label>
+              <input
+                className="auth-form-input"
+                placeholder="title"
+                password="text"
+                onChange={(e) => setVaccancies(e.target.value)}
+              />
             </div>
-            <div className="flex flex-row justify-around">
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Experience:</label>
-                <input
-                  className="auth-form-input"
-                  placeholder="experience"
-                  password="text"
-                  onChange={(e) => setExperience(e.target.value)}
-                />
-              </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Experience:</label>
+              <input
+                className="auth-form-input"
+                placeholder="experience"
+                password="text"
+                onChange={(e) => setExperience(e.target.value)}
+              />
+            </div>
 
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Experience status:</label>
-                <select
-                  className="auth-form-input"
-                  defaultValue="Experience status"
-                  onChange={(e) => setExperienceStatus(e.target.value)}
-                >
-                  <option value="Experience status" disabled>
-                    Experience status
-                  </option>
-                  <option value="month">Month</option>
-                  <option value="year">Year</option>
-                </select>
-              </div>
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Experience status:</label>
+              <select
+                className="auth-form-input"
+                defaultValue="Experience status"
+                onChange={(e) => setExperienceStatus(e.target.value)}
+              >
+                <option value="Experience status" disabled>
+                  Experience status
+                </option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+              </select>
             </div>
-            <div className="flex flex-row justify-around">
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Company name:</label>
-                <input
-                  className="auth-form-input"
-                  placeholder="company name"
-                  password="text"
-                  onChange={(e) => setCompanyName(e.target.value)}
-                />
-              </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Company name:</label>
+              <input
+                className="auth-form-input"
+                placeholder="company name"
+                password="text"
+                onChange={(e) => setCompanyName(e.target.value)}
+              />
+            </div>
 
-              <div className="flex flex-col mt-6 w-5/12">
-                <label>Company location:</label>
-                <input
-                  className="auth-form-input"
-                  placeholder="company location"
-                  password="text"
-                  onChange={(e) => setCompanyLocation(e.target.value)}
-                />
-              </div>
+            <div className="flex flex-col mt-6 w-5/12">
+              <label>Company location:</label>
+              <input
+                className="auth-form-input"
+                placeholder="company location"
+                password="text"
+                onChange={(e) => setCompanyLocation(e.target.value)}
+              />
             </div>
-            <div className="flex flex-row justify-around">
-              <div className="flex flex-col mt-6 w-11/12">
-                <label>Company Logo:</label>
-                <input
-                  className="auth-form-input"
-                  type="file"
-                  onChange={(e) => setCompanyLogo(e.target.files[0])}
-                />
-              </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-11/12">
+              <label>Company Logo:</label>
+              <input
+                className="auth-form-input"
+                type="file"
+                onChange={(e) => setCompanyLogo(e.target.files[0])}
+              />
             </div>
-            <div className="flex flex-row justify-around">
-              <div className="flex flex-col mt-6 w-11/12">
-                <label>Description:</label>
-                <ReactQuill
-                  className="bg-white"
-                  placeholder="Type something here ..."
-                  modules={modules}
-                  formats={formats}
-                  theme="snow"
-                  value={description}
-                  onChange={setDescription}
-                />
-              </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-11/12">
+              <label>Description:</label>
+              <ReactQuill
+                className="bg-white"
+                placeholder="Type something here ..."
+                modules={modules}
+                formats={formats}
+                theme="snow"
+                value={description}
+                onChange={setDescription}
+              />
             </div>
-            <div className="flex flex-row justify-around">
-              <div className="flex flex-col my-6 w-11/12">
-                <button className="mt-6 auth-button" type="submit">
-                  {loading ? "saving job .........." : "Add Job"}
-                </button>
-              </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col my-6 w-11/12">
+              <button className="mt-6 auth-button" type="submit">
+                {loading ? "saving job .........." : "Add Job"}
+              </button>
             </div>
-          </form>
-        )}
+          </div>
+        </form>
       </div>
     </div>
   );
