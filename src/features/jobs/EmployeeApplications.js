@@ -24,6 +24,7 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
           appTokenConfig(loggedInToken)
         )
         .then((res) => {
+          console.log(res.data);
           setEmployeeApplications(res.data);
           setLoading(false);
         })
@@ -56,16 +57,13 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
                           Title
                         </th>
                         <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
+                          Company
+                        </th>
+                        <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
                           Date
                         </th>
                         <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                          Days ago
-                        </th>
-                        <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
                           status
-                        </th>
-                        <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                          Resume
                         </th>
                       </tr>
                     </thead>
@@ -74,33 +72,23 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
                         <React.Fragment key={employeeApplic.id}>
                           <tr>
                             <td className="w-1/3 text-left py-3 px-4">
-                              {employeeApplic.job}
+                              {employeeApplic.job.title}
+                            </td>
+                            <td className="w-1/3 text-left py-3 px-4">
+                              {employeeApplic.job.company_name}
                             </td>
                             <td className="w-1/3 text-left py-3 px-4">
                               {moment(
                                 employeeApplic.application_created_at
                               ).format("YYYY-MM-DD")}
-                            </td>
-                            <td className="w-1/3 text-left py-3 px-4">
+                              (
                               {moment(
                                 employeeApplic.application_created_at
                               ).fromNow()}
+                              )
                             </td>
                             <td className="w-1/3 text-left py-3 px-4">
                               {employeeApplic.status}
-                            </td>
-                            <td className="w-1/3 text-left py-3 px-4">
-                              <button
-                                className="bg-jobBlue-800 py-1 px-3 rounded-md font-bold text-white"
-                                onClick={() =>
-                                  window.open(
-                                    employeeApplic.resume_file,
-                                    "_blank"
-                                  )
-                                }
-                              >
-                                Link
-                              </button>
                             </td>
                           </tr>
                         </React.Fragment>
