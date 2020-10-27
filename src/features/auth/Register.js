@@ -110,7 +110,7 @@ export default function Register() {
         isLoginButton={isLoginButton}
       />
       <RegisterTabs
-        color="jobGreen"
+        color="jobBlue"
         setPhoneNumber={setPhoneNumber}
         setUserType={setUserType}
         setFirstName={setFirstName}

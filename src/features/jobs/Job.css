@@ -50,7 +50,7 @@
 }
 
 .search-button {
-  background-color: #26ae61;
+  /* background-color: #26ae61; */
   font-size: 14px;
   outline: none;
   overflow: hidden;
@@ -92,7 +92,7 @@
 }
 
 .aplply-job-button {
-  background-color: #26ae61;
+  background-color: #1da1f2;
   color: #fff;
 }
 

@@ -35,7 +35,6 @@ export default function FilterForm() {
   }, []);
 
   const getJobsDataPaginate = (pageNumber = 1) => {
-    console.log(pageNumber);
     getJobsData(pageNumber);
   };
 
@@ -56,7 +55,7 @@ export default function FilterForm() {
             linkClass="page-link"
             activePage={currentPage}
             totalItemsCount={itemCount}
-            itemsCountPerPage={1}
+            itemsCountPerPage={5}
             onChange={(pageNumber) => getJobsDataPaginate(pageNumber)}
           />
         </div>
@@ -78,7 +77,7 @@ export default function FilterForm() {
               onChange={(e) => setType(e.target.value)}
               className="job-search-input mb-2 rounded-sm"
             />
-            <button className="search-button rounded-sm font-bold px-6 py-2 focus:outline-none">
+            <button className="search-button rounded-sm font-bold px-6 py-2 focus:outline-none bg-jobBlue-800">
               Filter
             </button>
           </form>

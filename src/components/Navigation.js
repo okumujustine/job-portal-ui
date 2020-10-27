@@ -132,7 +132,7 @@ function Navbar({ authState }) {
             {!authState.user ? null : authState.user.role === "admin" ? (
               <li className="nav-item">
                 <Link
-                  to="/admin/dashboard"
+                  to="/admin-dashboard"
                   className="navigation-button-link nav-bar-font px-3 py-2 flex items-center text-xs capitalize font-bold leading-snug text-white hover:opacity-75"
                 >
                   Dashboard

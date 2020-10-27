@@ -166,6 +166,19 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
       return;
     }
 
+    if (!companyLocation) {
+      errorAlert("Add company location!");
+      return;
+    }
+
+    if (companyLogo.size > 2000000) {
+      errorAlert("file size too large!, should be 2MB or less");
+      return;
+    }
+    if (!companyLogo.name.match(/\.(jpg|jpeg|png)$/)) {
+      errorAlert("wrong file format (png, jpeg, jpg)!");
+    }
+
     if (!description) {
       errorAlert("Add job description!");
       return;
@@ -214,7 +227,7 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
   };
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row mt-6">
       <div className="sticky left-0 w-2/12">
         <DashboardNavigation />
       </div>
@@ -225,7 +238,7 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
               <div className="flex mt-8 w-5/12">
                 <Loader
                   type="TailSpin"
-                  color="#26AE61"
+                  color="#1da1f2"
                   height={30}
                   width={30}
                   timeout={50000}
@@ -433,7 +446,7 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
           </div>
           <div className="flex flex-row justify-around">
             <div className="flex flex-col mt-6 w-11/12">
-              <label>Company Logo:</label>
+              <label>Company Logo (must be 2MB or less):</label>
               <input
                 className="auth-form-input"
                 type="file"

@@ -12,11 +12,12 @@ import Jobs from "./features/jobs/Jobs";
 import AboutUs from "./features/common/AboutUs";
 import NotFound from "./features/common/NotFound";
 import JobDetails from "./features/jobs/JobDetails";
-import Applications from "./features/jobs/Applications";
-import AdminApplications from "./features/admin/Applications";
+import EmployeeApplication from "./features/jobs/EmployeeApplications";
+import EmployerApplications from "./features/admin/Applications";
 import Dashboard from "./features/admin/Dashboard";
 import AddJob from "./features/admin/AddJob";
 import AdminProtection from "./features/common/AdminProtection";
+import JobApplicantsDetail from "./features/admin/JobApplicantsDetail";
 
 function App({ loadUser }) {
   React.useEffect(() => {
@@ -35,19 +36,23 @@ function App({ loadUser }) {
               <Jobs />
             </Route>
             <Route path="/applications">
-              <Applications />
+              <EmployeeApplication />
             </Route>
-            <Route path="/admin/applications">
-              <AdminApplications />
+            <Route path="/admin-job-applications">
+              <EmployerApplications />
             </Route>
-            <AdminProtection path="/admin/addjob" component={AddJob} />
+            <AdminProtection
+              path="/admin-job-applications-detail/:slug"
+              component={JobApplicantsDetail}
+            />
+            <AdminProtection path="/admin-addjob" component={AddJob} />
+            <AdminProtection path="/admin-dashboard" component={Dashboard} />
             <Route path="/jobdetails/:slug">
               <JobDetails />
             </Route>
             <Route path="/about">
               <AboutUs />
             </Route>
-            <AdminProtection path="/admin/dashboard" component={Dashboard} />
             <Route path="/auth/email-verify/:email/:token">
               <VerfyEmail />
             </Route>

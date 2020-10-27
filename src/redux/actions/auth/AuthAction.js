@@ -31,7 +31,6 @@ export const loadUser = () => async (dispatch, getState) => {
 
 export const loadUserWhenAlreadyLoggedIn = () => async (dispatch, getState) => {
   await dispatch(checkTokenExpiry());
-  console.log("medium");
   axios
     .get("http://127.0.0.1:8000/auth/user/", tokenConfig(getState))
     .then((res) => {
@@ -46,7 +45,6 @@ export const loadUserWhenAlreadyLoggedIn = () => async (dispatch, getState) => {
 };
 
 export const checkTokenExpiry = () => async (dispatch, getState) => {
-  console.log("medium2");
   const auth_token = getState().AuthReducer.jobPortalToken;
 
   if (!auth_token) {

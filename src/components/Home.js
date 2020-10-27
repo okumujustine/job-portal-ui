@@ -14,6 +14,7 @@ export default function Home() {
     axios
       .get("http://127.0.0.1:8000/joblisting/latest/")
       .then((res) => {
+        console.log();
         setJobs(res.data);
       })
       .catch((error) => {
@@ -30,7 +31,7 @@ export default function Home() {
       <div className="home-banner flex justify-center items-center flex-col">
         <span className="home-banner-title">Hire great hourly employees</span>
         <p className="text-white home-banner-caption-p">
-          Work Scout is most trusted job board, connecting the world's <br />{" "}
+          Work Scout is most trusted job board, connecting the world's <br />
           brightest minds with resume database loaded with talents.
         </p>
         <div>
@@ -46,7 +47,10 @@ export default function Home() {
             <DisplayJobs jobs={jobs} />
           </div>
           <div className="flex flex-col items-center">
-            <Link to="jobs" className="rounded-sm load-more-btn mt-12 mb-12">
+            <Link
+              to="jobs"
+              className="rounded-sm load-more-btn mt-12 mb-12 bg-jobBlue-800"
+            >
               Load More Jobs
             </Link>
           </div>
