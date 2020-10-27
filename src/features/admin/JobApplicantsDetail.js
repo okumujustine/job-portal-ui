@@ -11,7 +11,8 @@ import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 
 function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
-  const [jobApplications, setJobApplications] = React.useState([]);
+  const [jobApplications, setJobApplications] = React.useState(null);
+  const [error, setError] = React.useState(null);
 
   const { state } = useLocation();
 
@@ -41,7 +42,7 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
             }
           })
           .catch((error) => {
-            console.log("failed to load jobs, try again later!");
+            setError("failed to load jobs, try again later!");
           });
       };
       getJobApplications();
@@ -61,12 +62,14 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
           <h5 className="capitalize font-bold text-2xl">
             {state.title} Applicants
           </h5>
-          {jobApplications.length == 0 ? (
+          {error && (
             <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
               No Job Applications yet
             </h5>
-          ) : null}
-          {jobApplications.length > 0 && (
+          )}
+          {!jobApplications && !error ? (
+            <p>loading...</p>
+          ) : jobApplications.length > 0 ? (
             <div className=" py-4 w-full">
               <div className="shadow overflow-hidden rounded border-b border-gray-200">
                 <table className="min-w-full bg-white">
@@ -127,6 +130,10 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
                 </table>
               </div>
             </div>
+          ) : (
+            <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
+              No Job Applications yet
+            </h5>
           )}
         </div>
       </div>
