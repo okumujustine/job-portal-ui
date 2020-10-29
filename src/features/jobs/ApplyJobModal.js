@@ -7,6 +7,7 @@ import { useAlert } from "react-alert";
 import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { appTokenConfig } from "../../helperfuncs/token";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
+import { Link } from "react-router-dom";
 
 function Modal({
   showModal,
@@ -16,6 +17,7 @@ function Modal({
   loadUserWhenAlreadyLoggedIn,
 }) {
   const [resume, setResume] = React.useState("");
+  const [applyMethod, setApplyMethod] = React.useState("easy");
   const [applied, setApplied] = React.useState(false);
   const { user } = authState;
 
@@ -34,7 +36,8 @@ function Modal({
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data);
+          return;
         });
     }
   }, [user, job]);
@@ -47,13 +50,26 @@ function Modal({
       return;
     }
 
-    if (!resume) {
+    if (!resume && applyMethod === "hard") {
       alert.error("select a resume please!");
       return;
     }
 
+    if (user && !user.profile_owner[0].resume && applyMethod === "easy") {
+      alert.error("add a resume in your profile please!");
+      return;
+    }
+
     const applyFormData = new FormData();
-    applyFormData.append("resume_file", resume, resume.name);
+
+    if (user && user.profile_owner[0].resume && applyMethod === "easy") {
+      applyFormData.append("profile_resume", user.profile_owner[0].resume);
+    }
+
+    if (resume && applyMethod === "hard") {
+      applyFormData.append("resume_file", resume, resume.name);
+    }
+
     applyFormData.append("first_name", user.first_name);
     applyFormData.append("last_name", user.last_name);
     applyFormData.append("email", user.email);
@@ -68,11 +84,16 @@ function Modal({
       )
       .then((res) => {
         setShowModal(false);
+        setResume("");
         alert.show("application successful!");
       })
       .catch((err) => {
         alert.error("application failed, try again later!");
       });
+  };
+
+  const onApplyMethod = (e) => {
+    setApplyMethod(e.target.value);
   };
   return (
     <>
@@ -110,11 +131,50 @@ function Modal({
                         <p>{user.email}</p>
                       </div>
                     </div>
-                    <input
-                      className="mt-4"
-                      type="file"
-                      onChange={(e) => setResume(e.target.files[0])}
-                    />
+                    <div className="mt-6 px-3 ">
+                      <input
+                        type="radio"
+                        checked={applyMethod === "easy"}
+                        onChange={onApplyMethod}
+                        value="easy"
+                        name="apply"
+                      />
+                      Easy Apply
+                      <input
+                        type="radio"
+                        value="hard"
+                        checked={applyMethod === "hard"}
+                        onChange={onApplyMethod}
+                        className="ml-5"
+                        name="apply"
+                      />
+                      Use New Resume
+                    </div>
+                    <div>
+                      {applyMethod === "hard" ? (
+                        <input
+                          className="mt-4"
+                          type="file"
+                          onChange={(e) => setResume(e.target.files[0])}
+                        />
+                      ) : (
+                        <div className="mt-4">
+                          {user && !user.profile_owner[0].resume ? (
+                            <Link
+                              to="/employee-profile"
+                              className="bg-jobBlue-800 py-2 px-3 rounded-md shadow-md text-white"
+                            >
+                              Add a Resume to your profile
+                            </Link>
+                          ) : (
+                            <span className="py-2 px-3">
+                              We shall use your profile resume to apply for this
+                              job
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
                     {applied && (
                       <small className="pt-3 text-red-500">
                         <b>
@@ -139,7 +199,7 @@ function Modal({
                     style={{ transition: "all .15s ease" }}
                     onClick={() => sendApplication()}
                   >
-                    Easy Apply
+                    Apply
                   </button>
                 </div>
               </div>

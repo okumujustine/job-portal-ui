@@ -38,10 +38,8 @@ function Applications({ authState, loadUserWhenAlreadyLoggedIn }) {
         setjobCurrentPage(res.data.current);
         setJobs(res.data.results);
         setItemCount(res.data.count);
-        console.log(res);
       })
       .catch((error) => {
-        console.log("error");
         setError("failed to load jobs, try again later!");
       });
   };

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 import { connect } from "react-redux";
+import { useAlert } from "react-alert";
 
 import { appTokenConfig } from "../../helperfuncs/token";
 import { getLoggedInToken } from "../../helperfuncs/getToken";
@@ -15,18 +16,18 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
   const [error, setError] = React.useState(null);
 
   const { state } = useLocation();
+  const alert = useAlert();
 
   React.useEffect(() => {
     let isMounted = true;
     if (_.isEmpty(state)) {
       // TODO: retrieve details by slug and set to state
-      console.log("invalid url");
     } else {
       const getJobApplications = async () => {
         await loadUserWhenAlreadyLoggedIn();
         const loggedInToken = await getLoggedInToken();
         if (!loggedInToken) {
-          console.log("log in please!");
+          alert.error("log in please!");
           return;
         }
 
@@ -37,7 +38,6 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
           )
           .then((res) => {
             if (isMounted) {
-              console.log(res);
               setJobApplications(res.data);
             }
           })

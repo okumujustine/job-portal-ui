@@ -18,6 +18,7 @@ import Dashboard from "./features/admin/Dashboard";
 import AddJob from "./features/admin/AddJob";
 import AdminProtection from "./features/common/AdminProtection";
 import JobApplicantsDetail from "./features/admin/JobApplicantsDetail";
+import EmployeeProfile from "./features/jobs/EmployeeProfile";
 
 function App({ loadUser }) {
   React.useEffect(() => {
@@ -35,18 +36,7 @@ function App({ loadUser }) {
             <Route path="/jobs">
               <Jobs />
             </Route>
-            <Route path="/applications">
-              <EmployeeApplication />
-            </Route>
-            <Route path="/admin-job-applications">
-              <EmployerApplications />
-            </Route>
-            <AdminProtection
-              path="/admin-job-applications-detail/:slug"
-              component={JobApplicantsDetail}
-            />
-            <AdminProtection path="/admin-addjob" component={AddJob} />
-            <AdminProtection path="/admin-dashboard" component={Dashboard} />
+
             <Route path="/jobdetails/:slug">
               <JobDetails />
             </Route>
@@ -62,6 +52,29 @@ function App({ loadUser }) {
             <Route path="/signup">
               <Register />
             </Route>
+
+            {/* employee */}
+            <Route path="/applications">
+              <EmployeeApplication />
+            </Route>
+            <Route path="/employee-dashboard">
+              <EmployeeApplication />
+            </Route>
+            <Route path="/employee-profile">
+              <EmployeeProfile />
+            </Route>
+
+            {/* employer */}
+            <Route path="/admin-job-applications">
+              <EmployerApplications />
+            </Route>
+            <AdminProtection
+              path="/admin-job-applications-detail/:slug"
+              component={JobApplicantsDetail}
+            />
+            <AdminProtection path="/admin-addjob" component={AddJob} />
+            <AdminProtection path="/admin-dashboard" component={Dashboard} />
+
             <Route>
               <NotFound />
             </Route>

@@ -34,6 +34,18 @@
   color: #f1630d;
 }
 
+.job-internship {
+  background-color: #ccfae4;
+  border: 1px solid #028502;
+  color: #028502;
+}
+
+.job-contract {
+  background-color: #c1e5fb;
+  border: 1px solid #1da1f2;
+  color: #1da1f2;
+}
+
 .job-search-input {
   padding: 14px 18px;
   outline: none;

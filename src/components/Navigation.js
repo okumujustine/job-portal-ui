@@ -8,7 +8,7 @@ function Navbar({ authState }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
 
   const authLinks = (
-    <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50">
+    <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50 shadow-md">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
         <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           <a
@@ -80,7 +80,7 @@ function Navbar({ authState }) {
   );
 
   const loggedInLinks = (
-    <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50">
+    <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50 shadow-md">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
         <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           <a
@@ -141,10 +141,10 @@ function Navbar({ authState }) {
             ) : (
               <li className="nav-item">
                 <Link
-                  to="/applications"
+                  to="/employee-dashboard"
                   className="navigation-button-link nav-bar-font px-3 py-2 flex items-center text-xs  font-bold leading-snug text-white hover:opacity-75 capitalize"
                 >
-                  Applications
+                  Dasboard
                 </Link>
               </li>
             )}

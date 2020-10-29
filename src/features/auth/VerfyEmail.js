@@ -2,6 +2,7 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useAlert } from "react-alert";
+import Loader from "react-loader-spinner";
 
 import AuthDialog from "./AuthDialog";
 
@@ -10,6 +11,7 @@ export default function VerfyEmail() {
   const [isLoginButton, setIsLoginButton] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const [dialogMessage, setDialogMessage] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   let { email, token } = useParams();
 
@@ -24,6 +26,7 @@ export default function VerfyEmail() {
       alert.error("use a valid link with valid token!");
       return;
     }
+    setLoading(true);
 
     axios
       .get(
@@ -38,6 +41,7 @@ export default function VerfyEmail() {
         setIsError(true);
         setDialogMessage(error.response.data.error);
         setOpenAuthDialog(true);
+        setLoading(false);
       });
   };
 
@@ -47,7 +51,6 @@ export default function VerfyEmail() {
 
   return (
     <div>
-      <h5>verify email</h5>
       <AuthDialog
         isOpen={openAuthDialog}
         isClose={closeAuthDialog}
@@ -55,8 +58,33 @@ export default function VerfyEmail() {
         content={dialogMessage}
         isLoginButton={isLoginButton}
       />
-      <p>{email}</p>
-      <button onClick={verifyToken}>verify</button>
+      <div className="flex flex-col items-center justify-center py-12">
+        <h5 className="text-2xl font-bold py-6">verify email address</h5>
+
+        <h5 className="text-2xl font-bold">{email}</h5>
+        <button
+          className="bg-jobBlue-800 py-2 px-4 font-bold text-white mt-6 flex justify-center items-center"
+          onClick={verifyToken}
+          style={{
+            minWidth: "200px",
+            minHeight: "40px",
+            backgroundColor: loading && "#ebebe4",
+          }}
+          disabled={loading}
+        >
+          {!loading ? (
+            "Confirm Verification"
+          ) : (
+            <Loader
+              type="Puff"
+              color="#FFFFFF"
+              height={25}
+              width={25}
+              timeout={30000}
+            />
+          )}
+        </button>
+      </div>
     </div>
   );
 }

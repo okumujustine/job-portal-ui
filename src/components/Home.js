@@ -14,7 +14,6 @@ export default function Home() {
     axios
       .get("http://127.0.0.1:8000/joblisting/latest/")
       .then((res) => {
-        console.log();
         setJobs(res.data);
       })
       .catch((error) => {

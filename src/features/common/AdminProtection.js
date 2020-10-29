@@ -20,10 +20,8 @@ const AdminProtection = ({ component: Component, authState, ...rest }) => {
         if (authState.isLoading) {
           return <h2>Loading...</h2>;
         } else if (authToken && userRole === "admin") {
-          console.log("admin");
           return <Component {...props} />;
         } else {
-          console.log("not admin");
           return (
             <Redirect to={{ pathname: "/", state: { from: props.location } }} />
           );

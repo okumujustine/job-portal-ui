@@ -1,33 +1,39 @@
 import React from "react";
 import _ from "lodash";
+import { useAlert } from "react-alert";
 
 import JobDetailsTitleBar from "./JobDetailsTitleBar";
 import ApplyJobModal from "./ApplyJobModal";
 import { useParams, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
+import { getLoggedInToken } from "../../helperfuncs/getToken";
+import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 
-function JobDetails({ authState }) {
+function JobDetails({ authState, loadUserWhenAlreadyLoggedIn }) {
   const { isAuthenticated } = authState;
   const [showModal, setShowModal] = React.useState(false);
   const [job, setJob] = React.useState([]);
   let { slug } = useParams();
   const { state } = useLocation();
+  const alert = useAlert();
 
   React.useEffect(() => {
     if (_.isEmpty(state)) {
       // TODO: retrieve details by slug and set to state
-      console.log("empty");
     } else {
       setJob(state);
     }
   }, []);
 
-  const applyForJob = () => {
-    if (isAuthenticated) {
-      setShowModal(true);
-    } else {
-      alert("log in first");
+  const applyForJob = async () => {
+    await loadUserWhenAlreadyLoggedIn();
+    const loggedInToken = await getLoggedInToken();
+    if (!loggedInToken) {
+      alert.error("log in please!");
+      return;
     }
+
+    setShowModal(true);
   };
 
   return (
@@ -114,4 +120,6 @@ function JobDetails({ authState }) {
 const mapStateToProps = (state) => ({
   authState: state.AuthReducer,
 });
-export default connect(mapStateToProps, null)(JobDetails);
+export default connect(mapStateToProps, { loadUserWhenAlreadyLoggedIn })(
+  JobDetails
+);

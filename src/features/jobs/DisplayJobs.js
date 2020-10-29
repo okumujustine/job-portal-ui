@@ -6,7 +6,6 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
 export default function DisplayJobs({ jobs }) {
-  console.log(jobs);
   return (
     <React.Fragment>
       <div className="flex flex-col min-h-screen">
@@ -46,7 +45,7 @@ export default function DisplayJobs({ jobs }) {
                     Experience {job.experience} {job.experience_status}(s){" "}
                   </small>
                 </div>
-                <div className="mt-1 flex md:min-w-330 lg:min-w-330 xl:min-w-330">
+                <div className="mt-1 flex md:min-w-330 lg:min-w-330 xl:min-w-330 mb-3">
                   {job.tag_one ? (
                     <small className="p-1 px-2 bg-yellow-200 text-yellow-800 rounded-xl lowercase">
                       {job.tag_one}
@@ -63,6 +62,11 @@ export default function DisplayJobs({ jobs }) {
                     </small>
                   ) : null}
                 </div>
+                {job.work_duration ? (
+                  <small className="text-gray-600 capitalize font-bold">
+                    Duration: {job.work_duration}
+                  </small>
+                ) : null}
               </div>
               <div className="hidden lg:block md:block xl:block">
                 {job.employment_status === "Full Time" ? (
@@ -78,6 +82,18 @@ export default function DisplayJobs({ jobs }) {
 
                 {job.employment_status === "Freelance" ? (
                   <small className="job-freelance p-1 ml-1 px-2 rounded-sm">
+                    {job.employment_status}
+                  </small>
+                ) : null}
+
+                {job.employment_status === "Internship" ? (
+                  <small className="job-internship p-1 ml-1 px-2 rounded-sm">
+                    {job.employment_status}
+                  </small>
+                ) : null}
+
+                {job.employment_status === "Contract" ? (
+                  <small className="job-contract p-1 ml-1 px-2 rounded-sm">
                     {job.employment_status}
                   </small>
                 ) : null}

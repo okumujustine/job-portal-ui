@@ -33,6 +33,7 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
   const [companyLocation, setCompanyLocation] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [companyLogo, setCompanyLogo] = React.useState("");
+  const [workDuration, setWorkDuration] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [carloading, setCatLoading] = React.useState(false);
 
@@ -177,6 +178,7 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
     }
     if (!companyLogo.name.match(/\.(jpg|jpeg|png)$/)) {
       errorAlert("wrong file format (png, jpeg, jpg)!");
+      return;
     }
 
     if (!description) {
@@ -187,7 +189,9 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
     setLoading(true);
 
     const addJobFormData = new FormData();
-
+    if (workDuration) {
+      addJobFormData.append("work_duration", workDuration);
+    }
     addJobFormData.append("category", category);
     addJobFormData.append("title", title);
     addJobFormData.append(
@@ -219,6 +223,9 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
       .then((res) => {
         alert.show("job successful added!");
         setLoading(false);
+        setTimeout(function () {
+          window.location.reload();
+        }, 2500);
       })
       .catch((error) => {
         alert.error("failed to add job, try again later!");
@@ -270,7 +277,7 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
               <input
                 className="auth-form-input"
                 placeholder="title"
-                password="text"
+                type="text"
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
@@ -290,8 +297,8 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
               <label>Tag one:</label>
               <input
                 className="auth-form-input"
-                placeholder="title"
-                password="text"
+                placeholder="tag one"
+                type="text"
                 onChange={(e) => setTagOne(e.target.value)}
               />
             </div>
@@ -301,8 +308,8 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
               <label>Tag two:</label>
               <input
                 className="auth-form-input"
-                placeholder="category"
-                password="text"
+                placeholder="tag two"
+                type="text"
                 onChange={(e) => setTagTwo(e.target.value)}
               />
             </div>
@@ -311,8 +318,8 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
               <label>Tag three:</label>
               <input
                 className="auth-form-input"
-                placeholder="title"
-                password="text"
+                placeholder="tag three"
+                type="text"
                 onChange={(e) => setTagThree(e.target.value)}
               />
             </div>
@@ -347,6 +354,8 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
                 <option value="Part Time">Full Time</option>
                 <option value="Full Time">Part Time</option>
                 <option value="Freelance">Freelance</option>
+                <option value="Internship">Internship</option>
+                <option value="Contract">Contract</option>
               </select>
             </div>
           </div>
@@ -355,8 +364,8 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
               <label>Min salary:</label>
               <input
                 className="auth-form-input"
-                placeholder="category"
-                password="text"
+                placeholder="minimum salary"
+                type="number"
                 onChange={(e) => setMinSalary(e.target.value)}
               />
             </div>
@@ -365,8 +374,8 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
               <label>Max salary:</label>
               <input
                 className="auth-form-input"
-                placeholder="title"
-                password="text"
+                placeholder="maximum salary"
+                type="number"
                 onChange={(e) => setMaxSalary(e.target.value)}
               />
             </div>
@@ -388,22 +397,22 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
             </div>
 
             <div className="flex flex-col mt-6 w-5/12">
-              <label>Vacancies:</label>
+              <label>Number of Vacancies:</label>
               <input
                 className="auth-form-input"
-                placeholder="title"
-                password="text"
+                placeholder="number of vacancies"
+                type="number"
                 onChange={(e) => setVaccancies(e.target.value)}
               />
             </div>
           </div>
           <div className="flex flex-row justify-around">
             <div className="flex flex-col mt-6 w-5/12">
-              <label>Experience:</label>
+              <label>Number of Experience:</label>
               <input
                 className="auth-form-input"
-                placeholder="experience"
-                password="text"
+                placeholder="number of experience"
+                type="number"
                 onChange={(e) => setExperience(e.target.value)}
               />
             </div>
@@ -429,7 +438,7 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
               <input
                 className="auth-form-input"
                 placeholder="company name"
-                password="text"
+                type="text"
                 onChange={(e) => setCompanyName(e.target.value)}
               />
             </div>
@@ -439,8 +448,19 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
               <input
                 className="auth-form-input"
                 placeholder="company location"
-                password="text"
+                type="text"
                 onChange={(e) => setCompanyLocation(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-11/12">
+              <label>Work Duration (optional):</label>
+              <input
+                className="auth-form-input"
+                type="text"
+                placeholder="e.g 2 years"
+                onChange={(e) => setWorkDuration(e.target.value)}
               />
             </div>
           </div>

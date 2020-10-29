@@ -2,6 +2,7 @@ import * as React from "react";
 import DashboardNavigation from "./DashboardNavigation";
 import { connect } from "react-redux";
 import axios from "axios";
+import { useAlert } from "react-alert";
 
 import { appTokenConfig } from "../../helperfuncs/token";
 import { getLoggedInToken } from "../../helperfuncs/getToken";
@@ -10,6 +11,8 @@ import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction
 function Dashboard({ loadUserWhenAlreadyLoggedIn }) {
   const [statsJobPosted, setStatsJobPosted] = React.useState(0);
   const [statsApplications, setStatsApplications] = React.useState(0);
+
+  const alert = useAlert();
 
   React.useEffect(() => {
     let isMounted = true;
@@ -30,13 +33,12 @@ function Dashboard({ loadUserWhenAlreadyLoggedIn }) {
         )
         .then((res) => {
           if (isMounted) {
-            console.log(res);
             setStatsJobPosted(res.data.posted_jobs_count);
             setStatsApplications(res.data.job_applications_count);
           }
         })
         .catch((error) => {
-          console.log("error");
+          alert.error("failed to load job stats, try again later");
         });
     };
 

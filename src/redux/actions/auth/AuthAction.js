@@ -94,6 +94,7 @@ export const loginUser = (user) => (dispatch) => {
           jobPortalToken: res.data.tokens.access,
           jobPortalRefreshToken: res.data.tokens.refresh,
           user: {
+            id: res.data.id,
             email: res.data.email,
             first_name: res.data.first_name,
             last_name: res.data.last_name,
@@ -102,18 +103,13 @@ export const loginUser = (user) => (dispatch) => {
           },
         },
       });
-      // setTimeout(() => (window.location = "/"), 500);
     })
     .catch((err) => {
       const { error } = err.response.data;
-      console.log("error", error);
+
       dispatch({
         type: LOGIN_FAILED,
         payload: { erroMessage: error },
       });
     });
 };
-
-// workerTimers.setInterval(() => {
-//   console.log("worker ---");
-// }, 1000);

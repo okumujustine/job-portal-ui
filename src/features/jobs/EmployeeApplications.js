@@ -1,45 +1,78 @@
 import * as React from "react";
 import axios from "axios";
 import moment from "moment";
+import Pagination from "react-js-pagination";
 
 import { appTokenConfig } from "../../helperfuncs/token";
 import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 import { connect } from "react-redux";
+import EmployeeNavigation from "./EmployeeNavigation";
 
 function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
   const [employeeApplications, setEmployeeApplications] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
+  const [applicationsCurrentPage, setApplicationsCurrentPage] = React.useState(
+    1
+  );
+  const [applicationsCount, setApplicationsCount] = React.useState(0);
+
+  async function getEmployeeApplications(pageNumber) {
+    await loadUserWhenAlreadyLoggedIn();
+    const loggedInToken = await getLoggedInToken();
+
+    setLoading(true);
+    axios
+      .get(
+        `http://localhost:8000/joblisting/userapplications/?page=${pageNumber}`,
+        appTokenConfig(loggedInToken)
+      )
+      .then((res) => {
+        setEmployeeApplications(res.data.results);
+        setApplicationsCurrentPage(res.data.current);
+        setApplicationsCount(res.data.count);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError("failed to fetch data try again later");
+      });
+  }
 
   React.useEffect(() => {
-    async function getUserApplications() {
-      await loadUserWhenAlreadyLoggedIn();
-      const loggedInToken = await getLoggedInToken();
-
-      setLoading(true);
-      axios
-        .get(
-          "http://localhost:8000/joblisting/userapplications/",
-          appTokenConfig(loggedInToken)
-        )
-        .then((res) => {
-          console.log(res.data);
-          setEmployeeApplications(res.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError("failed to fetch data try again later");
-        });
-    }
-    getUserApplications();
+    getEmployeeApplications(1);
   }, []);
+
+  const employeesApplicationPaginate = (pageNumber = 1) => {
+    getEmployeeApplications(pageNumber);
+  };
 
   return (
     <div className="flex flex-row mt-6">
+      <div>
+        <EmployeeNavigation />
+      </div>
       <div className="w-10/12 m-auto">
         <div className="px-20">
           <div className=" py-8 w-full">
+            <div className="flex justify-between">
+              <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-2/12 flex justify-center items-center flex-col">
+                <h5>APLLIED</h5>
+                <span className="font-bold text-5xl">{applicationsCount}</span>
+              </div>
+              <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-2/12 flex justify-center items-center flex-col">
+                <h5>SENT</h5>
+                <span className="font-bold text-5xl">{applicationsCount}</span>
+              </div>
+              <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-2/12 flex justify-center items-center flex-col">
+                <h5>ACCEPTED</h5>
+                <span className="font-bold text-5xl">{applicationsCount}</span>
+              </div>
+              <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-2/12 flex justify-center items-center flex-col">
+                <h5>REJECTED</h5>
+                <span className="font-bold text-5xl">{applicationsCount}</span>
+              </div>
+            </div>
             <div className="shadow overflow-hidden rounded border-b border-gray-200">
               {error && (
                 <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
@@ -103,22 +136,19 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
               </React.Fragment>
             </div>
           </div>
+          <Pagination
+            itemClass="page-item"
+            firstPageText="First"
+            lastPageText="Last"
+            linkClass="page-link"
+            activePage={applicationsCurrentPage}
+            totalItemsCount={applicationsCount}
+            itemsCountPerPage={5}
+            onChange={(pageNumber) => employeesApplicationPaginate(pageNumber)}
+          />
         </div>
       </div>
     </div>
-    //       <Pagination
-    //         itemClass="page-item"
-    //         firstPageText="First"
-    //         lastPageText="Last"
-    //         linkClass="page-link"
-    //         activePage={currentPage}
-    //         totalItemsCount={itemCount}
-    //         itemsCountPerPage={5}
-    //         onChange={(pageNumber) => getUserJobsPaginate(pageNumber)}
-    //       />
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
 
