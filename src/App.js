@@ -19,6 +19,7 @@ import AddJob from "./features/admin/AddJob";
 import AdminProtection from "./features/common/AdminProtection";
 import JobApplicantsDetail from "./features/admin/JobApplicantsDetail";
 import EmployeeProfile from "./features/jobs/EmployeeProfile";
+import EmployerProfile from "./features/admin/EmployerProfile";
 
 function App({ loadUser }) {
   React.useEffect(() => {
@@ -74,7 +75,10 @@ function App({ loadUser }) {
             />
             <AdminProtection path="/admin-addjob" component={AddJob} />
             <AdminProtection path="/admin-dashboard" component={Dashboard} />
-
+            <AdminProtection
+              path="/employer-profile"
+              component={EmployerProfile}
+            />
             <Route>
               <NotFound />
             </Route>

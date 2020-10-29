@@ -38,6 +38,7 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
           )
           .then((res) => {
             if (isMounted) {
+              console.log(res.data);
               setJobApplications(res.data);
             }
           })
@@ -113,15 +114,29 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
                               "YYYY-MM-DD"
                             )}
                           </td>
-                          <td className="text-left py-2 px-4 font-bold">
-                            <button
-                              className="bg-jobBlue-800 py-1 px-3 rounded-md font-bold text-white"
-                              onClick={() =>
-                                window.open(jobApplic.resume_file, "_blank")
-                              }
-                            >
-                              Link
-                            </button>
+                          <td className="w-1/3 text-left py-2 px-4 font-bold">
+                            {jobApplic.resume_file ? (
+                              <button
+                                className="bg-jobBlue-800 py-1 px-3 rounded-md font-bold text-white"
+                                onClick={() =>
+                                  window.open(jobApplic.resume_file, "_blank")
+                                }
+                              >
+                                Link
+                              </button>
+                            ) : (
+                              <button
+                                className="bg-jobBlue-800 py-1 px-3 rounded-md font-bold text-white"
+                                onClick={() =>
+                                  window.open(
+                                    jobApplic.profile_resume,
+                                    "_blank"
+                                  )
+                                }
+                              >
+                                Link
+                              </button>
+                            )}
                           </td>
                         </tr>
                       </React.Fragment>

@@ -167,7 +167,7 @@ function Modal({
                               Add a Resume to your profile
                             </Link>
                           ) : (
-                            <span className="py-2 px-3">
+                            <span className="py-2 px-3 bg-blue-200 border-2 border-blue-700 text-blue-700">
                               We shall use your profile resume to apply for this
                               job
                             </span>

@@ -11,6 +11,7 @@ export default function DashboardNavigation() {
         to={"/admin-job-applications"}
         title={"Applications"}
       />
+      <DasboardNavButton to={"/employer-profile"} title={"Profile"} />
     </div>
   );
 }
