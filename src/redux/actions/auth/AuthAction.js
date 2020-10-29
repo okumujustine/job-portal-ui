@@ -1,5 +1,4 @@
 import axios from "axios";
-import * as workerTimers from "worker-timers";
 
 import {
   USER_LOADING,
@@ -8,6 +7,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   REFRESH_TOKEN_SUCCESS,
+  LOGOUT_SUCCESS,
 } from "../index";
 
 import { tokenConfig, config } from "../../../helperfuncs/token";
@@ -112,4 +112,30 @@ export const loginUser = (user) => (dispatch) => {
         payload: { erroMessage: error },
       });
     });
+};
+
+export const logoutUser = () => (dispatch, getState) => {
+  const job_portal_token = getState().AuthReducer.jobPortalToken;
+  const token_refresh = getState().AuthReducer.jobPortalRefreshToken;
+
+  if (job_portal_token && token_refresh) {
+    axios
+      .post(
+        "http://127.0.0.1:8000/auth/logout/",
+        {
+          refresh: token_refresh,
+        },
+        tokenConfig(getState)
+      )
+      .then((res) => {
+        console.log(res);
+        localStorage.removeItem("jobPortalToken");
+        localStorage.removeItem("jobPortalRefreshToken");
+        dispatch({ type: LOGOUT_SUCCESS });
+        setTimeout(() => (window.location = "/"), 2000);
+      })
+      .catch((error) => {
+        console.log("logout failed");
+      });
+  }
 };

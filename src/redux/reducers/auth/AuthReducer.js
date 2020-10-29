@@ -5,6 +5,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   REFRESH_TOKEN_SUCCESS,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILED,
 } from "../../actions";
 
 const initialState = {
@@ -13,6 +15,7 @@ const initialState = {
   isAuthenticated: null,
   isLoading: false,
   user: null,
+  logout: null,
   role: localStorage.getItem("jobPortalUserRole"),
   loginFailedError: null,
 };
@@ -53,6 +56,18 @@ export default (state = initialState, action) => {
         isAuthenticated: false,
         isLoading: false,
         user: null,
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        token: null,
+        isAuthenticated: false,
+        isLoading: false,
+        user: null,
+        logout: "sucess",
+      };
+    case LOGOUT_FAILED:
+      return {
+        logout: "failed",
       };
     case LOGIN_SUCCESS:
       localStorage.setItem("jobPortalToken", action.payload.jobPortalToken);

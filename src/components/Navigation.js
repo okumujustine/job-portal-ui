@@ -1,11 +1,30 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { useAlert } from "react-alert";
 
 import "./Navigation.css";
-import { connect } from "react-redux";
+import { logoutUser } from "../redux/actions/auth/AuthAction";
 
-function Navbar({ authState }) {
+function Navbar({ authState, logoutUser }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+
+  const alert = useAlert();
+
+  React.useEffect(() => {
+    if (authState && authState.logout && authState.logout === "sucess") {
+      alert.success("successfully loggedout!");
+      return;
+    }
+
+    if (authState && authState.logout && authState.logout === "failed") {
+      alert.error("failed, try again later!");
+    }
+  }, [authState]);
+
+  const onLogoutUser = () => {
+    logoutUser();
+  };
 
   const authLinks = (
     <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50 shadow-md">
@@ -149,12 +168,12 @@ function Navbar({ authState }) {
               </li>
             )}
             <li className="nav-item">
-              <Link
-                to="/login"
+              <button
+                onClick={onLogoutUser}
                 className="navigation-button-link nav-bar-font px-3 py-2 flex items-center text-xs capitalize font-bold leading-snug text-white hover:opacity-75"
               >
                 Log Out
-              </Link>
+              </button>
             </li>
           </ul>
         </div>
@@ -176,4 +195,4 @@ function Navbar({ authState }) {
 const mapStateToProps = (state) => ({
   authState: state.AuthReducer,
 });
-export default connect(mapStateToProps, null)(Navbar);
+export default connect(mapStateToProps, { logoutUser })(Navbar);
