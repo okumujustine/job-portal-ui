@@ -66,6 +66,19 @@ function Modal({
       applyFormData.append("profile_resume", user.profile_owner[0].resume);
     }
 
+    if (resume && applyMethod === "hard" && resume.size > 2000000) {
+      alert.error("file size too large!, should be 2MB or less");
+      return;
+    }
+    if (
+      resume &&
+      applyMethod === "hard" &&
+      !resume.name.match(/\.(docx|pdf|doc)$/)
+    ) {
+      alert.error("wrong file format use (pdf, docx)!");
+      return;
+    }
+
     if (resume && applyMethod === "hard") {
       applyFormData.append("resume_file", resume, resume.name);
     }
