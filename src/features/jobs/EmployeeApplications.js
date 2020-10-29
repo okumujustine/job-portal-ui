@@ -56,20 +56,8 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
         <div className="px-20">
           <div className=" py-8 w-full">
             <div className="flex justify-between">
-              <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-2/12 flex justify-center items-center flex-col">
-                <h5>APLLIED</h5>
-                <span className="font-bold text-5xl">{applicationsCount}</span>
-              </div>
-              <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-2/12 flex justify-center items-center flex-col">
-                <h5>SENT</h5>
-                <span className="font-bold text-5xl">{applicationsCount}</span>
-              </div>
-              <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-2/12 flex justify-center items-center flex-col">
-                <h5>ACCEPTED</h5>
-                <span className="font-bold text-5xl">{applicationsCount}</span>
-              </div>
-              <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-2/12 flex justify-center items-center flex-col">
-                <h5>REJECTED</h5>
+              <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-5/12 flex justify-center items-center flex-col">
+                <h5>APLLICATIONS</h5>
                 <span className="font-bold text-5xl">{applicationsCount}</span>
               </div>
             </div>
