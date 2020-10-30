@@ -9,7 +9,6 @@ export default function FilterForm() {
   const [jobs, setJobs] = React.useState([]);
   const [error, setError] = React.useState("");
   const [title, setTitle] = React.useState("");
-  const [category, setCategory] = React.useState("");
   const [type, setType] = React.useState("");
   const [currentPage, setjobCurrentPage] = React.useState(1);
   const [itemCount, setItemCount] = React.useState(0);
@@ -17,7 +16,7 @@ export default function FilterForm() {
 
   const getJobsData = (pageNumber) => {
     setLoading(true);
-    const searchData = { title, category, type };
+    const searchData = { title, type };
     axios
       .get(`http://127.0.0.1:8000/joblisting/filter/?page=${pageNumber}`, {
         params: searchData,
@@ -27,10 +26,14 @@ export default function FilterForm() {
         setJobs(res.data.results);
         setItemCount(res.data.count);
         setLoading(false);
+        setTitle("");
+        setType("");
       })
       .catch((error) => {
         setError("failed to load jobs, try again later!");
         setLoading(false);
+        setTitle("");
+        setType("");
       });
   };
 
@@ -44,7 +47,11 @@ export default function FilterForm() {
 
   const onSubmitSearch = (e) => {
     e.preventDefault();
-    getJobsData();
+    getJobsData(1);
+  };
+
+  const onSelectFilter = (e) => {
+    getJobsData(1);
   };
 
   return (
@@ -65,19 +72,24 @@ export default function FilterForm() {
         </div>
         <div className="w-3/12 fixed" style={{ right: "5%" }}>
           <h4 className="sort-font">Sort by</h4>
+
+          <button
+            className="border-2 px-2 mb-4 font-bold bg-blue-200 focus:outline-none"
+            onClick={onSelectFilter}
+          >
+            All Jobs
+          </button>
+
           <form onSubmit={onSubmitSearch}>
             <input
+              value={title}
               placeholder="title"
               onChange={(e) => setTitle(e.target.value)}
               className="job-search-input mb-2 rounded-sm"
             />
             <input
-              placeholder="category"
-              onChange={(e) => setCategory(e.target.value)}
-              className="job-search-input mb-2 rounded-sm"
-            />
-            <input
               placeholder="type"
+              value={type}
               onChange={(e) => setType(e.target.value)}
               className="job-search-input mb-2 rounded-sm"
             />

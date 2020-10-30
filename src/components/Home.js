@@ -60,6 +60,9 @@ export default function Home() {
         </div>
         <div className="lg:w-3/12 lg:block ">
           <h3 className="after-banner-span-text">Job Spotlight</h3>
+          <small>
+            <i>comming soon</i>
+          </small>
         </div>
       </div>
       <Footer />

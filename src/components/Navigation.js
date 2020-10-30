@@ -5,9 +5,12 @@ import { useAlert } from "react-alert";
 
 import "./Navigation.css";
 import { logoutUser } from "../redux/actions/auth/AuthAction";
+import Dialog from "./Dialog";
 
 function Navbar({ authState, logoutUser }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [dialogMessage, setDialogMessage] = React.useState("");
 
   const alert = useAlert();
 
@@ -19,11 +22,22 @@ function Navbar({ authState, logoutUser }) {
 
     if (authState && authState.logout && authState.logout === "failed") {
       alert.error("failed, try again later!");
+      return;
     }
   }, [authState]);
 
   const onLogoutUser = () => {
+    setDialogMessage("Are you sure you want to logout !?");
+    setOpenDialog(true);
+  };
+
+  const onConfirm = () => {
+    setOpenDialog(false);
     logoutUser();
+  };
+
+  const closeDialog = () => {
+    setOpenDialog(false);
   };
 
   const authLinks = (
@@ -197,6 +211,12 @@ function Navbar({ authState, logoutUser }) {
 
   return (
     <>
+      <Dialog
+        content={dialogMessage}
+        isOpen={openDialog}
+        isClose={closeDialog}
+        confirm={onConfirm}
+      />
       {authState.isAuthenticated === null
         ? nullLinks
         : authState.isAuthenticated

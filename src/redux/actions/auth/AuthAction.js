@@ -104,6 +104,7 @@ export const loginUser = (user) => (dispatch) => {
           },
         },
       });
+      setTimeout(() => (window.location = "/"), 500);
     })
     .catch((err) => {
       const { error } = err.response.data;

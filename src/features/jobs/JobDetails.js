@@ -57,27 +57,30 @@ function JobDetails({ authState, loadUserWhenAlreadyLoggedIn }) {
                     ")",
               }}
             ></div>
-            <div className="mt-3 pb-6 mb-6 flex flex-col md:flex-row lg:flex-row xl:flex-row">
+            <div className="pb-4 flex flex-col md:flex-row lg:flex-row xl:flex-row">
               <h5 className="capitalize text-lg">{job.title}</h5>
-              <h6 className="text-sm md:pl-3 md:pt-1 lg:pt-1 xl:pt-1 lg:pl-3 xl:pl-3">
-                http://justine@gmail.com
-              </h6>
             </div>
-            <div dangerouslySetInnerHTML={{ __html: job.description }} />
+            <div>
+              <div dangerouslySetInnerHTML={{ __html: job.description }} />
+            </div>
           </div>
           <div>
             <h5 className="font-bold py-3">Overview</h5>
             <div className="px-4 py-10 rounded-md border-2 mb-10">
               <ul>
                 <li className="flex mb-3">
-                  <p>icon</p>
+                  <p>
+                    <i class="far fa-compass"></i>
+                  </p>
                   <div className="flex flex-col ml-2">
                     <strong>Location:</strong>
                     <span>{job.company_location}</span>
                   </div>
                 </li>
                 <li className="flex mb-3">
-                  <p>icon</p>
+                  <p>
+                    <i class="fas fa-clock"></i>
+                  </p>
                   <div className="flex flex-col ml-2">
                     <strong>Deadline:</strong>
                     <span>{job.dateline}</span>
@@ -85,7 +88,9 @@ function JobDetails({ authState, loadUserWhenAlreadyLoggedIn }) {
                 </li>
 
                 <li className="flex mb-6">
-                  <p>icon</p>
+                  <p>
+                    <i class="far fa-money-bill-alt"></i>
+                  </p>
                   <div className="flex flex-col ml-2">
                     <strong>Salary:</strong>
                     <span>
@@ -103,9 +108,6 @@ function JobDetails({ authState, loadUserWhenAlreadyLoggedIn }) {
                     className="aplply-job-button px-2 py-2 rounded-md focus:outline-none"
                   >
                     Apply Here
-                  </button>
-                  <button className="aplply-job-button px-2 py-2 rounded-md mt-4 focus:outline-none">
-                    Apply Site
                   </button>
                 </li>
               </ul>
