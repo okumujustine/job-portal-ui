@@ -98,6 +98,20 @@ function Navbar({ authState, logoutUser }) {
     </nav>
   );
 
+  const nullLinks = (
+    <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50 shadow-md">
+      <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+        <div className="animate-pulse  w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+          <a
+            className="nav-bar-font text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase bg-text-400"
+            href="#pablo"
+          >
+            Job Portal
+          </a>
+        </div>
+      </div>
+    </nav>
+  );
   const loggedInLinks = (
     <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50 shadow-md">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
@@ -184,7 +198,7 @@ function Navbar({ authState, logoutUser }) {
   return (
     <>
       {authState.isAuthenticated === null
-        ? null
+        ? nullLinks
         : authState.isAuthenticated
         ? loggedInLinks
         : authLinks}

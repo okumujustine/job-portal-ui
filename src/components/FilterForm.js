@@ -13,8 +13,10 @@ export default function FilterForm() {
   const [type, setType] = React.useState("");
   const [currentPage, setjobCurrentPage] = React.useState(1);
   const [itemCount, setItemCount] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
 
   const getJobsData = (pageNumber) => {
+    setLoading(true);
     const searchData = { title, category, type };
     axios
       .get(`http://127.0.0.1:8000/joblisting/filter/?page=${pageNumber}`, {
@@ -24,9 +26,11 @@ export default function FilterForm() {
         setjobCurrentPage(res.data.current);
         setJobs(res.data.results);
         setItemCount(res.data.count);
+        setLoading(false);
       })
       .catch((error) => {
         setError("failed to load jobs, try again later!");
+        setLoading(false);
       });
   };
 
@@ -47,7 +51,7 @@ export default function FilterForm() {
     <React.Fragment>
       <div className="flex w-10/12 m-auto justify-between">
         <div className="w-8/12">
-          <DisplayJobs jobs={jobs} />
+          <DisplayJobs jobs={jobs} isLoading={loading} />
           <Pagination
             itemClass="page-item"
             firstPageText="First"

@@ -8,13 +8,14 @@ import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 import { connect } from "react-redux";
 import EmployeeNavigation from "./EmployeeNavigation";
+import { TableLoaders, CardLoaders } from "../../components/Loaders";
 
 function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
   const [employeeApplications, setEmployeeApplications] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [applicationsCurrentPage, setApplicationsCurrentPage] = React.useState(
-    1
+    0
   );
   const [applicationsCount, setApplicationsCount] = React.useState(0);
 
@@ -55,12 +56,20 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
       <div className="w-10/12 m-auto">
         <div className="px-20">
           <div className=" py-8 w-full">
-            <div className="flex justify-between">
-              <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-5/12 flex justify-center items-center flex-col">
-                <h5>APLLICATIONS</h5>
-                <span className="font-bold text-5xl">{applicationsCount}</span>
+            {!error && !loading && applicationsCount !== 0 ? (
+              <div className="flex justify-between">
+                <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-5/12 flex justify-center items-center flex-col">
+                  <h5>APLLICATIONS</h5>
+                  <span className="font-bold text-5xl">
+                    {applicationsCount}
+                  </span>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="mb-5">
+                <CardLoaders />
+              </div>
+            )}
             <div className="shadow overflow-hidden rounded border-b border-gray-200">
               {error && (
                 <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
@@ -69,7 +78,7 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
               )}
               <React.Fragment>
                 {!employeeApplications && !error ? (
-                  <p>loading...</p>
+                  <TableLoaders />
                 ) : employeeApplications.length > 0 ? (
                   <table className="min-w-full bg-white">
                     <thead className="bg-gray-800 text-white">

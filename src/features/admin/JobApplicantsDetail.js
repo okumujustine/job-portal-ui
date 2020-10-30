@@ -10,6 +10,7 @@ import { useAlert } from "react-alert";
 import { appTokenConfig } from "../../helperfuncs/token";
 import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
+import { TableLoaders } from "../../components/Loaders";
 
 function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
   const [jobApplications, setJobApplications] = React.useState(null);
@@ -65,11 +66,11 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
           </h5>
           {error && (
             <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
-              No Job Applications yet
+              Error loading jobs, try again later
             </h5>
           )}
           {!jobApplications && !error ? (
-            <p>loading...</p>
+            <TableLoaders />
           ) : jobApplications.length > 0 ? (
             <div className=" py-4 w-full">
               <div className="shadow overflow-hidden rounded border-b border-gray-200">

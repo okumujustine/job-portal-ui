@@ -9,15 +9,19 @@ import Footer from "./Footer";
 export default function Home() {
   const [jobs, setJobs] = React.useState([]);
   const [error, setError] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   const loadData = () => {
+    setLoading(true);
     axios
       .get("http://127.0.0.1:8000/joblisting/latest/")
       .then((res) => {
         setJobs(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         setError("failed to load jobs, try again later!");
+        setLoading(false);
       });
   };
 
@@ -43,7 +47,7 @@ export default function Home() {
         <div className="lg:w-8/12 w-11/12 m-auto">
           <h3 className="after-banner-span-text">Recent Jobs</h3>
           <div>
-            <DisplayJobs jobs={jobs} />
+            <DisplayJobs jobs={jobs} isLoading={loading} />
           </div>
           <div className="flex flex-col items-center">
             <Link

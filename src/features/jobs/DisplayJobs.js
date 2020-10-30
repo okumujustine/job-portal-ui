@@ -4,16 +4,18 @@ import moment from "moment";
 import Zoom from "react-medium-image-zoom";
 
 import "react-medium-image-zoom/dist/styles.css";
+import { JobsLoaders } from "../../components/Loaders";
 
-export default function DisplayJobs({ jobs }) {
+export default function DisplayJobs({ jobs, isLoading }) {
   return (
     <React.Fragment>
       <div className="flex flex-col min-h-screen">
-        {jobs.length === 0 && <p>No jobs found</p>}
-        {jobs.map((job, index) => (
+        {jobs.length === 0 && !isLoading && <p>No jobs found</p>}
+        {isLoading && <JobsLoaders />}
+        {jobs.map((job) => (
           <Link
             to={{ pathname: `/jobdetails/${job.slug}`, state: job }}
-            key={index}
+            key={job.id}
             className=" job-card w-full rounded overflow-hidden shadow-sm p-6 flex mr-1 ml-1 mb-2 flex-col lg:flex-row md:flex-row xl:flex-row"
           >
             <Zoom>

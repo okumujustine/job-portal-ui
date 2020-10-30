@@ -8,6 +8,7 @@ import {
   LOGIN_FAILED,
   REFRESH_TOKEN_SUCCESS,
   LOGOUT_SUCCESS,
+  LOGOUT_FAILED,
 } from "../index";
 
 import { tokenConfig, config } from "../../../helperfuncs/token";
@@ -135,7 +136,7 @@ export const logoutUser = () => (dispatch, getState) => {
         setTimeout(() => (window.location = "/"), 2000);
       })
       .catch((error) => {
-        console.log("logout failed");
+        dispatch({ type: LOGOUT_FAILED });
       });
   }
 };

@@ -17,9 +17,7 @@ const AdminProtection = ({ component: Component, authState, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (authState.isLoading) {
-          return <h2>Loading...</h2>;
-        } else if (authToken && userRole === "admin") {
+        if (authToken && userRole === "admin") {
           return <Component {...props} />;
         } else {
           return (
