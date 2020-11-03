@@ -12,7 +12,7 @@ import {
 } from "../index";
 
 import { tokenConfig, config } from "../../../helperfuncs/token";
-import { baseUrl } from "../../../features/common/constants";
+import { baseUrl, userRoleKey } from "../../../features/common/constants";
 import {
   authTokenKey,
   refreshTokenKey,
@@ -134,9 +134,9 @@ export const logoutUser = () => (dispatch, getState) => {
         tokenConfig(getState)
       )
       .then((res) => {
-        console.log(res);
         localStorage.removeItem(authTokenKey);
         localStorage.removeItem(refreshTokenKey);
+        localStorage.removeItem(userRoleKey);
         dispatch({ type: LOGOUT_SUCCESS });
         setTimeout(() => (window.location = "/"), 2000);
       })
