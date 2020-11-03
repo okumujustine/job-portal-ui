@@ -12,13 +12,14 @@ import {
 } from "../index";
 
 import { tokenConfig, config } from "../../../helperfuncs/token";
+import { baseUrl } from "../../../features/common/constants";
 
 export const loadUser = () => async (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
   await dispatch(checkTokenExpiry());
 
   axios
-    .get("http://127.0.0.1:8000/auth/user/", tokenConfig(getState))
+    .get(`${baseUrl}/auth/user/`, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: USER_LOADED,
@@ -33,7 +34,7 @@ export const loadUser = () => async (dispatch, getState) => {
 export const loadUserWhenAlreadyLoggedIn = () => async (dispatch, getState) => {
   await dispatch(checkTokenExpiry());
   axios
-    .get("http://127.0.0.1:8000/auth/user/", tokenConfig(getState))
+    .get(`${baseUrl}/auth/user/`, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: USER_LOADED,
@@ -54,7 +55,7 @@ export const checkTokenExpiry = () => async (dispatch, getState) => {
 
   try {
     const res = await axios.post(
-      "http://127.0.0.1:8000/auth/verify/token/",
+      `${baseUrl}/auth/verify/token/`,
       { token: auth_token },
       tokenConfig(getState)
     );
@@ -67,10 +68,9 @@ export const checkTokenExpiry = () => async (dispatch, getState) => {
       return false;
     }
     try {
-      const res = await axios.post(
-        "http://127.0.0.1:8000/auth/refresh/token/",
-        { refresh: refresh_token }
-      );
+      const res = await axios.post(`${baseUrl}/auth/refresh/token/`, {
+        refresh: refresh_token,
+      });
 
       await dispatch({
         type: REFRESH_TOKEN_SUCCESS,
@@ -87,7 +87,7 @@ export const checkTokenExpiry = () => async (dispatch, getState) => {
 export const loginUser = (user) => (dispatch) => {
   const body = user;
   axios
-    .post("http://127.0.0.1:8000/auth/login/", body, config)
+    .post(`${baseUrl}/auth/login/`, body, config)
     .then((res) => {
       dispatch({
         type: LOGIN_SUCCESS,
@@ -123,7 +123,7 @@ export const logoutUser = () => (dispatch, getState) => {
   if (job_portal_token && token_refresh) {
     axios
       .post(
-        "http://127.0.0.1:8000/auth/logout/",
+        `${baseUrl}/auth/logout/`,
         {
           refresh: token_refresh,
         },

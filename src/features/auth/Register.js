@@ -5,6 +5,7 @@ import axios from "axios";
 import RegisterTabs from "./RegisterTabs";
 import AuthDialog from "./AuthDialog";
 import "./Auth.css";
+import { baseUrl } from "../common/constants";
 
 export default function Register() {
   const [loading, setLoading] = React.useState(false);
@@ -79,7 +80,7 @@ export default function Register() {
     };
 
     axios
-      .post("http://127.0.0.1:8000/auth/register/", registerBody)
+      .post(`${baseUrl}/auth/register/`, registerBody)
       .then((res) => {
         setIsLoginButton(false);
         setIsError(false);

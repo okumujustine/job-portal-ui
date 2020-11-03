@@ -5,6 +5,7 @@ import ReactQuill from "react-quill";
 import { connect } from "react-redux";
 import moment from "moment";
 import axios from "axios";
+import { baseUrl } from "../common/constants";
 import Loader from "react-loader-spinner";
 import "react-quill/dist/quill.snow.css";
 
@@ -73,7 +74,7 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
     let isMounted = true;
     setCatLoading(true);
     axios
-      .get("http://localhost:8000/joblisting/categories/")
+      .get(`${baseUrl}/joblisting/categories/`)
       .then((res) => {
         if (isMounted) {
           setJobCategories(res.data);
@@ -81,6 +82,7 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
         }
       })
       .catch((error) => {
+        console.log(error.response.data);
         errorAlert("error getting job categories, try again later");
         setCatLoading(false);
       });

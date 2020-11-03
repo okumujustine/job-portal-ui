@@ -16,10 +16,11 @@ import EmployeeApplication from "./features/jobs/EmployeeApplications";
 import EmployerApplications from "./features/admin/Applications";
 import Dashboard from "./features/admin/Dashboard";
 import AddJob from "./features/admin/AddJob";
-import AdminProtection from "./features/common/AdminProtection";
+import EmployerProtection from "./features/common/EmployerProtection";
 import JobApplicantsDetail from "./features/admin/JobApplicantsDetail";
 import EmployeeProfile from "./features/jobs/EmployeeProfile";
 import EmployerProfile from "./features/admin/EmployerProfile";
+import EmployeeProtection from "./features/common/EmployeeProtection";
 
 function App({ loadUser }) {
   React.useEffect(() => {
@@ -55,27 +56,30 @@ function App({ loadUser }) {
             </Route>
 
             {/* employee */}
-            <Route path="/applications">
-              <EmployeeApplication />
-            </Route>
-            <Route path="/employee-dashboard">
-              <EmployeeApplication />
-            </Route>
-            <Route path="/employee-profile">
-              <EmployeeProfile />
-            </Route>
+            <EmployeeProtection
+              path="/applications"
+              component={EmployeeApplication}
+            />
+            <EmployeeProtection
+              path="/employee-dashboard"
+              component={EmployeeProtection}
+            />
+            <EmployeeProtection
+              path="/employee-profile"
+              component={EmployeeProfile}
+            />
 
             {/* employer */}
-            <Route path="/admin-job-applications">
+            <EmployerProtection path="/admin-job-applications">
               <EmployerApplications />
-            </Route>
-            <AdminProtection
+            </EmployerProtection>
+            <EmployerProtection
               path="/admin-job-applications-detail/:slug"
               component={JobApplicantsDetail}
             />
-            <AdminProtection path="/admin-addjob" component={AddJob} />
-            <AdminProtection path="/admin-dashboard" component={Dashboard} />
-            <AdminProtection
+            <EmployerProtection path="/admin-addjob" component={AddJob} />
+            <EmployerProtection path="/admin-dashboard" component={Dashboard} />
+            <EmployerProtection
               path="/employer-profile"
               component={EmployerProfile}
             />

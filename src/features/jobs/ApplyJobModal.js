@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import _ from "lodash";
 import { useAlert } from "react-alert";
+import { baseUrl } from "../common/constants";
 
 import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { appTokenConfig } from "../../helperfuncs/token";
@@ -26,7 +27,7 @@ function Modal({
   React.useEffect(() => {
     if (user && !_.isEmpty(job)) {
       axios
-        .post("http://localhost:8000/joblisting/userapplied/", {
+        .post(`${baseUrl}/joblisting/userapplied/`, {
           job: job.id,
           applicant: user.id,
         })

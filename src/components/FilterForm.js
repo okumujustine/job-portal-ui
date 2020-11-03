@@ -4,6 +4,7 @@ import Pagination from "react-js-pagination";
 
 import DisplayJobs from "../features/jobs/DisplayJobs";
 import "../components/PaginationCustom.css";
+import { baseUrl } from "../features/common/constants";
 
 export default function FilterForm() {
   const [jobs, setJobs] = React.useState([]);
@@ -18,7 +19,7 @@ export default function FilterForm() {
     setLoading(true);
     const searchData = { title, type };
     axios
-      .get(`http://127.0.0.1:8000/joblisting/filter/?page=${pageNumber}`, {
+      .get(`${baseUrl}/joblisting/filter/?page=${pageNumber}`, {
         params: searchData,
       })
       .then((res) => {

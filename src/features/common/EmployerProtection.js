@@ -3,13 +3,16 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { useAlert } from "react-alert";
 
-const AdminProtection = ({ component: Component, authState, ...rest }) => {
-  const authToken = localStorage.getItem("jobPortalToken");
-  const userRole = localStorage.getItem("jobPortalUserRole");
+const xx_auth_token_storage_key = "jobPortalToken";
+const xx_user_role_storage_key = "jobPortalUserRole";
+
+const EmployerProtection = ({ component: Component, authState, ...rest }) => {
+  const authToken = localStorage.getItem(xx_auth_token_storage_key);
+  const userRole = localStorage.getItem(xx_user_role_storage_key);
 
   const alert = useAlert();
 
-  if (!authToken && userRole) {
+  if (!authToken && !userRole) {
     alert.error("loggin as admin to access this route");
   }
 
@@ -33,4 +36,4 @@ const mapStateToProps = (state) => ({
   authState: state.AuthReducer,
 });
 
-export default connect(mapStateToProps, null)(AdminProtection);
+export default connect(mapStateToProps, null)(EmployerProtection);

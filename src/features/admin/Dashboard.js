@@ -8,6 +8,7 @@ import { appTokenConfig } from "../../helperfuncs/token";
 import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 import { CardLoaders } from "../../components/Loaders";
+import { baseUrl } from "../common/constants";
 
 function Dashboard({ loadUserWhenAlreadyLoggedIn }) {
   const [statsJobPosted, setStatsJobPosted] = React.useState(null);
@@ -34,7 +35,7 @@ function Dashboard({ loadUserWhenAlreadyLoggedIn }) {
 
       axios
         .get(
-          "http://localhost:8000/joblisting/employers/stats/",
+          `${baseUrl}/joblisting/employers/stats/`,
           appTokenConfig(loggedInToken)
         )
         .then((res) => {
