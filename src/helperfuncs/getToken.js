@@ -1,6 +1,6 @@
-const xx_auth_token_storage_key = "jobPortalToken";
+import { authTokenKey } from "../features/common/constants";
 
 export function getLoggedInToken() {
-  const loggedInToken = localStorage.getItem(xx_auth_token_storage_key);
+  const loggedInToken = localStorage.getItem(authTokenKey);
   return loggedInToken;
 }

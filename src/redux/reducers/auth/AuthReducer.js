@@ -8,19 +8,20 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
 } from "../../actions";
-
-const xx_auth_token_storage_key = "jobPortalToken";
-const xx_refresh_token_storage_key = "jobPortalRefreshToken";
-const xx_user_role_storage_key = "jobPortalUserRole";
+import {
+  authTokenKey,
+  refreshTokenKey,
+  userRoleKey,
+} from "../../../features/common/constants";
 
 const initialState = {
-  jobPortalToken: localStorage.getItem(xx_auth_token_storage_key),
-  jobPortalRefreshToken: localStorage.getItem(xx_refresh_token_storage_key),
+  jobPortalToken: localStorage.getItem(authTokenKey),
+  jobPortalRefreshToken: localStorage.getItem(refreshTokenKey),
   isAuthenticated: null,
   isLoading: false,
   user: null,
   logout: null,
-  role: localStorage.getItem(xx_user_role_storage_key),
+  role: localStorage.getItem(userRoleKey),
   loginFailedError: null,
 };
 
@@ -33,7 +34,7 @@ export default (state = initialState, action) => {
         isLoading: true,
       };
     case USER_LOADED:
-      localStorage.setItem(xx_user_role_storage_key, action.payload.role);
+      localStorage.setItem(userRoleKey, action.payload.role);
       return {
         ...state,
         isAuthenticated: true,
@@ -42,9 +43,9 @@ export default (state = initialState, action) => {
         role: action.payload.role,
       };
     case LOGIN_FAILED:
-      localStorage.removeItem(xx_auth_token_storage_key);
-      localStorage.removeItem(xx_refresh_token_storage_key);
-      localStorage.removeItem(xx_user_role_storage_key);
+      localStorage.removeItem(authTokenKey);
+      localStorage.removeItem(refreshTokenKey);
+      localStorage.removeItem(userRoleKey);
       return {
         token: null,
         isAuthenticated: false,
@@ -53,8 +54,8 @@ export default (state = initialState, action) => {
         loginFailedError: action.payload.erroMessage,
       };
     case AUTH_ERROR:
-      localStorage.removeItem(xx_auth_token_storage_key);
-      localStorage.removeItem(xx_refresh_token_storage_key);
+      localStorage.removeItem(authTokenKey);
+      localStorage.removeItem(refreshTokenKey);
       return {
         token: null,
         isAuthenticated: false,
@@ -74,15 +75,12 @@ export default (state = initialState, action) => {
         logout: "failed",
       };
     case LOGIN_SUCCESS:
+      localStorage.setItem(authTokenKey, action.payload.jobPortalToken);
       localStorage.setItem(
-        xx_auth_token_storage_key,
-        action.payload.jobPortalToken
-      );
-      localStorage.setItem(
-        xx_refresh_token_storage_key,
+        refreshTokenKey,
         action.payload.jobPortalRefreshToken
       );
-      localStorage.setItem(xx_user_role_storage_key, action.payload.user.role);
+      localStorage.setItem(userRoleKey, action.payload.user.role);
       return {
         ...state,
         ...action.payload,
@@ -92,10 +90,7 @@ export default (state = initialState, action) => {
         loginFailedError: null,
       };
     case REFRESH_TOKEN_SUCCESS:
-      localStorage.setItem(
-        xx_auth_token_storage_key,
-        action.payload.jobPortalToken
-      );
+      localStorage.setItem(authTokenKey, action.payload.jobPortalToken);
       return {
         ...state,
         ...action.payload,

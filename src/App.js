@@ -62,7 +62,7 @@ function App({ loadUser }) {
             />
             <EmployeeProtection
               path="/employee-dashboard"
-              component={EmployeeProtection}
+              component={EmployeeApplication}
             />
             <EmployeeProtection
               path="/employee-profile"

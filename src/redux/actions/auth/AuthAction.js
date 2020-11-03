@@ -13,6 +13,10 @@ import {
 
 import { tokenConfig, config } from "../../../helperfuncs/token";
 import { baseUrl } from "../../../features/common/constants";
+import {
+  authTokenKey,
+  refreshTokenKey,
+} from "../../../features/common/constants";
 
 export const loadUser = () => async (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
@@ -131,8 +135,8 @@ export const logoutUser = () => (dispatch, getState) => {
       )
       .then((res) => {
         console.log(res);
-        localStorage.removeItem("jobPortalToken");
-        localStorage.removeItem("jobPortalRefreshToken");
+        localStorage.removeItem(authTokenKey);
+        localStorage.removeItem(refreshTokenKey);
         dispatch({ type: LOGOUT_SUCCESS });
         setTimeout(() => (window.location = "/"), 2000);
       })

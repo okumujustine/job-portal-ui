@@ -2,13 +2,11 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { useAlert } from "react-alert";
-
-const xx_auth_token_storage_key = "jobPortalToken";
-const xx_user_role_storage_key = "jobPortalUserRole";
+import { authTokenKey, userRoleKey } from "../common/constants";
 
 const EmployeeProtection = ({ component: Component, authState, ...rest }) => {
-  const authToken = localStorage.getItem(xx_auth_token_storage_key);
-  const userRole = localStorage.getItem(xx_user_role_storage_key);
+  const authToken = localStorage.getItem(authTokenKey);
+  const userRole = localStorage.getItem(userRoleKey);
 
   const alert = useAlert();
 
@@ -21,7 +19,6 @@ const EmployeeProtection = ({ component: Component, authState, ...rest }) => {
       {...rest}
       render={(props) => {
         if (authToken && userRole === "employee") {
-          console.log(authToken);
           return <Component {...props} />;
         } else {
           return (
