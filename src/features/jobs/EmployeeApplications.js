@@ -56,7 +56,7 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
       <div className="w-10/12 m-auto">
         <div className="px-20">
           <div className=" py-8 w-full">
-            {!error && !loading && applicationsCount !== 0 ? (
+            {!error && !loading ? (
               <div className="flex justify-between">
                 <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-5/12 flex justify-center items-center flex-col">
                   <h5>APLLICATIONS</h5>
