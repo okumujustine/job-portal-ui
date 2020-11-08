@@ -73,7 +73,10 @@ function Dashboard({ loadUserWhenAlreadyLoggedIn }) {
               <CardLoaders />
             </React.Fragment>
           ) : null}
-          {statsApplications && statsJobPosted && !loading && !error ? (
+          {statsApplications !== null &&
+          statsJobPosted !== null &&
+          !loading &&
+          !error ? (
             <React.Fragment>
               <div className="font-bold rounded-md py-12 px-4 shadow-md w-4/12 flex justify-center items-center flex-col">
                 <h5>JOBS POSTED</h5>

@@ -70,7 +70,7 @@ function JobDetails({ authState, loadUserWhenAlreadyLoggedIn }) {
               <ul>
                 <li className="flex mb-3">
                   <p>
-                    <i class="far fa-compass"></i>
+                    <i className="far fa-compass"></i>
                   </p>
                   <div className="flex flex-col ml-2">
                     <strong>Location:</strong>
@@ -79,7 +79,7 @@ function JobDetails({ authState, loadUserWhenAlreadyLoggedIn }) {
                 </li>
                 <li className="flex mb-3">
                   <p>
-                    <i class="fas fa-clock"></i>
+                    <i className="fas fa-clock"></i>
                   </p>
                   <div className="flex flex-col ml-2">
                     <strong>Deadline:</strong>
@@ -89,7 +89,7 @@ function JobDetails({ authState, loadUserWhenAlreadyLoggedIn }) {
 
                 <li className="flex mb-6">
                   <p>
-                    <i class="far fa-money-bill-alt"></i>
+                    <i className="far fa-money-bill-alt"></i>
                   </p>
                   <div className="flex flex-col ml-2">
                     <strong>Salary:</strong>
