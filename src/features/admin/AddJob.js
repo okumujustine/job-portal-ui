@@ -105,10 +105,6 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
       return;
     }
 
-    if (!description) {
-      errorAlert("Select company logo please!");
-      return;
-    }
     if (!category) {
       errorAlert("Add job category!");
       return;
@@ -171,6 +167,11 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
 
     if (!companyLocation) {
       errorAlert("Add company location!");
+      return;
+    }
+
+    if (!companyLogo) {
+      errorAlert("Select company logo please!");
       return;
     }
 

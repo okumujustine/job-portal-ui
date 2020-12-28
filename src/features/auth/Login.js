@@ -92,6 +92,7 @@ function Login({ authState, loginUser }) {
           <input
             className="auth-form-input"
             placeholder="email address"
+            type="email"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>

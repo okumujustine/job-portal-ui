@@ -18,7 +18,7 @@ const EmployerProtection = ({ component: Component, authState, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (authToken && userRole === "admin") {
+        if ((authToken && userRole === "employer") || userRole === "admin") {
           return <Component {...props} />;
         } else {
           return (

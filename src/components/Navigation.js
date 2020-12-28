@@ -176,7 +176,8 @@ function Navbar({ authState, logoutUser }) {
                 <span className="ml-2">About</span>
               </Link>
             </li>
-            {!authState.user ? null : authState.user.role === "admin" ? (
+            {!authState.user ? null : authState.user.role === "employer" ||
+              authState.user.role === "admin" ? (
               <li className="nav-item">
                 <Link
                   to="/admin-dashboard"
