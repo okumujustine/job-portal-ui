@@ -11,7 +11,7 @@ import EmployeeNavigation from "./EmployeeNavigation";
 import { TableLoaders, CardLoaders } from "../../components/Loaders";
 
 function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
-  const [employeeApplications, setEmployeeApplications] = React.useState(null);
+  const [employeeApplications, setEmployeeApplications] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [applicationsCurrentPage, setApplicationsCurrentPage] = React.useState(
@@ -37,6 +37,7 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
       })
       .catch((error) => {
         setError("failed to fetch data try again later");
+        setLoading(false);
       });
   }
 
