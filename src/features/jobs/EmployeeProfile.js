@@ -7,6 +7,7 @@ import { useAlert } from "react-alert";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { appTokenConfig } from "../../helperfuncs/token";
+import { baseUrl } from "../common/constants";
 
 function EmployeeProfile({ authState, loadUserWhenAlreadyLoggedIn }) {
   const [employeeResume, setEmployeeResume] = React.useState("");
@@ -56,7 +57,7 @@ function EmployeeProfile({ authState, loadUserWhenAlreadyLoggedIn }) {
 
     axios
       .patch(
-        `http://127.0.0.1:8000/auth/profile/update/${user.id}/`,
+        `${baseUrl}/auth/profile/update/${user.id}/`,
         updateProfileFormData,
         appTokenConfig(loggedInToken)
       )

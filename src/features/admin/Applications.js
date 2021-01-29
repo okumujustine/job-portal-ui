@@ -12,9 +12,10 @@ import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction
 import { getLoggedInToken } from "../../helperfuncs/getToken";
 import "../../components/PaginationCustom.css";
 import { TableLoaders } from "../../components/Loaders";
+import { baseUrl } from "../common/constants";
 
 function Applications({ authState, loadUserWhenAlreadyLoggedIn }) {
-  const [jobs, setJobs] = React.useState(null);
+  const [jobs, setJobs] = React.useState([]);
   const [error, setError] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [loading, setLoading] = React.useState("");
@@ -38,7 +39,7 @@ function Applications({ authState, loadUserWhenAlreadyLoggedIn }) {
 
     axios
       .get(
-        `http://127.0.0.1:8000/joblisting/admin/userjobs/?page=${pageNumber}&title=${title}`,
+        `${baseUrl}/joblisting/admin/userjobs/?page=${pageNumber}&title=${title}`,
         appTokenConfig(loggedInToken)
       )
       .then((res) => {
@@ -77,15 +78,15 @@ function Applications({ authState, loadUserWhenAlreadyLoggedIn }) {
         <div className="px-20">
           <div className=" py-8 w-full">
             <div className="shadow overflow-hidden rounded border-b border-gray-200">
-              {error && (
+              {error && !loading && (
                 <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
                   Error loading jobs, try again later
                 </h5>
               )}
 
-              {!jobs && !error ? (
+              {!error && loading ? (
                 <TableLoaders />
-              ) : jobs.length > 0 ? (
+              ) : jobs && jobs.length > 0 ? (
                 <table className="min-w-full bg-white">
                   <thead className="bg-gray-800 text-white">
                     <tr>

@@ -11,6 +11,7 @@ import { appTokenConfig } from "../../helperfuncs/token";
 import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 import { TableLoaders } from "../../components/Loaders";
+import { baseUrl } from "../common/constants";
 
 function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
   const [jobApplications, setJobApplications] = React.useState(null);
@@ -34,7 +35,7 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
 
         axios
           .get(
-            `http://127.0.0.1:8000/joblisting/jobapplications/?id=${state.id}`,
+            `${baseUrl}/joblisting/jobapplications/?id=${state.id}`,
             appTokenConfig(loggedInToken)
           )
           .then((res) => {
