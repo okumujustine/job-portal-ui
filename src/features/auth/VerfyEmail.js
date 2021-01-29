@@ -2,6 +2,8 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useAlert } from "react-alert";
+import { baseUrl } from "../common/constants";
+
 import Loader from "react-loader-spinner";
 
 import AuthDialog from "./AuthDialog";
@@ -29,9 +31,7 @@ export default function VerfyEmail() {
     setLoading(true);
 
     axios
-      .get(
-        `http://127.0.0.1:8000/auth/email-verify/?email=${email}&token=${token}`
-      )
+      .get(`${baseUrl}/auth/email-verify/?email=${email}&token=${token}`)
       .then((res) => {
         setIsLoginButton(true);
         setOpenAuthDialog(true);
