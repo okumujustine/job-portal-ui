@@ -57,7 +57,7 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
       <div className="w-10/12 m-auto">
         <div className="px-20">
           <div className=" py-8 w-full">
-            {!error && !loading ? (
+            {!loading ? (
               <div className="flex justify-between">
                 <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-5/12 flex justify-center items-center flex-col">
                   <h5>APLLICATIONS</h5>
@@ -126,11 +126,7 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
                       ))}
                     </tbody>
                   </table>
-                ) : (
-                  <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
-                    No Job Applications yet
-                  </h5>
-                )}
+                ) : null}
               </React.Fragment>
             </div>
           </div>
