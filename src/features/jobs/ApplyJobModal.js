@@ -92,7 +92,7 @@ function Modal({
 
     axios
       .post(
-        "http://localhost:8000/joblisting/apply/",
+        `${baseUrl}/joblisting/apply/`,
         applyFormData,
         appTokenConfig(loggedInToken)
       )

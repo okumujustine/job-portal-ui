@@ -26,7 +26,7 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
     setLoading(true);
     axios
       .get(
-        `http://localhost:8000/joblisting/userapplications/?page=${pageNumber}`,
+        `${baseUrl}/joblisting/userapplications/?page=${pageNumber}`,
         appTokenConfig(loggedInToken)
       )
       .then((res) => {

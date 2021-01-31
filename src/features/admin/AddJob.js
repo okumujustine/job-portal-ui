@@ -219,7 +219,7 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
 
     axios
       .post(
-        "http://localhost:8000/joblisting/create/",
+        `${baseUrl}/joblisting/create/`,
         addJobFormData,
         appTokenConfig(loggedInToken)
       )
