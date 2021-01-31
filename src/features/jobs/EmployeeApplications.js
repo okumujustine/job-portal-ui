@@ -9,6 +9,7 @@ import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction
 import { connect } from "react-redux";
 import EmployeeNavigation from "./EmployeeNavigation";
 import { TableLoaders, CardLoaders } from "../../components/Loaders";
+import { baseUrl } from "../common/constants";
 
 function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
   const [employeeApplications, setEmployeeApplications] = React.useState([]);
