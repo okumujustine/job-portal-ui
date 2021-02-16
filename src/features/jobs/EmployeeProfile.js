@@ -104,6 +104,7 @@ function EmployeeProfile({ authState, loadUserWhenAlreadyLoggedIn }) {
                     <input
                       className="auth-form-input"
                       type="file"
+                      accept="application/pdf"
                       onChange={(e) => setEmployeeResume(e.target.files[0])}
                     />
                     <button className="bg-blue-700 px-4 py-2 font-bold text-white mt-4 rounded-md">

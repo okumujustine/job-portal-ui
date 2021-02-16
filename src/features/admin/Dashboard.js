@@ -45,7 +45,7 @@ function Dashboard({ loadUserWhenAlreadyLoggedIn }) {
             setLoading(false);
           }
         })
-        .catch((error) => {
+        .catch(() => {
           alert.error("failed to load job stats, try again later");
           setLoading(false);
           setError("failed to load job stats, try again later");

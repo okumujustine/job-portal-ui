@@ -96,14 +96,12 @@ function Modal({
         applyFormData,
         appTokenConfig(loggedInToken)
       )
-      .then((res) => {
+      .then(() => {
         setShowModal(false);
         setResume("");
         alert.show("application successful!");
       })
-      .catch((err) => {
-        alert.error("application failed, try again later!");
-      });
+      .catch(() => alert.error("application failed, try again later!"));
   };
 
   const onApplyMethod = (e) => {
@@ -145,47 +143,61 @@ function Modal({
                         <p>{user.email}</p>
                       </div>
                     </div>
-                    <div className="mt-6 px-3 ">
-                      <input
-                        type="radio"
-                        checked={applyMethod === "easy"}
-                        onChange={onApplyMethod}
-                        value="easy"
-                        name="apply"
-                      />
-                      Easy Apply
-                      <input
-                        type="radio"
-                        value="hard"
-                        checked={applyMethod === "hard"}
-                        onChange={onApplyMethod}
-                        className="ml-5"
-                        name="apply"
-                      />
-                      Use New Resume
-                    </div>
+                    {user.role === "employee" ? (
+                      <div className="mt-6 px-3 ">
+                        <input
+                          type="radio"
+                          checked={applyMethod === "easy"}
+                          onChange={onApplyMethod}
+                          value="easy"
+                          name="apply"
+                        />
+                        Easy Apply
+                        <input
+                          type="radio"
+                          value="hard"
+                          checked={applyMethod === "hard"}
+                          onChange={onApplyMethod}
+                          className="ml-5"
+                          name="apply"
+                        />
+                        Use New Resume
+                      </div>
+                    ) : null}
                     <div>
                       {applyMethod === "hard" ? (
                         <input
                           className="mt-4"
                           type="file"
+                          accept="application/pdf"
                           onChange={(e) => setResume(e.target.files[0])}
                         />
                       ) : (
                         <div className="mt-4">
-                          {user && !user.profile_owner[0].resume ? (
+                          {user &&
+                          !user.profile_owner[0].resume &&
+                          user.role === "employee" ? (
                             <Link
                               to="/employee-profile"
                               className="bg-jobBlue-800 py-2 px-3 rounded-md shadow-md text-white"
                             >
                               Add a Resume to your profile
                             </Link>
-                          ) : (
+                          ) : null}
+
+                          {(user && user.role === "employer") ||
+                          user.role === "admin" ? (
+                            <h5 className="text-red-700">
+                              Employer application comming soon
+                            </h5>
+                          ) : null}
+
+                          {user && user.profile_owner[0].resume ? (
                             <span className="py-2 px-3 bg-blue-200 border-2 border-blue-700 text-blue-700">
                               We shall use your profile resume to apply for this
                               job
                             </span>
-                          )}
+                          ) : null}
                         </div>
                       )}
                     </div>
@@ -207,14 +219,16 @@ function Modal({
                   >
                     Close
                   </button>
-                  <button
-                    className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                    type="button"
-                    style={{ transition: "all .15s ease" }}
-                    onClick={() => sendApplication()}
-                  >
-                    Apply
-                  </button>
+                  {user.role === "employee" ? (
+                    <button
+                      className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                      type="button"
+                      style={{ transition: "all .15s ease" }}
+                      onClick={() => sendApplication()}
+                    >
+                      Apply
+                    </button>
+                  ) : null}
                 </div>
               </div>
             </div>

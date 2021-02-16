@@ -473,6 +473,7 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
               <input
                 className="auth-form-input"
                 type="file"
+                accept="image/png,image/jpeg"
                 onChange={(e) => setCompanyLogo(e.target.files[0])}
               />
             </div>
