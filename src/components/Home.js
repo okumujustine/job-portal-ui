@@ -9,7 +9,6 @@ import { baseUrl } from "../features/common/constants";
 
 export default function Home() {
   const [jobs, setJobs] = React.useState([]);
-  const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
   const loadData = () => {
@@ -20,8 +19,7 @@ export default function Home() {
         setJobs(res.data);
         setLoading(false);
       })
-      .catch((error) => {
-        setError("failed to load jobs, try again later!");
+      .catch(() => {
         setLoading(false);
       });
   };

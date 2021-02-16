@@ -4,16 +4,14 @@ import { useAlert } from "react-alert";
 
 import JobDetailsTitleBar from "./JobDetailsTitleBar";
 import ApplyJobModal from "./ApplyJobModal";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { getLoggedInToken } from "../../helperfuncs/getToken";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 
-function JobDetails({ authState, loadUserWhenAlreadyLoggedIn }) {
-  const { isAuthenticated } = authState;
+function JobDetails({ loadUserWhenAlreadyLoggedIn }) {
   const [showModal, setShowModal] = React.useState(false);
   const [job, setJob] = React.useState([]);
-  let { slug } = useParams();
   const { state } = useLocation();
   const alert = useAlert();
 

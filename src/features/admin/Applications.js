@@ -14,10 +14,9 @@ import "../../components/PaginationCustom.css";
 import { TableLoaders } from "../../components/Loaders";
 import { baseUrl } from "../common/constants";
 
-function Applications({ authState, loadUserWhenAlreadyLoggedIn }) {
+function Applications({ loadUserWhenAlreadyLoggedIn }) {
   const [jobs, setJobs] = React.useState([]);
   const [error, setError] = React.useState("");
-  const [title, setTitle] = React.useState("");
   const [loading, setLoading] = React.useState("");
   const [currentPage, setjobCurrentPage] = React.useState(1);
   const [itemCount, setItemCount] = React.useState(0);
@@ -39,7 +38,7 @@ function Applications({ authState, loadUserWhenAlreadyLoggedIn }) {
 
     axios
       .get(
-        `${baseUrl}/joblisting/admin/userjobs/?page=${pageNumber}&title=${title}`,
+        `${baseUrl}/joblisting/admin/userjobs/?page=${pageNumber}&title=""`,
         appTokenConfig(loggedInToken)
       )
       .then((res) => {

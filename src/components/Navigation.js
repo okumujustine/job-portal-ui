@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { useAlert } from "react-alert";
 
 import "./Navigation.css";
 import { logoutUser } from "../redux/actions/auth/AuthAction";
@@ -11,20 +10,6 @@ function Navbar({ authState, logoutUser }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [dialogMessage, setDialogMessage] = React.useState("");
-
-  const alert = useAlert();
-
-  React.useEffect(() => {
-    if (authState && authState.logout && authState.logout === "sucess") {
-      alert.success("successfully loggedout!");
-      return;
-    }
-
-    if (authState && authState.logout && authState.logout === "failed") {
-      alert.error("failed, try again later!");
-      return;
-    }
-  }, [authState]);
 
   const onLogoutUser = () => {
     setDialogMessage("Are you sure you want to logout !?");

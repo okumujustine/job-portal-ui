@@ -8,7 +8,6 @@ import { baseUrl } from "../features/common/constants";
 
 export default function FilterForm() {
   const [jobs, setJobs] = React.useState([]);
-  const [error, setError] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [type, setType] = React.useState("");
   const [currentPage, setjobCurrentPage] = React.useState(1);
@@ -30,8 +29,7 @@ export default function FilterForm() {
         setTitle("");
         setType("");
       })
-      .catch((error) => {
-        setError("failed to load jobs, try again later!");
+      .catch(() => {
         setLoading(false);
         setTitle("");
         setType("");
