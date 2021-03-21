@@ -32,11 +32,11 @@ export default function Home() {
       <div className="home-banner flex justify-center items-center flex-col">
         <span className="home-banner-title">Hire great hourly employees</span>
         <p className="text-white home-banner-caption-p">
-          Work Scout is most trusted job board, connecting the world's <br />
+          JobsUg is the most trusted job board, connecting the world's <br />
           brightest minds with resume database loaded with talents.
         </p>
         <div>
-          <Link className="banner-button-1" to="/">
+          <Link className="banner-button-1" to="/jobs">
             Find Your Dream Job
           </Link>
         </div>
