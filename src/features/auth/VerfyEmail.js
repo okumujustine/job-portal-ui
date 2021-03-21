@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+
+import { axiosInstance } from "../../services/axios";
 import { useAlert } from "react-alert";
-import { baseUrl } from "../common/constants";
 
 import Loader from "react-loader-spinner";
 
@@ -30,8 +30,8 @@ export default function VerfyEmail() {
     }
     setLoading(true);
 
-    axios
-      .get(`${baseUrl}/auth/email-verify/?email=${email}&token=${token}`)
+    axiosInstance
+      .get(`/auth/email-verify/?email=${email}&token=${token}`)
       .then((res) => {
         setIsLoginButton(true);
         setOpenAuthDialog(true);

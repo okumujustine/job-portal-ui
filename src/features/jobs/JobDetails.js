@@ -1,19 +1,15 @@
 import React from "react";
 import _ from "lodash";
-import { useAlert } from "react-alert";
+import { useLocation, Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import JobDetailsTitleBar from "./JobDetailsTitleBar";
 import ApplyJobModal from "./ApplyJobModal";
-import { useLocation } from "react-router-dom";
-import { connect } from "react-redux";
-import { getLoggedInToken } from "../../helperfuncs/getToken";
-import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 
-function JobDetails({ loadUserWhenAlreadyLoggedIn }) {
+function JobDetails({ authState }) {
   const [showModal, setShowModal] = React.useState(false);
   const [job, setJob] = React.useState([]);
   const { state } = useLocation();
-  const alert = useAlert();
 
   React.useEffect(() => {
     if (_.isEmpty(state)) {
@@ -21,16 +17,9 @@ function JobDetails({ loadUserWhenAlreadyLoggedIn }) {
     } else {
       setJob(state);
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const applyForJob = async () => {
-    await loadUserWhenAlreadyLoggedIn();
-    const loggedInToken = await getLoggedInToken();
-    if (!loggedInToken) {
-      alert.error("log in please!");
-      return;
-    }
-
     setShowModal(true);
   };
 
@@ -101,12 +90,21 @@ function JobDetails({ loadUserWhenAlreadyLoggedIn }) {
                   </div>
                 </li>
                 <li className="flex justify-center flex-col">
-                  <button
-                    onClick={() => applyForJob()}
-                    className="aplply-job-button px-2 py-2 rounded-md focus:outline-none"
-                  >
-                    Apply Here
-                  </button>
+                  {authState && authState.isAuthenticated ? (
+                    <button
+                      onClick={() => applyForJob()}
+                      className="aplply-job-button px-2 py-2 rounded-md focus:outline-none"
+                    >
+                      Apply Here
+                    </button>
+                  ) : (
+                    <Link
+                      to="/login"
+                      className="aplply-job-button px-2 py-2 rounded-md focus:outline-none text-center"
+                    >
+                      Log In to Apply
+                    </Link>
+                  )}
                 </li>
               </ul>
             </div>
@@ -120,6 +118,4 @@ function JobDetails({ loadUserWhenAlreadyLoggedIn }) {
 const mapStateToProps = (state) => ({
   authState: state.AuthReducer,
 });
-export default connect(mapStateToProps, { loadUserWhenAlreadyLoggedIn })(
-  JobDetails
-);
+export default connect(mapStateToProps, null)(JobDetails);

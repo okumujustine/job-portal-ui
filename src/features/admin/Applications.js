@@ -1,65 +1,48 @@
 import * as React from "react";
-import axios from "axios";
 import moment from "moment";
 import Pagination from "react-js-pagination";
-import { useAlert } from "react-alert";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import DashboardNavigation from "./DashboardNavigation";
-import { appTokenConfig } from "../../helperfuncs/token";
-import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
-import { getLoggedInToken } from "../../helperfuncs/getToken";
+import { axiosInstance } from "../../services/axios";
 import "../../components/PaginationCustom.css";
 import { TableLoaders } from "../../components/Loaders";
-import { baseUrl } from "../common/constants";
 
-function Applications({ loadUserWhenAlreadyLoggedIn }) {
+function Applications() {
   const [jobs, setJobs] = React.useState([]);
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState("");
   const [currentPage, setjobCurrentPage] = React.useState(1);
   const [itemCount, setItemCount] = React.useState(0);
 
-  const alert = useAlert();
-
-  let isMounted;
+  const isMounted = React.useRef();
 
   const getUserJobs = async (pageNumber) => {
-    await loadUserWhenAlreadyLoggedIn();
-    const loggedInToken = await getLoggedInToken();
-    if (!loggedInToken) {
-      alert.error("log in please!");
-      return;
-    }
-
     setLoading(true);
     setError("");
 
-    axios
-      .get(
-        `${baseUrl}/joblisting/admin/userjobs/?page=${pageNumber}&title=""`,
-        appTokenConfig(loggedInToken)
-      )
+    axiosInstance
+      .get(`/joblisting/admin/userjobs/?page=${pageNumber}&title=""`)
       .then((res) => {
-        if (isMounted) {
+        if (isMounted.current) {
           setjobCurrentPage(res.data.current);
           setJobs(res.data.results);
           setItemCount(res.data.count);
           setLoading(false);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setError("failed to load jobs, try again later!");
         setLoading(false);
       });
   };
 
   React.useEffect(() => {
-    isMounted = true;
+    isMounted.current = true;
     getUserJobs(1);
     return () => {
-      isMounted = false;
+      isMounted.current = false;
     };
   }, []);
 
@@ -173,6 +156,4 @@ function Applications({ loadUserWhenAlreadyLoggedIn }) {
 const mapStateToProps = (state) => ({
   authState: state.AuthReducer,
 });
-export default connect(mapStateToProps, { loadUserWhenAlreadyLoggedIn })(
-  Applications
-);
+export default connect(mapStateToProps, null)(Applications);

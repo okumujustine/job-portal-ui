@@ -1,15 +1,10 @@
 import * as React from "react";
 import EmployeeNavigation from "./EmployeeNavigation";
 import { connect } from "react-redux";
-import axios from "axios";
+import { axiosInstance } from "../../services/axios";
 import { useAlert } from "react-alert";
 
-import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
-import { getLoggedInToken } from "../../helperfuncs/getToken";
-import { appTokenConfig } from "../../helperfuncs/token";
-import { baseUrl } from "../common/constants";
-
-function EmployeeProfile({ authState, loadUserWhenAlreadyLoggedIn }) {
+function EmployeeProfile({ authState }) {
   const [employeeResume, setEmployeeResume] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
@@ -18,13 +13,6 @@ function EmployeeProfile({ authState, loadUserWhenAlreadyLoggedIn }) {
 
   const saveResume = async (e) => {
     e.preventDefault();
-
-    await loadUserWhenAlreadyLoggedIn();
-    const loggedInToken = await getLoggedInToken();
-    if (!loggedInToken) {
-      alert.error("log in please!");
-      return;
-    }
 
     if (!employeeResume) {
       alert.error("select resume please");
@@ -55,12 +43,8 @@ function EmployeeProfile({ authState, loadUserWhenAlreadyLoggedIn }) {
 
     setLoading(true);
 
-    axios
-      .patch(
-        `${baseUrl}/auth/profile/update/${user.id}/`,
-        updateProfileFormData,
-        appTokenConfig(loggedInToken)
-      )
+    axiosInstance
+      .patch(`/auth/profile/update/${user.id}/`, updateProfileFormData)
       .then((res) => {
         setEmployeeResume("");
         window.location.reload();
@@ -126,6 +110,4 @@ function EmployeeProfile({ authState, loadUserWhenAlreadyLoggedIn }) {
 const mapStateToProps = (state) => ({
   authState: state.AuthReducer,
 });
-export default connect(mapStateToProps, { loadUserWhenAlreadyLoggedIn })(
-  EmployeeProfile
-);
+export default connect(mapStateToProps, null)(EmployeeProfile);

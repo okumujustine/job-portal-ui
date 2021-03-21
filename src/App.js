@@ -25,7 +25,7 @@ import EmployeeProtection from "./features/common/EmployeeProtection";
 function App({ loadUser }) {
   React.useEffect(() => {
     loadUser();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <>
       <Router>

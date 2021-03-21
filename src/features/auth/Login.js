@@ -6,8 +6,7 @@ import { useAlert } from "react-alert";
 import { loginUser } from "../../redux/actions/auth/AuthAction";
 import AuthDialog from "./AuthDialog";
 import "./Auth.css";
-import axios from "axios";
-import { baseUrl } from "../common/constants";
+import { axiosInstance } from "../../services/axios";
 import { config } from "../../helperfuncs/token";
 
 function Login({ authState, loginUser }) {
@@ -36,7 +35,7 @@ function Login({ authState, loginUser }) {
       alert.error(loginFailedError);
       return;
     }
-  }, [authState]);
+  }, [authState]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
@@ -56,8 +55,8 @@ function Login({ authState, loginUser }) {
     setIsEmailLoading(true);
     const userEmail = e.target[0].value;
 
-    axios
-      .post(`${baseUrl}/auth/re-verify/`, { email: userEmail }, config)
+    axiosInstance
+      .post(`/auth/re-verify/`, { email: userEmail }, config)
       .then((res) => {
         alert.success("Activation email sent");
         setIsEmailLoading(false);

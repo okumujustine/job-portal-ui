@@ -4,17 +4,13 @@ import { useAlert } from "react-alert";
 import ReactQuill from "react-quill";
 import { connect } from "react-redux";
 import moment from "moment";
-import axios from "axios";
-import { baseUrl } from "../common/constants";
 import Loader from "react-loader-spinner";
 import "react-quill/dist/quill.snow.css";
 
 import DashboardNavigation from "./DashboardNavigation";
-import { getLoggedInToken } from "../../helperfuncs/getToken";
-import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
-import { appTokenConfig } from "../../helperfuncs/token";
+import { axiosInstance } from "../../services/axios";
 
-function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
+function AddJob() {
   const [deadlineDate, setDeadlineDate] = React.useState(new Date());
   const [category, setCategory] = React.useState(0);
   const [jobCategories, setJobCategories] = React.useState([]);
@@ -36,7 +32,6 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
   const [companyLogo, setCompanyLogo] = React.useState("");
   const [workDuration, setWorkDuration] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const [carloading, setCatLoading] = React.useState(false);
 
   const alert = useAlert();
 
@@ -72,24 +67,21 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
 
   React.useEffect(() => {
     let isMounted = true;
-    setCatLoading(true);
-    axios
-      .get(`${baseUrl}/joblisting/categories/`)
+    axiosInstance
+      .get(`/joblisting/categories/`)
       .then((res) => {
         if (isMounted) {
           setJobCategories(res.data);
-          setCatLoading(false);
         }
       })
       .catch((error) => {
         console.log(error.response.data);
         errorAlert("error getting job categories, try again later");
-        setCatLoading(false);
       });
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function errorAlert(reason) {
     alert.error(reason);
@@ -97,13 +89,6 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
 
   const onAddJob = async (e) => {
     e.preventDefault();
-
-    await loadUserWhenAlreadyLoggedIn();
-    const loggedInToken = await getLoggedInToken();
-    if (!loggedInToken) {
-      errorAlert("log in please!");
-      return;
-    }
 
     if (!category) {
       errorAlert("Add job category!");
@@ -217,20 +202,16 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
     addJobFormData.append("company_logo", companyLogo, companyLogo.name);
     addJobFormData.append("description", description);
 
-    axios
-      .post(
-        `${baseUrl}/joblisting/create/`,
-        addJobFormData,
-        appTokenConfig(loggedInToken)
-      )
-      .then((res) => {
+    axiosInstance
+      .post(`/joblisting/create/`, addJobFormData)
+      .then(() => {
         alert.show("job successful added!");
         setLoading(false);
         setTimeout(function () {
           window.location.reload();
         }, 2500);
       })
-      .catch((error) => {
+      .catch(() => {
         alert.error("failed to add job, try again later!");
         setLoading(false);
       });
@@ -508,6 +489,4 @@ function AddJob({ loadUserWhenAlreadyLoggedIn, authState }) {
 const mapStateToProps = (state) => ({
   authState: state.AuthReducer,
 });
-export default connect(mapStateToProps, { loadUserWhenAlreadyLoggedIn })(
-  AddJob
-);
+export default connect(mapStateToProps, null)(AddJob);

@@ -1,11 +1,10 @@
 import React from "react";
 import { useAlert } from "react-alert";
-import axios from "axios";
+import { axiosInstance } from "../../services/axios";
 
 import RegisterTabs from "./RegisterTabs";
 import AuthDialog from "./AuthDialog";
 import "./Auth.css";
-import { baseUrl } from "../common/constants";
 
 export default function Register() {
   const [loading, setLoading] = React.useState(false);
@@ -79,8 +78,8 @@ export default function Register() {
       role: userType,
     };
 
-    axios
-      .post(`${baseUrl}/auth/register/`, registerBody)
+    axiosInstance
+      .post(`/auth/register/`, registerBody)
       .then((res) => {
         setIsLoginButton(false);
         setIsError(false);

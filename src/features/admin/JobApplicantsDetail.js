@@ -1,24 +1,18 @@
 import * as React from "react";
 import DashboardNavigation from "./DashboardNavigation";
 import _ from "lodash";
-import axios from "axios";
+import { axiosInstance } from "../../services/axios";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 import { connect } from "react-redux";
-import { useAlert } from "react-alert";
 
-import { appTokenConfig } from "../../helperfuncs/token";
-import { getLoggedInToken } from "../../helperfuncs/getToken";
-import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 import { TableLoaders } from "../../components/Loaders";
-import { baseUrl } from "../common/constants";
 
-function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
+function JobApplicantsDetail() {
   const [jobApplications, setJobApplications] = React.useState(null);
   const [error, setError] = React.useState(null);
 
   const { state } = useLocation();
-  const alert = useAlert();
 
   React.useEffect(() => {
     let isMounted = true;
@@ -26,25 +20,15 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
       // TODO: retrieve details by slug and set to state
     } else {
       const getJobApplications = async () => {
-        await loadUserWhenAlreadyLoggedIn();
-        const loggedInToken = await getLoggedInToken();
-        if (!loggedInToken) {
-          alert.error("log in please!");
-          return;
-        }
-
-        axios
-          .get(
-            `${baseUrl}/joblisting/jobapplications/?id=${state.id}`,
-            appTokenConfig(loggedInToken)
-          )
+        axiosInstance
+          .get(`/joblisting/jobapplications/?id=${state.id}`)
           .then((res) => {
             if (isMounted) {
               console.log(res.data);
               setJobApplications(res.data);
             }
           })
-          .catch((error) => {
+          .catch(() => {
             setError("failed to load jobs, try again later!");
           });
       };
@@ -53,7 +37,7 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="flex flex-row mt-6">
@@ -161,6 +145,4 @@ function JobApplicantsDetail({ loadUserWhenAlreadyLoggedIn }) {
 const mapStateToProps = (state) => ({
   authState: state.AuthReducer,
 });
-export default connect(mapStateToProps, { loadUserWhenAlreadyLoggedIn })(
-  JobApplicantsDetail
-);
+export default connect(mapStateToProps, null)(JobApplicantsDetail);

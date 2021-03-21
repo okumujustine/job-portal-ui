@@ -1,11 +1,10 @@
 import * as React from "react";
-import axios from "axios";
+import { axiosInstance } from "../services/axios";
 
 import "./Home.css";
 import { Link } from "react-router-dom";
 import DisplayJobs from "../features/jobs/DisplayJobs";
 import Footer from "./Footer";
-import { baseUrl } from "../features/common/constants";
 
 export default function Home() {
   const [jobs, setJobs] = React.useState([]);
@@ -13,8 +12,8 @@ export default function Home() {
 
   const loadData = () => {
     setLoading(true);
-    axios
-      .get(`${baseUrl}/joblisting/latest/`)
+    axiosInstance
+      .get(`/joblisting/latest/`)
       .then((res) => {
         setJobs(res.data);
         setLoading(false);

@@ -1,18 +1,11 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { useAlert } from "react-alert";
 import { authTokenKey, userRoleKey } from "../common/constants";
 
 const EmployeeProtection = ({ component: Component, authState, ...rest }) => {
   const authToken = localStorage.getItem(authTokenKey);
   const userRole = localStorage.getItem(userRoleKey);
-
-  const alert = useAlert();
-
-  if (!authToken && !userRole) {
-    alert.error("loggin as emplyee to access this route");
-  }
 
   return (
     <Route

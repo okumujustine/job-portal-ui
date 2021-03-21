@@ -1,15 +1,12 @@
 import * as React from "react";
-import axios from "axios";
 import moment from "moment";
 import Pagination from "react-js-pagination";
 
-import { appTokenConfig } from "../../helperfuncs/token";
-import { getLoggedInToken } from "../../helperfuncs/getToken";
+import { axiosInstance } from "../../services/axios";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 import { connect } from "react-redux";
 import EmployeeNavigation from "./EmployeeNavigation";
 import { TableLoaders, CardLoaders } from "../../components/Loaders";
-import { baseUrl } from "../common/constants";
 
 function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
   const [employeeApplications, setEmployeeApplications] = React.useState([]);
@@ -22,14 +19,10 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
 
   async function getEmployeeApplications(pageNumber) {
     await loadUserWhenAlreadyLoggedIn();
-    const loggedInToken = await getLoggedInToken();
 
     setLoading(true);
-    axios
-      .get(
-        `${baseUrl}/joblisting/userapplications/?page=${pageNumber}`,
-        appTokenConfig(loggedInToken)
-      )
+    axiosInstance
+      .get(`/joblisting/userapplications/?page=${pageNumber}`)
       .then((res) => {
         setEmployeeApplications(res.data.results);
         setApplicationsCurrentPage(res.data.current);
@@ -44,7 +37,7 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
 
   React.useEffect(() => {
     getEmployeeApplications(1);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const employeesApplicationPaginate = (pageNumber = 1) => {
     getEmployeeApplications(pageNumber);

@@ -1,16 +1,12 @@
 import * as React from "react";
 import DashboardNavigation from "./DashboardNavigation";
 import { connect } from "react-redux";
-import axios from "axios";
 import { useAlert } from "react-alert";
 
-import { appTokenConfig } from "../../helperfuncs/token";
-import { getLoggedInToken } from "../../helperfuncs/getToken";
-import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
+import { axiosInstance } from "../../services/axios";
 import { CardLoaders } from "../../components/Loaders";
-import { baseUrl } from "../common/constants";
 
-function Dashboard({ loadUserWhenAlreadyLoggedIn }) {
+function Dashboard() {
   const [statsJobPosted, setStatsJobPosted] = React.useState(null);
   const [statsApplications, setStatsApplications] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
@@ -22,22 +18,11 @@ function Dashboard({ loadUserWhenAlreadyLoggedIn }) {
     let isMounted = true;
 
     const getEmployerStats = async () => {
-      await loadUserWhenAlreadyLoggedIn();
-
       setLoading(true);
       setError("");
 
-      const loggedInToken = await getLoggedInToken();
-      if (!loggedInToken) {
-        alert.error("log in please!");
-        return;
-      }
-
-      axios
-        .get(
-          `${baseUrl}/joblisting/employers/stats/`,
-          appTokenConfig(loggedInToken)
-        )
+      axiosInstance
+        .get(`/joblisting/employers/stats/`)
         .then((res) => {
           if (isMounted) {
             setStatsJobPosted(res.data.posted_jobs_count);
@@ -57,7 +42,7 @@ function Dashboard({ loadUserWhenAlreadyLoggedIn }) {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="flex flex-row mt-6">
@@ -97,6 +82,4 @@ function Dashboard({ loadUserWhenAlreadyLoggedIn }) {
 const mapStateToProps = (state) => ({
   authState: state.AuthReducer,
 });
-export default connect(mapStateToProps, { loadUserWhenAlreadyLoggedIn })(
-  Dashboard
-);
+export default connect(mapStateToProps, null)(Dashboard);

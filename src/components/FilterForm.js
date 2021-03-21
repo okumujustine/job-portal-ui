@@ -1,24 +1,22 @@
 import * as React from "react";
-import axios from "axios";
 import Pagination from "react-js-pagination";
 
 import DisplayJobs from "../features/jobs/DisplayJobs";
 import "../components/PaginationCustom.css";
-import { baseUrl } from "../features/common/constants";
+import { axiosInstance } from "../services/axios";
 
 export default function FilterForm() {
   const [jobs, setJobs] = React.useState([]);
   const [title, setTitle] = React.useState("");
-  const [type, setType] = React.useState("");
   const [currentPage, setjobCurrentPage] = React.useState(1);
   const [itemCount, setItemCount] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
 
   const getJobsData = (pageNumber) => {
     setLoading(true);
-    const searchData = { title, type };
-    axios
-      .get(`${baseUrl}/joblisting/filter/?page=${pageNumber}`, {
+    const searchData = { title };
+    axiosInstance
+      .get(`/joblisting/filter/?page=${pageNumber}`, {
         params: searchData,
       })
       .then((res) => {
@@ -27,18 +25,16 @@ export default function FilterForm() {
         setItemCount(res.data.count);
         setLoading(false);
         setTitle("");
-        setType("");
       })
       .catch(() => {
         setLoading(false);
         setTitle("");
-        setType("");
       });
   };
 
   React.useEffect(() => {
     getJobsData(1);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getJobsDataPaginate = (pageNumber = 1) => {
     getJobsData(pageNumber);
@@ -55,8 +51,30 @@ export default function FilterForm() {
 
   return (
     <React.Fragment>
-      <div className="flex w-10/12 m-auto justify-between">
-        <div className="w-8/12">
+      <div className="flex w-7/12 mx-auto flex-col m-auto">
+        <div className="flex flex-row mb-6 w-full">
+          <form className="flex flex-col w-full" onSubmit={onSubmitSearch}>
+            <input
+              value={title}
+              placeholder="search by title ....."
+              onChange={(e) => setTitle(e.target.value)}
+              className="rounded-sm mb-3 border px-5 py-2"
+            />
+            <div className="flex flex-row">
+              <button className="mr-3 w-20 text-sm text-white rounded-sm font-bold px-1 py-2 focus:outline-none bg-jobBlue-800">
+                Search
+              </button>
+              <button
+                className="w-20 text-sm text-white rounded-sm font-bold px-1 py-2 focus:outline-none bg-jobBlue-800"
+                onClick={onSelectFilter}
+              >
+                All Jobs
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div>
           <DisplayJobs jobs={jobs} isLoading={loading} />
           <Pagination
             itemClass="page-item"
@@ -68,34 +86,6 @@ export default function FilterForm() {
             itemsCountPerPage={5}
             onChange={(pageNumber) => getJobsDataPaginate(pageNumber)}
           />
-        </div>
-        <div className="w-3/12 fixed" style={{ right: "5%" }}>
-          <h4 className="sort-font">Sort by</h4>
-
-          <button
-            className="border-2 px-2 mb-4 font-bold bg-blue-200 focus:outline-none"
-            onClick={onSelectFilter}
-          >
-            All Jobs
-          </button>
-
-          <form onSubmit={onSubmitSearch}>
-            <input
-              value={title}
-              placeholder="title"
-              onChange={(e) => setTitle(e.target.value)}
-              className="job-search-input mb-2 rounded-sm"
-            />
-            <input
-              placeholder="type"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              className="job-search-input mb-2 rounded-sm"
-            />
-            <button className="search-button rounded-sm font-bold px-6 py-2 focus:outline-none bg-jobBlue-800">
-              Filter
-            </button>
-          </form>
         </div>
       </div>
     </React.Fragment>

@@ -1,97 +1,52 @@
-import axios from "axios";
-
 import {
   USER_LOADING,
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
-  REFRESH_TOKEN_SUCCESS,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
 } from "../index";
 
 import { tokenConfig, config } from "../../../helperfuncs/token";
-import { baseUrl, userRoleKey } from "../../../features/common/constants";
+import { userRoleKey } from "../../../features/common/constants";
 import {
   authTokenKey,
   refreshTokenKey,
 } from "../../../features/common/constants";
+import { axiosInstance } from "../../../services/axios";
 
-export const loadUser = () => async (dispatch, getState) => {
+export const loadUser = () => async (dispatch) => {
   dispatch({ type: USER_LOADING });
-  await dispatch(checkTokenExpiry());
 
-  axios
-    .get(`${baseUrl}/auth/user/`, tokenConfig(getState))
-    .then((res) => {
+  axiosInstance
+    .get("/auth/user")
+    .then((user) =>
       dispatch({
         type: USER_LOADED,
-        payload: res.data,
-      });
-    })
-    .catch((error) => {
-      dispatch({ type: AUTH_ERROR });
-    });
+        payload: user.data,
+      })
+    )
+    .catch(() => dispatch({ type: AUTH_ERROR }));
 };
 
 export const loadUserWhenAlreadyLoggedIn = () => async (dispatch, getState) => {
-  await dispatch(checkTokenExpiry());
-  axios
-    .get(`${baseUrl}/auth/user/`, tokenConfig(getState))
-    .then((res) => {
+  axiosInstance
+    .get(`/auth/user/`, tokenConfig(getState))
+    .then((res) =>
       dispatch({
         type: USER_LOADED,
         payload: res.data,
-      });
-    })
-    .catch((error) => {
-      dispatch({ type: AUTH_ERROR });
-    });
-};
-
-export const checkTokenExpiry = () => async (dispatch, getState) => {
-  const auth_token = getState().AuthReducer.jobPortalToken;
-
-  if (!auth_token) {
-    return;
-  }
-
-  try {
-    const res = await axios.post(
-      `${baseUrl}/auth/verify/token/`,
-      { token: auth_token },
-      tokenConfig(getState)
-    );
-    const { data } = await res;
-    return data.success;
-  } catch {
-    const refresh_token = getState().AuthReducer.jobPortalRefreshToken;
-    if (!refresh_token) {
-      dispatch({ type: AUTH_ERROR });
-      return false;
-    }
-    try {
-      const res = await axios.post(`${baseUrl}/auth/refresh/token/`, {
-        refresh: refresh_token,
-      });
-
-      await dispatch({
-        type: REFRESH_TOKEN_SUCCESS,
-        payload: { jobPortalToken: res.data.access },
-      });
-      return true;
-    } catch (err) {
-      dispatch({ type: AUTH_ERROR });
-    }
-  }
+      })
+    )
+    .catch(() => dispatch({ type: AUTH_ERROR }));
 };
 
 // LOGIN USER
 export const loginUser = (user) => (dispatch) => {
   const body = user;
-  axios
-    .post(`${baseUrl}/auth/login/`, body, config)
+  axiosInstance
+    .post(`/auth/login/`, body, config)
     .then((res) => {
       dispatch({
         type: LOGIN_SUCCESS,
@@ -125,22 +80,22 @@ export const logoutUser = () => (dispatch, getState) => {
   const token_refresh = getState().AuthReducer.jobPortalRefreshToken;
 
   if (job_portal_token && token_refresh) {
-    axios
+    axiosInstance
       .post(
-        `${baseUrl}/auth/logout/`,
+        `/auth/logout/`,
         {
           refresh: token_refresh,
         },
         tokenConfig(getState)
       )
-      .then((res) => {
+      .then(() => {
         localStorage.removeItem(authTokenKey);
         localStorage.removeItem(refreshTokenKey);
         localStorage.removeItem(userRoleKey);
         dispatch({ type: LOGOUT_SUCCESS });
         setTimeout(() => (window.location = "/"), 2000);
       })
-      .catch((error) => {
+      .catch(() => {
         dispatch({ type: LOGOUT_FAILED });
       });
   }

@@ -1,22 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import axios from "axios";
+import { axiosInstance } from "../../services/axios";
 import _ from "lodash";
 import { useAlert } from "react-alert";
-import { baseUrl } from "../common/constants";
 
-import { getLoggedInToken } from "../../helperfuncs/getToken";
-import { appTokenConfig } from "../../helperfuncs/token";
-import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 import { Link } from "react-router-dom";
 
-function Modal({
-  showModal,
-  setShowModal,
-  job,
-  authState,
-  loadUserWhenAlreadyLoggedIn,
-}) {
+function Modal({ showModal, setShowModal, job, authState }) {
   const [resume, setResume] = React.useState("");
   const [applyMethod, setApplyMethod] = React.useState("easy");
   const [applied, setApplied] = React.useState(false);
@@ -26,8 +16,8 @@ function Modal({
 
   React.useEffect(() => {
     if (user && !_.isEmpty(job)) {
-      axios
-        .post(`${baseUrl}/joblisting/userapplied/`, {
+      axiosInstance
+        .post(`/joblisting/userapplied/`, {
           job: job.id,
           applicant: user.id,
         })
@@ -44,13 +34,6 @@ function Modal({
   }, [user, job]);
 
   const sendApplication = async () => {
-    await loadUserWhenAlreadyLoggedIn();
-    const loggedInToken = await getLoggedInToken();
-    if (!loggedInToken) {
-      alert.error("log in please!");
-      return;
-    }
-
     if (!resume && applyMethod === "hard") {
       alert.error("select a resume please!");
       return;
@@ -90,18 +73,19 @@ function Modal({
     applyFormData.append("applicant", user.id);
     applyFormData.append("job", job.id);
 
-    axios
-      .post(
-        `${baseUrl}/joblisting/apply/`,
-        applyFormData,
-        appTokenConfig(loggedInToken)
-      )
+    axiosInstance
+      .post(`/joblisting/apply/`, applyFormData)
       .then(() => {
         setShowModal(false);
         setResume("");
         alert.show("application successful!");
       })
-      .catch(() => alert.error("application failed, try again later!"));
+      .catch((error) => {
+        console.log("-----error", JSON.stringify(error));
+        // if (error.status !== 401) {
+        return alert.error("application failed, try again later!");
+        // }
+      });
   };
 
   const onApplyMethod = (e) => {
@@ -243,4 +227,4 @@ function Modal({
 const mapStateToProps = (state) => ({
   authState: state.AuthReducer,
 });
-export default connect(mapStateToProps, { loadUserWhenAlreadyLoggedIn })(Modal);
+export default connect(mapStateToProps, null)(Modal);
