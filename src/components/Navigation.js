@@ -100,13 +100,54 @@ function Navbar({ authState, logoutUser }) {
   const nullLinks = (
     <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg sticky top-0 bg-white z-50 shadow-md">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-        <div className="animate-pulse  w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+        <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           <a
-            className="nav-bar-font text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase bg-text-400"
+            className="nav-bar-font text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white"
             href="#pablo"
           >
             Job Portal
           </a>
+          <button
+            className="nav-bar-font cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+            type="button"
+            onClick={() => setNavbarOpen(!navbarOpen)}
+          >
+            <i className="fas fa-bars"></i>
+          </button>
+        </div>
+        <div
+          className={
+            "lg:flex flex-grow items-center" +
+            (navbarOpen ? " flex" : " hidden")
+          }
+          id="example-navbar-danger"
+        >
+          <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+            <li className="nav-item">
+              <Link
+                className="nav-bar-font nav-bar-font px-3 py-2 flex items-center text-xs capitalize font-bold leading-snug text-white hover:opacity-75"
+                to="/"
+              >
+                <span className="ml-2">Home</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className="nav-bar-font px-3 py-2 flex items-center text-xs capitalize font-bold leading-snug text-white hover:opacity-75"
+                to="/jobs"
+              >
+                <span className="ml-2">Jobs</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className="nav-bar-font px-3 py-2 flex items-center text-xs capitalize font-bold leading-snug text-white hover:opacity-75"
+                to="/about"
+              >
+                <span className="ml-2">About</span>
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
