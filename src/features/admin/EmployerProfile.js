@@ -1,6 +1,8 @@
 import * as React from "react";
-import DashboardNavigation from "./DashboardNavigation";
 import { connect } from "react-redux";
+
+import DashboardNavigation from "./DashboardNavigation";
+import Label from "../../components/Label";
 
 function EmployerProfile({ authState }) {
   const { user } = authState;
@@ -17,6 +19,7 @@ function EmployerProfile({ authState }) {
                 <React.Fragment>
                   <div>
                     <div>
+                      <Label label="Name" />
                       <h1 className="font-bold text-2xl capitalize">
                         {user.first_name} {user.last_name}
                       </h1>

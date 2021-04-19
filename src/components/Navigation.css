@@ -5,3 +5,15 @@
   margin-right: 10px;
   border-radius: 3px;
 }
+
+.main-nav-active-class {
+  border-bottom-width: 2px !important;
+  --border-opacity: 1 !important;
+  border-color: #1da1f2 !important;
+  border-color: rgba(29, 161, 242, var(--border-opacity)) !important;
+}
+
+.main-nav-active-class-2 {
+  background-color: #1da1f2;
+  color: #ffffff;
+}

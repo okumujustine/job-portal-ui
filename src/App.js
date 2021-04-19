@@ -1,5 +1,10 @@
 import * as React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
 import Login from "./features/auth/Login";
 import Register from "./features/auth/Register";
@@ -33,7 +38,10 @@ function App({ loadUser }) {
         <Navigation />
         <div>
           <Switch>
-            <Route path="/" exact>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+            <Route path="/home">
               <Home />
             </Route>
             <Route path="/jobs">
