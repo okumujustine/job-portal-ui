@@ -14,6 +14,7 @@ export default function RegisterTabs({
   registerUser,
   phoneNumber,
   loading,
+  userType,
 }) {
   const [openTab, setOpenTab] = React.useState(1);
 
@@ -67,6 +68,10 @@ export default function RegisterTabs({
               </a>
             </li>
           </ul>
+          <h1 className="text-1xl text-center font-bold underline text-jobBlue-100">
+            (Registering as{" "}
+            <span className="text-jobGreen-100 capitalize">{userType}</span>)
+          </h1>
           <div className="flex flex-col min-w-0 break-words bg-white w-full shadow-sm ">
             <div className="px-4 flex-auto">
               <div className="tab-content tab-space">

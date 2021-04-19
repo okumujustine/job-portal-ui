@@ -109,10 +109,12 @@ export default function Register() {
         content={dialogMessage}
         isLoginButton={isLoginButton}
       />
+
       <RegisterTabs
         color="jobBlue"
         setPhoneNumber={setPhoneNumber}
         setUserType={setUserType}
+        userType={userType}
         setFirstName={setFirstName}
         setLastName={setLastName}
         setEmail={setEmail}
