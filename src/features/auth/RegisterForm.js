@@ -47,7 +47,8 @@ export default function RegisterForm({
         <div className="flex flex-col mt-6">
           <label>Phone Number:</label>
           <PhoneInput
-            className="focus:outline-none PhoneInputInputDiv"
+            className="border px-2"
+            numberInputProps={{ className: "PhoneInputInputDiv" }}
             defaultCountry="UG"
             value={phoneNumber}
             onChange={onChangePhoneNumber}

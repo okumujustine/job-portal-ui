@@ -16,7 +16,8 @@
 }
 
 .PhoneInputInputDiv {
-  padding: 6px 8px;
+  padding: 14px 18px !important;
+
   outline: none;
   font-size: 14px;
   color: #909090;
@@ -27,7 +28,6 @@
   display: block;
   background-color: #fcfcfc;
   font-weight: 500;
-  border: 1px solid #e0e0e0;
   opacity: 1;
   border-radius: 3px;
 }

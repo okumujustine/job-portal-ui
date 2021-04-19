@@ -1,8 +1,10 @@
 import * as React from "react";
-import EmployeeNavigation from "./EmployeeNavigation";
-import { connect } from "react-redux";
-import { axiosInstance } from "../../services/axios";
 import { useAlert } from "react-alert";
+import { connect } from "react-redux";
+
+import EmployeeNavigation from "./EmployeeNavigation";
+import Label from "../../components/Label";
+import { axiosInstance } from "../../services/axios";
 
 function EmployeeProfile({ authState }) {
   const [employeeResume, setEmployeeResume] = React.useState("");
@@ -45,11 +47,11 @@ function EmployeeProfile({ authState }) {
 
     axiosInstance
       .patch(`/auth/profile/update/${user.id}/`, updateProfileFormData)
-      .then((res) => {
+      .then(() => {
         setEmployeeResume("");
         window.location.reload();
       })
-      .catch((error) => {
+      .catch(() => {
         alert("error updating resume");
         setLoading(false);
       });
@@ -71,8 +73,14 @@ function EmployeeProfile({ authState }) {
             <div className="flex justify-between">
               {user ? (
                 <div>
-                  <div className="flex flex-col mb-8">
-                    <span>Name: {user.first_name}</span>
+                  <div className="flex flex-col mb-2">
+                    <div>
+                      <Label label="Name" />
+                      <h1 className="font-bold text-2xl capitalize">
+                        {user.first_name} {user.last_name}
+                      </h1>
+                    </div>
+                    <Label label="Resume" />
                     {user.profile_owner[0].resume ? (
                       <button
                         onClick={() =>

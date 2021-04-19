@@ -209,7 +209,7 @@ function AddJob() {
         setLoading(false);
         setTimeout(function () {
           window.location.reload();
-        }, 2500);
+        }, 200);
       })
       .catch(() => {
         alert.error("failed to add job, try again later!");

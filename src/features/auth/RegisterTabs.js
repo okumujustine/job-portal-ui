@@ -19,13 +19,14 @@ export default function RegisterTabs({
 
   return (
     <>
-      <div className="flex flex-wrap">
+      <h1 className="text-center pt-6 font-bold text-3xl">Register As</h1>
+      <div className="flex flex-wrap mt-6">
         <div className="w-full lg:w-6/12 md:w-6/12 xl:w-6/12 m-auto">
           <ul
             className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
             role="tablist"
           >
-            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center border-2 border-jobBlue-100">
               <a
                 className={
                   "text-xs font-bold uppercase px-5 py-3 shadow-sm block leading-normal " +
@@ -45,7 +46,7 @@ export default function RegisterTabs({
                 Employee
               </a>
             </li>
-            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center border-2 border-jobBlue-100">
               <a
                 className={
                   "text-xs font-bold uppercase px-5 py-3 shadow-sm block leading-normal " +

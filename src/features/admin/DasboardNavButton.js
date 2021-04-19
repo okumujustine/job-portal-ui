@@ -1,13 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function DasboardNavButton({ to, title }) {
   return (
-    <Link
+    <NavLink
       to={to}
-      className="p-2 text-white text-center mb-5 font-bold bg-jobBlue-800"
+      activeClassName="bg-jobBlue-100 dasboard-links-active-class-ext"
+      className="p-2 text-jobBlue-100 text-center mb-5 font-bold bg-white border border-jobBlue-100"
     >
       {title}
-    </Link>
+    </NavLink>
   );
 }

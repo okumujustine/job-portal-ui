@@ -21,6 +21,7 @@ import JobApplicantsDetail from "./features/admin/JobApplicantsDetail";
 import EmployeeProfile from "./features/jobs/EmployeeProfile";
 import EmployerProfile from "./features/admin/EmployerProfile";
 import EmployeeProtection from "./features/common/EmployeeProtection";
+import "./App.css";
 
 function App({ loadUser }) {
   React.useEffect(() => {

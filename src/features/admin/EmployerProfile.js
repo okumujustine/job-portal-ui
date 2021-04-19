@@ -15,7 +15,13 @@ function EmployerProfile({ authState }) {
             <div className="flex justify-between">
               {user ? (
                 <React.Fragment>
-                  <span>Name: {user.first_name}</span>
+                  <div>
+                    <div>
+                      <h1 className="font-bold text-2xl capitalize">
+                        {user.first_name} {user.last_name}
+                      </h1>
+                    </div>
+                  </div>
                 </React.Fragment>
               ) : null}
             </div>
