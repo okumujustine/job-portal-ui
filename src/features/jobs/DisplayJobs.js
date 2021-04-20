@@ -6,12 +6,13 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { JobsLoaders } from "../../components/Loaders";
 
-export default function DisplayJobs({ jobs, isLoading }) {
+export default function DisplayJobs({ jobs, isLoading, error }) {
   return (
     <React.Fragment>
       <div className="flex flex-col min-h-screen">
-        {jobs.length === 0 && !isLoading && <p>No jobs found</p>}
+        {jobs.length === 0 && !isLoading && !error && <p>No jobs found</p>}
         {isLoading && <JobsLoaders />}
+        {error && <p>error please try again</p>}
         {jobs.map((job) => (
           <Link
             to={{ pathname: `/jobdetails/${job.slug}`, state: job }}

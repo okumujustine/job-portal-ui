@@ -1,7 +1,8 @@
 import React from "react";
 import { useAlert } from "react-alert";
-import { axiosInstance } from "../../services/axios";
+import { isPossiblePhoneNumber } from "react-phone-number-input";
 
+import { axiosInstance } from "../../services/axios";
 import RegisterTabs from "./RegisterTabs";
 import AuthDialog from "./AuthDialog";
 import "./Auth.css";
@@ -46,6 +47,11 @@ export default function Register() {
       alert.error("Phone number must be provided!");
       return;
     }
+    if (!isPossiblePhoneNumber(phoneNumber)) {
+      alert.error("Provide a valid phone number!");
+      return;
+    }
+
     if (!password) {
       alert.error("password must be provided!");
       return;

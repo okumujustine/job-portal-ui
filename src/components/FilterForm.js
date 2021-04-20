@@ -11,9 +11,11 @@ export default function FilterForm() {
   const [currentPage, setjobCurrentPage] = React.useState(1);
   const [itemCount, setItemCount] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
 
   const getJobsData = (pageNumber) => {
     setLoading(true);
+    setError(null);
     const searchData = { title };
     axiosInstance
       .get(`/joblisting/filter/?page=${pageNumber}`, {
@@ -27,10 +29,15 @@ export default function FilterForm() {
         setTitle("");
       })
       .catch(() => {
+        setError("Failed to load jobs, try again later");
         setLoading(false);
         setTitle("");
       });
   };
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   React.useEffect(() => {
     getJobsData(1);
@@ -75,7 +82,7 @@ export default function FilterForm() {
         </div>
 
         <div>
-          <DisplayJobs jobs={jobs} isLoading={loading} />
+          <DisplayJobs jobs={jobs} isLoading={loading} error={error} />
           <Pagination
             itemClass="page-item"
             firstPageText="First"

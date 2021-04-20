@@ -9,9 +9,11 @@ import Footer from "./Footer";
 export default function Home() {
   const [jobs, setJobs] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
 
   const loadData = () => {
     setLoading(true);
+    setError(null);
     axiosInstance
       .get(`/joblisting/latest/`)
       .then((res) => {
@@ -19,6 +21,7 @@ export default function Home() {
         setLoading(false);
       })
       .catch(() => {
+        setError("error to load jobs, try again later");
         setLoading(false);
       });
   };
@@ -45,11 +48,11 @@ export default function Home() {
         <div className="lg:w-8/12 w-11/12 m-auto">
           <h3 className="after-banner-span-text">Recent Jobs</h3>
           <div>
-            <DisplayJobs jobs={jobs} isLoading={loading} />
+            <DisplayJobs jobs={jobs} isLoading={loading} error={error} />
           </div>
           <div className="flex flex-col items-center">
             <Link
-              to="jobs"
+              to="/jobs"
               className="rounded-sm load-more-btn mt-12 mb-12 bg-jobBlue-800"
             >
               Load More Jobs
