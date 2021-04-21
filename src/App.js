@@ -79,9 +79,10 @@ function App({ loadUser }) {
             />
 
             {/* employer */}
-            <EmployerProtection path="/admin-job-applications">
-              <EmployerApplications />
-            </EmployerProtection>
+            <EmployerProtection
+              path="/admin-job-applications"
+              component={EmployerApplications}
+            />
             <EmployerProtection
               path="/admin-job-applications-detail/:slug"
               component={JobApplicantsDetail}
