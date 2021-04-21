@@ -1,12 +1,13 @@
 import * as React from "react";
 import moment from "moment";
 import Pagination from "react-js-pagination";
+import { connect } from "react-redux";
 
 import { axiosInstance } from "../../services/axios";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
-import { connect } from "react-redux";
 import EmployeeNavigation from "./EmployeeNavigation";
 import { TableLoaders, CardLoaders } from "../../components/Loaders";
+import Label from "../../components/Label";
 
 function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
   const [employeeApplications, setEmployeeApplications] = React.useState([]);
@@ -65,29 +66,30 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
                 <CardLoaders />
               </div>
             )}
-            <div className="shadow overflow-hidden rounded border-b border-gray-200">
-              {error && (
-                <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
-                  No Job Applications yet
-                </h5>
-              )}
-              <React.Fragment>
-                {!employeeApplications && !error ? (
-                  <TableLoaders />
-                ) : employeeApplications.length > 0 ? (
-                  <table className="min-w-full bg-white">
-                    <thead className="bg-gray-800 text-white">
+            {error && (
+              <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
+                No Job Applications yet
+              </h5>
+            )}
+            <React.Fragment>
+              {!employeeApplications && !error ? (
+                <TableLoaders />
+              ) : employeeApplications.length > 0 ? (
+                <>
+                  <Label label="Recent applications" />
+                  <table className="min-w-full bg-white mt-2">
+                    <thead>
                       <tr>
-                        <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
+                        <th className="bg-blue-100 border text-left px-8 py-4">
                           Title
                         </th>
-                        <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
+                        <th className="bg-blue-100 border text-left px-8 py-4">
                           Company
                         </th>
-                        <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
+                        <th className="bg-blue-100 border text-left px-8 py-4">
                           Date
                         </th>
-                        <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
+                        <th className="bg-blue-100 border text-left px-8 py-4">
                           status
                         </th>
                       </tr>
@@ -96,13 +98,13 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
                       {employeeApplications.map((employeeApplic) => (
                         <React.Fragment key={employeeApplic.id}>
                           <tr>
-                            <td className="w-1/3 text-left py-3 px-4">
+                            <td className="border px-8 py-4">
                               {employeeApplic.job.title}
                             </td>
-                            <td className="w-1/3 text-left py-3 px-4">
+                            <td className="border px-8 py-4">
                               {employeeApplic.job.company_name}
                             </td>
-                            <td className="w-1/3 text-left py-3 px-4">
+                            <td className="border px-8 py-4">
                               {moment(
                                 employeeApplic.application_created_at
                               ).format("YYYY-MM-DD")}
@@ -112,7 +114,7 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
                               ).fromNow()}
                               )
                             </td>
-                            <td className="w-1/3 text-left py-3 px-4">
+                            <td className="border px-8 py-4">
                               {employeeApplic.status}
                             </td>
                           </tr>
@@ -120,9 +122,9 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
                       ))}
                     </tbody>
                   </table>
-                ) : null}
-              </React.Fragment>
-            </div>
+                </>
+              ) : null}
+            </React.Fragment>
           </div>
           <Pagination
             itemClass="page-item"

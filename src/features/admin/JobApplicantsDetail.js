@@ -1,12 +1,14 @@
 import * as React from "react";
-import DashboardNavigation from "./DashboardNavigation";
 import _ from "lodash";
-import { axiosInstance } from "../../services/axios";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
+import { axiosInstance } from "../../services/axios";
+import DashboardNavigation from "./DashboardNavigation";
 import { TableLoaders } from "../../components/Loaders";
+import Label from "../../components/Label";
 
 function JobApplicantsDetail() {
   const [jobApplications, setJobApplications] = React.useState(null);
@@ -24,7 +26,6 @@ function JobApplicantsDetail() {
           .get(`/joblisting/jobapplications/?id=${state.id}`)
           .then((res) => {
             if (isMounted) {
-              console.log(res.data);
               setJobApplications(res.data);
             }
           })
@@ -46,9 +47,14 @@ function JobApplicantsDetail() {
       </div>
       <div className="w-10/12">
         <div className="px-20">
-          <h5 className="capitalize font-bold text-2xl">
-            {state.title} Applicants
-          </h5>
+          <Link
+            to="/admin-job-applications"
+            className="text-white bg-blue-700 px-2 py-1 font-bold shadow-sm hover:bg-jobBlue-100"
+          >
+            {"< Back"}
+          </Link>
+          <Label label="Job title" />
+          <h5 className="capitalize font-bold text-2xl">{state.title}</h5>
           {error && (
             <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
               Error loading jobs, try again later
@@ -58,78 +64,73 @@ function JobApplicantsDetail() {
             <TableLoaders />
           ) : jobApplications.length > 0 ? (
             <div className=" py-4 w-full">
-              <div className="shadow overflow-hidden rounded border-b border-gray-200">
-                <table className="min-w-full bg-white">
-                  <thead className="bg-gray-800 text-white">
-                    <tr>
-                      <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                        Name
-                      </th>
-                      <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                        Email
-                      </th>
-                      <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                        Date
-                      </th>
-                      <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                        Resume
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-gray-700">
-                    {jobApplications.map((jobApplic) => (
-                      <React.Fragment key={jobApplic.id}>
-                        <tr>
-                          <td className="w-1/3 text-left py-2 px-4">
-                            {jobApplic.first_name} {jobApplic.last_name}
-                          </td>
-                          <td className="w-1/3 text-left py-2 px-4 hover:text-jobBlue-800">
+              <Label label="Job Applicants" />
+              <table className="min-w-full bg-white mt-2">
+                <thead>
+                  <tr>
+                    <th className="bg-blue-100 border text-left px-8 py-4">
+                      Name
+                    </th>
+                    <th className="bg-blue-100 border text-left px-8 py-4">
+                      Email
+                    </th>
+                    <th className="bg-blue-100 border text-left px-8 py-4">
+                      Date
+                    </th>
+                    <th className="bg-blue-100 border text-left px-8 py-4">
+                      Resume
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-700">
+                  {jobApplications.map((jobApplic) => (
+                    <React.Fragment key={jobApplic.id}>
+                      <tr>
+                        <td className="border px-8 py-4">
+                          {jobApplic.first_name} {jobApplic.last_name}
+                        </td>
+                        <td className="border px-8 py-4">
+                          <button
+                            onClick={() =>
+                              window.open(`mailto:${jobApplic.email}`, "_blank")
+                            }
+                          >
+                            {jobApplic.email}
+                          </button>
+                        </td>
+                        <td className="border px-8 py-4">
+                          {moment(jobApplic.application_created_at).format(
+                            "YYYY-MM-DD"
+                          )}
+                          ( {moment(jobApplic.application_created_at).fromNow()}
+                          )
+                        </td>
+                        <td className="border px-8 py-4">
+                          {jobApplic.resume_file ? (
                             <button
+                              className="bg-blue-700 hover:bg-jobBlue-100 py-1 px-3 font-bold text-white"
                               onClick={() =>
-                                window.open(
-                                  `mailto:${jobApplic.email}`,
-                                  "_blank"
-                                )
+                                window.open(jobApplic.resume_file, "_blank")
                               }
                             >
-                              {jobApplic.email}
+                              Link
                             </button>
-                          </td>
-                          <td className="w-1/3 text-left py-2 px-4">
-                            {moment(jobApplic.application_created_at).format(
-                              "YYYY-MM-DD"
-                            )}
-                          </td>
-                          <td className="w-1/3 text-left py-2 px-4 font-bold">
-                            {jobApplic.resume_file ? (
-                              <button
-                                className="bg-jobBlue-800 py-1 px-3 rounded-md font-bold text-white"
-                                onClick={() =>
-                                  window.open(jobApplic.resume_file, "_blank")
-                                }
-                              >
-                                Link
-                              </button>
-                            ) : (
-                              <button
-                                className="bg-jobBlue-800 py-1 px-3 rounded-md font-bold text-white"
-                                onClick={() =>
-                                  window.open(
-                                    jobApplic.profile_resume,
-                                    "_blank"
-                                  )
-                                }
-                              >
-                                Link
-                              </button>
-                            )}
-                          </td>
-                        </tr>
-                      </React.Fragment>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                          ) : (
+                            <button
+                              className="bg-blue-700 hover:bg-jobBlue-100 py-1 px-3 font-bold text-white"
+                              onClick={() =>
+                                window.open(jobApplic.profile_resume, "_blank")
+                              }
+                            >
+                              Link
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </table>
             </div>
           ) : (
             <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">

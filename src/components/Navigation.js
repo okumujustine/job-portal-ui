@@ -62,6 +62,8 @@ function Navbar({ authState, logoutUser }) {
                 return true;
               } else if (pathStrings[1] === "employer-profile") {
                 return true;
+              } else if (pathStrings[1] === "admin-job-applications-detail") {
+                return true;
               } else if (pathStrings[1] === "admin-addjob") {
                 return true;
               } else if (pathStrings[1] === "admin-job-applications") {

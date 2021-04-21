@@ -8,6 +8,7 @@ import DashboardNavigation from "./DashboardNavigation";
 import { axiosInstance } from "../../services/axios";
 import "../../components/PaginationCustom.css";
 import { TableLoaders } from "../../components/Loaders";
+import Label from "../../components/Label";
 
 function Applications() {
   const [jobs, setJobs] = React.useState([]);
@@ -23,8 +24,9 @@ function Applications() {
     setError("");
 
     axiosInstance
-      .get(`/joblisting/admin/userjobs/?page=${pageNumber}&title=""`)
+      .get(`/joblisting/admin/userjobs/?page=${pageNumber}&title=`)
       .then((res) => {
+        console.log("res", res);
         if (isMounted.current) {
           setjobCurrentPage(res.data.current);
           setJobs(res.data.results);
@@ -56,86 +58,76 @@ function Applications() {
         <DashboardNavigation />
       </div>
       <div className="w-10/12">
-        <h5>Applications</h5>
         <div className="px-20">
+          <Label label="Jobs/Applications" />
           <div className=" py-8 w-full">
-            <div className="shadow overflow-hidden rounded border-b border-gray-200">
-              {error && !loading && (
-                <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
-                  Error loading jobs, try again later
-                </h5>
-              )}
+            {error && !loading && (
+              <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
+                Error loading jobs, try again later
+              </h5>
+            )}
 
-              {!error && loading ? (
-                <TableLoaders />
-              ) : jobs && jobs.length > 0 ? (
-                <table className="min-w-full bg-white">
-                  <thead className="bg-gray-800 text-white">
-                    <tr>
-                      <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                        Title
-                      </th>
-                      <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                        Published
-                      </th>
-                      <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                        Days ago
-                      </th>
-                      <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                        Applicants
-                      </th>
-                      <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                        Status
-                      </th>
-                      <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-gray-700">
-                    {jobs.map((job) => (
-                      <React.Fragment key={job.id}>
-                        <tr>
-                          <td className="w-1/3 text-left py-3 px-4">
-                            {job.title}
-                          </td>
-                          <td className="w-1/3 text-left py-3 px-4">
-                            {moment(job.published).format("YYYY-MM-DD")}
-                          </td>
-                          <td className="w-1/3 text-left py-3 px-4">
-                            {moment(job.published).fromNow()}
-                          </td>
-                          <td className="w-1/3 text-left py-3 px-4">
-                            {job.status}
-                          </td>
-                          <td className="w-1/3 text-left py-3 px-4 font-bold">
-                            {job.application_count === 0
-                              ? "No applicants"
-                              : job.application_count + " applicant(s)"}
-                          </td>
-                          <td className="text-left py-3 px-4">
-                            <Link
-                              to={{
-                                pathname: `/admin-job-applications-detail/${job.slug}`,
-                                state: job,
-                              }}
-                              className="text-white bg-jobBlue-800 px-2 py-1 font-bold shadow-sm rounded-md"
-                              href="tel:622322662"
-                            >
-                              Details
-                            </Link>
-                          </td>
-                        </tr>
-                      </React.Fragment>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
-                  No Job Applications yet
-                </h5>
-              )}
-            </div>
+            {!error && loading ? (
+              <TableLoaders />
+            ) : jobs && jobs.length > 0 ? (
+              <table className="bg-white">
+                <thead>
+                  <tr>
+                    <th className="bg-blue-100 border text-left px-8 py-4">
+                      Title
+                    </th>
+                    <th className="bg-blue-100 border text-left px-8 py-4">
+                      Published on
+                    </th>
+                    <th className="bg-blue-100 border text-left px-8 py-4">
+                      Status
+                    </th>
+                    <th className="bg-blue-100 border text-left px-8 py-4">
+                      Applicants
+                    </th>
+                    <th className="bg-blue-100 border text-left px-8 py-4">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody className="text-gray-700">
+                  {jobs.map((job) => (
+                    <React.Fragment key={job.id}>
+                      <tr>
+                        <td className="border px-8 py-4 font-bold">
+                          {job.title}
+                        </td>
+                        <td className="border px-8 py-4">
+                          {moment(job.published).format("YYYY-MM-DD")}(
+                          {moment(job.published).fromNow()})
+                        </td>
+                        <td className="border px-8 py-4">{job.status}</td>
+                        <td className="border px-8 py-4">
+                          {job.application_count}
+                        </td>
+                        <td className="border px-8 py-4">
+                          <Link
+                            to={{
+                              pathname: `/admin-job-applications-detail/${job.slug}`,
+                              state: job,
+                            }}
+                            className="text-white bg-blue-700 px-2 py-1 font-bold shadow-sm hover:bg-jobBlue-100"
+                            href="tel:622322662"
+                          >
+                            Details
+                          </Link>
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <h5 className="font-bold text-3xl mt-12 py-5 px-8 border-2 border-jobBlue-100">
+                No Job Applications yet
+              </h5>
+            )}
           </div>
           <Pagination
             itemClass="page-item"
