@@ -121,10 +121,15 @@ function Navbar({ authState, logoutUser }) {
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <a
-              className="nav-bar-font text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white"
+              className="nav-bar-font text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap  text-white"
               href="#pablo"
             >
-              Job Portal
+              JobsUg{" "}
+              {authState?.isAuthenticated ? (
+                <span className="font-bold underline text-jobBlue-100">
+                  (Hi {authState?.user?.first_name})
+                </span>
+              ) : null}
             </a>
             <button
               className="nav-bar-font cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
