@@ -6,7 +6,7 @@ const token = localStorage.getItem(authTokenKey);
 
 export let axiosInstance = axios.create({
   baseURL: baseUrl,
-  timeout: 3000,
+  timeout: 360000,
   headers: {
     "Content-Type": "application/json",
     "X-CSRFtoken": csrftoken,

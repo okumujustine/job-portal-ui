@@ -63,7 +63,6 @@ export const loginUser = (user) => (dispatch) => {
           },
         },
       });
-      setTimeout(() => (window.location = "/"), 200);
     })
     .catch((err) => {
       const { error } = err.response.data;
@@ -93,7 +92,6 @@ export const logoutUser = () => (dispatch, getState) => {
         localStorage.removeItem(refreshTokenKey);
         localStorage.removeItem(userRoleKey);
         dispatch({ type: LOGOUT_SUCCESS });
-        setTimeout(() => (window.location = "/"), 500);
       })
       .catch(() => {
         dispatch({ type: LOGOUT_FAILED });

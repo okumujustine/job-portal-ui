@@ -207,9 +207,6 @@ function AddJob() {
       .then(() => {
         alert.show("job successful added!");
         setLoading(false);
-        setTimeout(function () {
-          window.location.reload();
-        }, 200);
       })
       .catch(() => {
         alert.error("failed to add job, try again later!");
