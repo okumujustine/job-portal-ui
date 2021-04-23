@@ -47,7 +47,7 @@ function JobDetails({ authState }) {
             <div className="pb-4 flex flex-col md:flex-row lg:flex-row xl:flex-row">
               <h5 className="capitalize text-lg">{job.title}</h5>
             </div>
-            <div>
+            <div style={{ lineHeight: "35px" }}>
               <div dangerouslySetInnerHTML={{ __html: job.description }} />
             </div>
           </div>
