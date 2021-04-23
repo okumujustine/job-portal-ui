@@ -215,15 +215,15 @@ function AddJob() {
   };
 
   return (
-    <div className="flex flex-row mt-6">
-      <div className="sticky left-0 w-2/12">
+    <div className="flex flex-col lg:flex-row mt-6">
+      <div className="sticky left-0 lg:w-2/12">
         <DashboardNavigation />
       </div>
-      <div className="w-10/12">
+      <div className=" w-full lg:w-10/12">
         <form onSubmit={onAddJob} className="flex flex-col w-11/12 m-auto">
-          <div className="flex flex-row justify-around">
+          <div className="flex flex-col lg:flex-row lg:justify-around">
             {loading ? (
-              <div className="flex mt-8 w-5/12">
+              <div className="flex mt-8 lg:w-5/12 w-full">
                 <Loader
                   type="TailSpin"
                   color="#1da1f2"
@@ -234,7 +234,7 @@ function AddJob() {
                 <span className="pl-2">wait still loading category ...</span>
               </div>
             ) : (
-              <div className="flex flex-col mt-6 w-5/12">
+              <div className="flex flex-col w-full lg:w-5/12">
                 <label>Category:</label>
                 <select
                   className="auth-form-input"
@@ -253,7 +253,7 @@ function AddJob() {
               </div>
             )}
 
-            <div className="flex flex-col mt-6 w-5/12">
+            <div className="flex flex-col w-full lg:w-5/12">
               <label>Title:</label>
               <input
                 className="auth-form-input"
@@ -263,7 +263,7 @@ function AddJob() {
               />
             </div>
           </div>
-          <div className="flex flex-row justify-around">
+          <div className="flex flex-col lg:flex-row justify-around">
             <div className="flex flex-col mt-6 w-5/12">
               <label>Deadline:</label>
               <DateTimePicker
@@ -274,7 +274,7 @@ function AddJob() {
               />
             </div>
 
-            <div className="flex flex-col mt-6 w-5/12">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Tag one:</label>
               <input
                 className="auth-form-input"
@@ -284,8 +284,8 @@ function AddJob() {
               />
             </div>
           </div>
-          <div className="flex flex-row justify-around">
-            <div className="flex flex-col mt-6 w-5/12">
+          <div className="flex flex-col lg:flex-row justify-around">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Tag two:</label>
               <input
                 className="auth-form-input"
@@ -295,7 +295,7 @@ function AddJob() {
               />
             </div>
 
-            <div className="flex flex-col mt-6 w-5/12">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Tag three:</label>
               <input
                 className="auth-form-input"
@@ -305,8 +305,8 @@ function AddJob() {
               />
             </div>
           </div>
-          <div className="flex flex-row justify-around">
-            <div className="flex flex-col mt-6 w-5/12">
+          <div className="flex flex-col lg:flex-row justify-around">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Gender:</label>
               <select
                 className="auth-form-input"
@@ -322,7 +322,7 @@ function AddJob() {
               </select>
             </div>
 
-            <div className="flex flex-col mt-6 w-5/12">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Employment status:</label>
               <select
                 className="auth-form-input"
@@ -340,8 +340,8 @@ function AddJob() {
               </select>
             </div>
           </div>
-          <div className="flex flex-row justify-around">
-            <div className="flex flex-col mt-6 w-5/12">
+          <div className="flex flex-col lg:flex-row justify-around">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Min salary:</label>
               <input
                 className="auth-form-input"
@@ -351,7 +351,7 @@ function AddJob() {
               />
             </div>
 
-            <div className="flex flex-col mt-6 w-5/12">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Max salary:</label>
               <input
                 className="auth-form-input"
@@ -361,8 +361,8 @@ function AddJob() {
               />
             </div>
           </div>
-          <div className="flex flex-row justify-around">
-            <div className="flex flex-col mt-6 w-5/12">
+          <div className="flex flex-col lg:flex-row justify-around">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Salary Currency:</label>
               <select
                 className="auth-form-input"
@@ -377,7 +377,7 @@ function AddJob() {
               </select>
             </div>
 
-            <div className="flex flex-col mt-6 w-5/12">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Number of Vacancies:</label>
               <input
                 className="auth-form-input"
@@ -387,8 +387,8 @@ function AddJob() {
               />
             </div>
           </div>
-          <div className="flex flex-row justify-around">
-            <div className="flex flex-col mt-6 w-5/12">
+          <div className="flex flex-col lg:flex-row justify-around">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Number of Experience:</label>
               <input
                 className="auth-form-input"
@@ -398,7 +398,7 @@ function AddJob() {
               />
             </div>
 
-            <div className="flex flex-col mt-6 w-5/12">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Experience status:</label>
               <select
                 className="auth-form-input"
@@ -413,8 +413,8 @@ function AddJob() {
               </select>
             </div>
           </div>
-          <div className="flex flex-row justify-around">
-            <div className="flex flex-col mt-6 w-5/12">
+          <div className="flex flex-col lg:flex-row justify-around">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Company name:</label>
               <input
                 className="auth-form-input"
@@ -424,7 +424,7 @@ function AddJob() {
               />
             </div>
 
-            <div className="flex flex-col mt-6 w-5/12">
+            <div className="flex flex-col mt-6 w-full lg:w-5/12">
               <label>Company location:</label>
               <input
                 className="auth-form-input"
@@ -434,7 +434,7 @@ function AddJob() {
               />
             </div>
           </div>
-          <div className="flex flex-row justify-around">
+          <div className="flex flex-col lg:flex-row justify-around">
             <div className="flex flex-col mt-6 w-11/12">
               <label>Work Duration (optional):</label>
               <input
@@ -472,7 +472,7 @@ function AddJob() {
           </div>
           <div className="flex flex-row justify-around">
             <div className="flex flex-col my-6 w-11/12">
-              <button className="mt-6 auth-button" type="submit">
+              <button className=" mt-20 lg:mt-6 auth-button" type="submit">
                 {loading ? "saving job .........." : "Add Job"}
               </button>
             </div>

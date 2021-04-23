@@ -101,7 +101,7 @@ function Navbar({ authState, logoutUser }) {
       <li className="nav-item">
         <button
           onClick={onLogoutUser}
-          className="navigation-button-link nav-bar-font px-3 py-2 flex items-center text-xs capitalize font-bold leading-snug text-white hover:opacity-75"
+          className="navigation-button-link nav-bar-font mt-2 lg:mt-0 lg:px-3 py-2 flex items-center text-xs capitalize font-bold leading-snug text-white hover:opacity-75"
         >
           Log Out
         </button>

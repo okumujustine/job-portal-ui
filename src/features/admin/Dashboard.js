@@ -47,11 +47,11 @@ function Dashboard() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="flex flex-row mt-6">
-      <div className="sticky left-0 w-2/12">
+    <div className="flex flex-col lg:flex-row mt-6">
+      <div className="sticky left-0 lg:w-2/12">
         <DashboardNavigation />
       </div>
-      <div className="w-10/12">
+      <div className=" w-full lg:w-10/12">
         <div className="flex justify-around">
           {error && !loading && <p>{error}</p>}
           {loading && !error ? (
@@ -65,11 +65,11 @@ function Dashboard() {
           !loading &&
           !error ? (
             <React.Fragment>
-              <div className="font-bold rounded-md py-12 px-4 shadow-md w-4/12 flex justify-center items-center flex-col">
+              <div className="font-bold rounded-md py-8 lg:py-12 px-4 shadow-md w-5/12 lg:w-4/12 flex justify-center items-center flex-col">
                 <h5>JOBS POSTED</h5>
                 <span className="font-bold text-5xl">{statsJobPosted}</span>
               </div>
-              <div className="font-bold rounded-md py-12 px-4 shadow-md w-4/12 flex justify-center items-center flex-col">
+              <div className="font-bold rounded-md py-8 lg:py-12 px-4 shadow-md w-5/12 lg:w-4/12 flex justify-center items-center flex-col">
                 <h5>APPLICATIONS</h5>
                 <span className="font-bold text-5xl">{statsApplications}</span>
               </div>{" "}

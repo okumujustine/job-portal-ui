@@ -54,12 +54,12 @@ function Applications() {
   };
 
   return (
-    <div className="flex flex-row mt-6">
-      <div className="sticky left-0 w-2/12">
+    <div className="flex flex-col lg:flex-row mt-6">
+      <div className="sticky left-0 lg:w-2/12">
         <DashboardNavigation />
       </div>
-      <div className="w-10/12">
-        <div className="px-20">
+      <div className="w-full lg:w-10/12 overflow-x-scroll">
+        <div className="px-2 lg:px-20">
           <Label label="Jobs/Applications" />
           <div className=" py-8 w-full">
             {error && !loading && (

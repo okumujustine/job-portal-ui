@@ -48,19 +48,19 @@ export default function DisplayJobs({ jobs, isLoading, error }) {
                     Experience {job.experience} {job.experience_status}(s){" "}
                   </small>
                 </div>
-                <div className="mt-1 flex md:min-w-330 lg:min-w-330 xl:min-w-330 mb-3">
+                <div className="mt-1 flex md:min-w-330 lg:min-w-330 xl:min-w-330 mb-3 flex-wrap">
                   {job.tag_one ? (
-                    <small className="p-1 px-2 bg-yellow-200 text-yellow-800 rounded-xl lowercase">
+                    <small className="p-1 px-2 bg-yellow-200 text-yellow-800 rounded-xl lowercase truncate mt-1">
                       {job.tag_one}
                     </small>
                   ) : null}
                   {job.tag_two ? (
-                    <small className="ml-1 p-1 px-2 bg-green-200 text-green-800 rounded-xl lowercase">
+                    <small className="ml-1 p-1 px-2 bg-green-200 text-green-800 rounded-xl lowercase truncate mt-1">
                       {job.tag_two}
                     </small>
                   ) : null}
                   {job.tag_three ? (
-                    <small className="ml-1 p-1 px-2 bg-blue-200 text-blue-800 rounded-xl lowercase">
+                    <small className="ml-1 p-1 px-2 bg-blue-200 text-blue-800 rounded-xl lowercase truncate mt-1">
                       {job.tag_three}
                     </small>
                   ) : null}

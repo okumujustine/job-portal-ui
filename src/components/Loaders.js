@@ -50,7 +50,7 @@ export function TableLoaders() {
 
 export function CardLoaders() {
   return (
-    <div className="shadow-md rounded py-12 px-4 w-4/12  ">
+    <div className="rounded  py-8 lg:py-12 px-4 shadow-md w-5/12 lg:w-4/12  ">
       <div className="animate-pulse flex space-x-4">
         <div className="flex-1 space-y-4 py-1">
           <div className="h-4 bg-gray-400 rounded w-3/4"></div>

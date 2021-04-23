@@ -59,7 +59,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="lg:w-3/12 lg:block ">
+        <div className="lg:w-3/12 lg:block hidden">
           <h3 className="after-banner-span-text">Job Spotlight</h3>
           <small>
             <i>comming soon</i>

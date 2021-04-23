@@ -60,7 +60,7 @@ export default function FilterForm() {
 
   return (
     <React.Fragment>
-      <div className="flex w-7/12 mx-auto flex-col m-auto mt-10">
+      <div className="flex lg:w-8/12 md:w-10/12 md:mx-auto lg:mx-auto w-11/12 mx-2 flex-col mt-10">
         <div className="flex flex-row mb-6 w-full">
           <form className="flex flex-col w-full" onSubmit={onSubmitSearch}>
             <input
