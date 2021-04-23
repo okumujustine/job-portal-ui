@@ -27,7 +27,7 @@ export default function RegisterTabs({
             className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
             role="tablist"
           >
-            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center border-2 border-jobBlue-100">
+            <li className="-mb-px ml-2 lg:ml-0 mr-2 last:mr-0 flex-auto text-center border-2 border-jobBlue-100">
               <a
                 className={
                   "text-xs font-bold uppercase px-5 py-3 shadow-sm block leading-normal " +
@@ -69,7 +69,7 @@ export default function RegisterTabs({
             </li>
           </ul>
           <h1 className="text-1xl text-center font-bold underline text-jobBlue-100">
-            (Registering as{" "}
+            (Registering as
             <span className="text-jobGreen-100 capitalize">{userType}</span>)
           </h1>
           <div className="flex flex-col min-w-0 break-words bg-white w-full shadow-sm ">

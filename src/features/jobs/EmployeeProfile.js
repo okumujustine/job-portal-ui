@@ -58,12 +58,12 @@ function EmployeeProfile({ authState }) {
   };
 
   return (
-    <div className="flex flex-row mt-6">
+    <div className="flex flex-col lg:flex-row mt-6">
       <div>
         <EmployeeNavigation />
       </div>
-      <div className="w-10/12 m-auto">
-        <div className="px-20">
+      <div className="w-full lg:w-10/12 m-auto">
+        <div className="px-4 lg:px-20">
           <div className=" py-8 w-full">
             {loading && (
               <h5 className="font-bold text-xl text-jobBlue-700">

@@ -33,8 +33,10 @@ export default function Home() {
   return (
     <div>
       <div className="home-banner flex justify-center items-center flex-col">
-        <span className="home-banner-title">Hire great hourly employees</span>
-        <p className="text-white home-banner-caption-p">
+        <span className="home-banner-title text-center">
+          Hire great hourly employees
+        </span>
+        <p className="text-white home-banner-caption-p text-center">
           JobsUg is the most trusted job board, connecting the world's <br />
           brightest minds with resume database loaded with talents.
         </p>

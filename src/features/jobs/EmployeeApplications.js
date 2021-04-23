@@ -51,15 +51,15 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
   };
 
   return (
-    <div className="flex flex-row mt-6">
+    <div className="flex flex-col lg:flex-row mt-6">
       <div>
         <EmployeeNavigation />
       </div>
-      <div className="w-10/12 m-auto">
-        <div className="px-20">
-          <div className=" py-8 w-full">
+      <div className=" w-full lg:w-10/12 m-auto ">
+        <div className="lg:px-20">
+          <div className=" lg:ml-0 py-8 w-full">
             {!loading ? (
-              <div className="flex justify-between">
+              <div className="ml-2 flex justify-between">
                 <div className="font-bold rounded-md py-4 mb-5 px-2 shadow-md w-5/12 flex justify-center items-center flex-col">
                   <h5>APLLICATIONS</h5>
                   <span className="font-bold text-5xl">
@@ -83,21 +83,21 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
               {!employeeApplications && !error ? (
                 <TableLoaders />
               ) : employeeApplications.length > 0 ? (
-                <>
+                <div className="overflow-x-scroll mx-2">
                   <Label label="Recent applications" />
-                  <table className="min-w-full bg-white mt-2">
+                  <table className="min-w-full bg-white mt-2 w-full">
                     <thead>
                       <tr>
-                        <th className="bg-blue-100 border text-left px-8 py-4">
+                        <th className="bg-blue-100 border text-left px-4 py-2 lg:px-8 lg:py-4">
                           Title
                         </th>
-                        <th className="bg-blue-100 border text-left px-8 py-4">
+                        <th className="bg-blue-100 border text-left px-4 py-2 lg:px-8 lg:py-4">
                           Company
                         </th>
-                        <th className="bg-blue-100 border text-left px-8 py-4">
+                        <th className="bg-blue-100 border text-left px-4 py-2 lg:px-8 lg:py-4">
                           Date
                         </th>
-                        <th className="bg-blue-100 border text-left px-8 py-4">
+                        <th className="bg-blue-100 border text-left px-4 py-2 lg:px-8 lg:py-4">
                           status
                         </th>
                       </tr>
@@ -106,13 +106,13 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
                       {employeeApplications.map((employeeApplic) => (
                         <React.Fragment key={employeeApplic.id}>
                           <tr>
-                            <td className="border px-8 py-4">
+                            <td className="border px-4 py-2 lg:px-8 lg:py-4">
                               {employeeApplic.job.title}
                             </td>
-                            <td className="border px-8 py-4">
+                            <td className="border px-4 py-2 lg:px-8 lg:py-4">
                               {employeeApplic.job.company_name}
                             </td>
-                            <td className="border px-8 py-4">
+                            <td className="border px-4 py-2 lg:px-8 lg:py-4">
                               {moment(
                                 employeeApplic.application_created_at
                               ).format("YYYY-MM-DD")}
@@ -122,7 +122,7 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
                               ).fromNow()}
                               )
                             </td>
-                            <td className="border px-8 py-4">
+                            <td className="border px-4 py-2 lg:px-8 lg:py-4">
                               {employeeApplic.status}
                             </td>
                           </tr>
@@ -130,7 +130,7 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
                       ))}
                     </tbody>
                   </table>
-                </>
+                </div>
               ) : null}
             </React.Fragment>
           </div>

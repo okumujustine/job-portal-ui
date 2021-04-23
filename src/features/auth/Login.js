@@ -83,7 +83,7 @@ function Login({ authState, loginUser }) {
 
       <form
         onSubmit={onLoginUser}
-        className="auth-form flex flex-col w-5/12 m-auto"
+        className="auth-form flex flex-col w-11/12 lg:w-5/12 m-auto"
       >
         <h1 className="font-bold self-center text-3xl">Login Here</h1>
         <div className="flex flex-col mt-6">
