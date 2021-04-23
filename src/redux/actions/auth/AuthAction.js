@@ -63,6 +63,7 @@ export const loginUser = (user) => (dispatch) => {
           },
         },
       });
+      window.location.reload();
     })
     .catch((err) => {
       const { error } = err.response.data;
