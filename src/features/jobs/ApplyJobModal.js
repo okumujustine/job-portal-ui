@@ -80,11 +80,8 @@ function Modal({ showModal, setShowModal, job, authState }) {
         setResume("");
         alert.show("application successful!");
       })
-      .catch((error) => {
-        console.log("-----error", JSON.stringify(error));
-        // if (error.status !== 401) {
+      .catch(() => {
         return alert.error("application failed, try again later!");
-        // }
       });
   };
 
@@ -114,7 +111,7 @@ function Modal({ showModal, setShowModal, job, authState }) {
                 <div className="relative p-6 flex-auto">
                   <div className="flex flex-col">
                     <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row">
-                      <div className="w-64 mb-6 md:mb-2 xl:mb-2 pl-6">
+                      <div className="w-64 mb-6 md:mb-2 xl:mb-2 pl-0 lg:pl-6">
                         <label className="font-bold">First Name:</label>
                         <p>{user.first_name}</p>
                       </div>
@@ -135,8 +132,10 @@ function Modal({ showModal, setShowModal, job, authState }) {
                           onChange={onApplyMethod}
                           value="easy"
                           name="apply"
+                          id="easy"
                         />
-                        Easy Apply
+                        <label htmlFor="easy">Easy Apply</label>
+
                         <input
                           type="radio"
                           value="hard"
@@ -144,28 +143,32 @@ function Modal({ showModal, setShowModal, job, authState }) {
                           onChange={onApplyMethod}
                           className="ml-5"
                           name="apply"
+                          id="hard"
                         />
-                        Use New Resume
+
+                        <label htmlFor="hard">Use New Resume</label>
                       </div>
                     ) : null}
                     <div>
                       {applyMethod === "hard" ? (
-                        <input
-                          className="mt-4"
-                          type="file"
-                          accept="application/pdf"
-                          onChange={(e) => setResume(e.target.files[0])}
-                        />
+                        <div className="mt-4 ml-4">
+                          <input
+                            style={{ width: "180px" }}
+                            type="file"
+                            accept="application/pdf"
+                            onChange={(e) => setResume(e.target.files[0])}
+                          />
+                        </div>
                       ) : (
-                        <div className="mt-4">
+                        <div className="mt-6 ml-4">
                           {user &&
                           !user.profile_owner[0].resume &&
                           user.role === "employee" ? (
                             <Link
                               to="/employee-profile"
-                              className="bg-jobBlue-800 py-2 px-3 rounded-md shadow-md text-white"
+                              className="bg-jobBlue-800 py-3 px-3 rounded-md shadow-md text-white"
                             >
-                              Add a Resume to your profile
+                              Resume from profile
                             </Link>
                           ) : null}
 
