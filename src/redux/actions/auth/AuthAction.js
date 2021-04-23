@@ -60,10 +60,11 @@ export const loginUser = (user) => (dispatch) => {
             last_name: res.data.last_name,
             phone: res.data.phone,
             role: res.data.role,
+            profile_owner: res.data.profile_owner,
           },
         },
       });
-      window.location.reload();
+      // window.location.reload();
     })
     .catch((err) => {
       const { error } = err.response.data;
