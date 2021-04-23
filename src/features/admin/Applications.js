@@ -26,12 +26,13 @@ function Applications() {
     axiosInstance
       .get(`/joblisting/admin/userjobs/?page=${pageNumber}&title=`)
       .then((res) => {
-        console.log("res", res);
         if (isMounted.current) {
-          setjobCurrentPage(res.data.current);
-          setJobs(res.data.results);
-          setItemCount(res.data.count);
-          setLoading(false);
+          setTimeout(function () {
+            setjobCurrentPage(res.data.current);
+            setJobs(res.data.results);
+            setItemCount(res.data.count);
+            setLoading(false);
+          }, 1000);
         }
       })
       .catch(() => {

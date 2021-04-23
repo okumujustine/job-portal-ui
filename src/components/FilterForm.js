@@ -22,11 +22,13 @@ export default function FilterForm() {
         params: searchData,
       })
       .then((res) => {
-        setjobCurrentPage(res.data.current);
-        setJobs(res.data.results);
-        setItemCount(res.data.count);
-        setLoading(false);
-        setTitle("");
+        setTimeout(function () {
+          setjobCurrentPage(res.data.current);
+          setJobs(res.data.results);
+          setItemCount(res.data.count);
+          setLoading(false);
+          setTitle("");
+        }, 1000);
       })
       .catch(() => {
         setError("Failed to load jobs, try again later");

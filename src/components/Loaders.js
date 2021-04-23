@@ -27,15 +27,21 @@ export function JobsLoaders() {
 
 export function TableLoaders() {
   return (
-    <table className="min-w-full animate-pulse">
-      <thead className="w-full bg-gray-400 h-16">
+    <table className="animate-pulse min-w-full bg-white mt-2">
+      <thead>
         <tr>
-          <th className="text-gray-400 py-3 px-4">loading...</th>
+          <th className="bg-blue-100 border text-left px-8 py-4" />
+          <th className="bg-blue-100 border text-left px-8 py-4" />
+          <th className="bg-blue-100 border text-left px-8 py-4" />
+          <th className="bg-blue-100 border text-left px-8 py-4" />
         </tr>
       </thead>
-      <tbody className="w-full">
+      <tbody>
         <tr>
-          <td className="text-gray-400 py-3 px-4">loading...</td>
+          <td className="border px-8 py-4" />
+          <td className="border px-8 py-4" />
+          <td className="border px-8 py-4" />
+          <td className="border px-8 py-4" />
         </tr>
       </tbody>
     </table>
@@ -53,6 +59,13 @@ export function CardLoaders() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+export function LabelLoaders() {
+  return (
+    <div className="animate-pulse mt-4 underline text-gray-300">
+      <span className="text-gray-300">label</span>
     </div>
   );
 }

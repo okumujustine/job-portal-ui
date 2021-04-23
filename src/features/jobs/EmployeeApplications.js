@@ -6,7 +6,11 @@ import { connect } from "react-redux";
 import { axiosInstance } from "../../services/axios";
 import { loadUserWhenAlreadyLoggedIn } from "../../redux/actions/auth/AuthAction";
 import EmployeeNavigation from "./EmployeeNavigation";
-import { TableLoaders, CardLoaders } from "../../components/Loaders";
+import {
+  TableLoaders,
+  CardLoaders,
+  LabelLoaders,
+} from "../../components/Loaders";
 import Label from "../../components/Label";
 
 function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
@@ -25,12 +29,14 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
     axiosInstance
       .get(`/joblisting/userapplications/?page=${pageNumber}`)
       .then((res) => {
-        setEmployeeApplications(res.data.results);
-        setApplicationsCurrentPage(res.data.current);
-        setApplicationsCount(res.data.count);
-        setLoading(false);
+        setTimeout(function () {
+          setEmployeeApplications(res.data.results);
+          setApplicationsCurrentPage(res.data.current);
+          setApplicationsCount(res.data.count);
+          setLoading(false);
+        }, 1000);
       })
-      .catch((error) => {
+      .catch(() => {
         setError("failed to fetch data try again later");
         setLoading(false);
       });
@@ -64,6 +70,8 @@ function EmplyeeApplications({ loadUserWhenAlreadyLoggedIn }) {
             ) : (
               <div className="mb-5">
                 <CardLoaders />
+                <LabelLoaders />
+                <TableLoaders />
               </div>
             )}
             {error && (

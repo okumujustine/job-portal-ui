@@ -24,11 +24,13 @@ function Dashboard() {
       axiosInstance
         .get(`/joblisting/employers/stats/`)
         .then((res) => {
-          if (isMounted) {
-            setStatsJobPosted(res.data.posted_jobs_count);
-            setStatsApplications(res.data.job_applications_count);
-            setLoading(false);
-          }
+          setTimeout(function () {
+            if (isMounted) {
+              setStatsJobPosted(res.data.posted_jobs_count);
+              setStatsApplications(res.data.job_applications_count);
+              setLoading(false);
+            }
+          }, 1000);
         })
         .catch(() => {
           alert.error("failed to load job stats, try again later");
