@@ -22,7 +22,7 @@ export default function EmployeeNavigation() {
           Profile
         </NavLink>
       </div>
-      <div className="mx-8 flex flex-col hidden lg:block">
+      <div className="mx-8 lg:flex flex-col lg:flex-col hidden lg:block">
         <EmployeeDashboardNavButton
           to={"/employee-dashboard"}
           title={"Dashboard"}

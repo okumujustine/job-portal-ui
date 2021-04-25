@@ -89,9 +89,8 @@ export default function Register() {
       .then((res) => {
         setIsLoginButton(false);
         setIsError(false);
-        setDialogMessage(
-          "successful!, follow the link sent to your email to verify your account."
-        );
+        // follow the link sent to your email to verify your account
+        setDialogMessage("successfully signed up, you can now login .");
         setOpenAuthDialog(true);
 
         setLoading(false);
