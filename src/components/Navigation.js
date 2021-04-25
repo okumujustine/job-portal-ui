@@ -25,6 +25,21 @@ function Navbar({ authState, logoutUser }) {
     setOpenDialog(false);
   };
 
+  const nullLinks = (
+    <>
+      <li className="nav-item">
+        <button className="animate-pulse nav-bar-font px-3 py-2 flex items-center text-xs  font-bold leading-snug text-white hover:opacity-75 capitalize">
+          <span className="text-white">Sign Up</span>
+        </button>
+      </li>
+      <li className="nav-item">
+        <button className="animate-pulse nav-bar-font px-3 py-2 flex items-center text-xs capitalize font-bold leading-snug text-white hover:opacity-75">
+          <span className="text-white">Log In</span>
+        </button>
+      </li>
+    </>
+  );
+
   const authLinks = (
     <>
       <li className="nav-item">
@@ -174,7 +189,11 @@ function Navbar({ authState, logoutUser }) {
                   <span>About</span>
                 </NavLink>
               </li>
-              {authState.isAuthenticated ? loggedInLinks : authLinks}
+              {authState.isAuthenticated === null
+                ? nullLinks
+                : authState.isAuthenticated
+                ? loggedInLinks
+                : authLinks}
             </ul>
           </div>
         </div>
