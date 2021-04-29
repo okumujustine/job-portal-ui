@@ -18,17 +18,18 @@ const ContactForm = () => {
   const validate = Yup.object({
     email: Yup.string().required("Email address is required"),
     message: Yup.string()
-      .min(10, "Must be More than 50 character")
+      .min(50, "Must be More than 50 character")
       .max(500, "Must be 500 character or less")
       .required("Details is required"),
   });
 
-  const onSubmit = (values, setSubmitting) => {
+  const onSubmit = (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
     axiosInstance
       .post(`/contactus/create/`, values)
       .then(() => {
         setSubmitting(false);
+        resetForm({});
         setIsError(false);
         setDialogMessage(
           "contact info successfully sent, we'll get back to you soon."
@@ -50,7 +51,9 @@ const ContactForm = () => {
         email: "",
         message: "",
       }}
-      onSubmit={(values, { setSubmitting }) => onSubmit(values, setSubmitting)}
+      onSubmit={(values, { setSubmitting, resetForm }) =>
+        onSubmit(values, { setSubmitting, resetForm })
+      }
       validationSchema={validate}
     >
       {({ handleChange, values, isSubmitting, touched, errors }) => (
@@ -60,7 +63,6 @@ const ContactForm = () => {
             isClose={closeAuthDialog}
             isError={isError}
             content={dialogMessage}
-            isLoginButton={isSubmitting}
           />
           <div className="flex flex-col mt-6">
             <label htmlFor="email">Email Address</label>
@@ -95,7 +97,7 @@ const ContactForm = () => {
             type="submit"
             disabled={isSubmitting}
           >
-            Submit
+            {isSubmitting ? "Submiting" : "Submit"}
           </button>
         </Form>
       )}
