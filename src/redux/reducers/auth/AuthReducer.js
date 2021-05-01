@@ -13,6 +13,7 @@ import {
   refreshTokenKey,
   userRoleKey,
 } from "../../../features/common/constants";
+import { localBrowserStorage } from "../../../services/browserStorage";
 
 const initialState = {
   jobPortalToken: localStorage.getItem(authTokenKey),
@@ -33,8 +34,9 @@ export default (state = initialState, action) => {
         isAuthenticated: null,
         isLoading: true,
       };
+
     case USER_LOADED:
-      localStorage.setItem(userRoleKey, action.payload.role);
+      localBrowserStorage.setUserRole(action.payload.role);
       return {
         ...state,
         isAuthenticated: true,
@@ -42,10 +44,9 @@ export default (state = initialState, action) => {
         user: action.payload,
         role: action.payload.role,
       };
+
     case LOGIN_FAILED:
-      localStorage.removeItem(authTokenKey);
-      localStorage.removeItem(refreshTokenKey);
-      localStorage.removeItem(userRoleKey);
+      localBrowserStorage.clearTokensAndRole();
       return {
         token: null,
         isAuthenticated: false,
@@ -53,15 +54,16 @@ export default (state = initialState, action) => {
         user: null,
         loginFailedError: action.payload.erroMessage,
       };
+
     case AUTH_ERROR:
-      localStorage.removeItem(authTokenKey);
-      localStorage.removeItem(refreshTokenKey);
+      localBrowserStorage.clearTokensAndRole();
       return {
         token: null,
         isAuthenticated: false,
         isLoading: false,
         user: null,
       };
+
     case LOGOUT_SUCCESS:
       return {
         token: null,
@@ -70,17 +72,16 @@ export default (state = initialState, action) => {
         user: null,
         logout: "sucess",
       };
+
     case LOGOUT_FAILED:
       return {
         logout: "failed",
       };
+
     case LOGIN_SUCCESS:
-      localStorage.setItem(authTokenKey, action.payload.jobPortalToken);
-      localStorage.setItem(
-        refreshTokenKey,
-        action.payload.jobPortalRefreshToken
-      );
-      localStorage.setItem(userRoleKey, action.payload.user.role);
+      localBrowserStorage.setAccessToken(action.payload.jobPortalToken);
+      localBrowserStorage.setRefreshToken(action.payload.jobPortalRefreshToken);
+      localBrowserStorage.setUserRole(action.payload.user.role);
       return {
         ...state,
         ...action.payload,
@@ -89,8 +90,9 @@ export default (state = initialState, action) => {
         role: action.payload.user.role,
         loginFailedError: null,
       };
+
     case REFRESH_TOKEN_SUCCESS:
-      localStorage.setItem(authTokenKey, action.payload.jobPortalToken);
+      localBrowserStorage.setAccessToken(action.payload.jobPortalToken);
       return {
         ...state,
         ...action.payload,

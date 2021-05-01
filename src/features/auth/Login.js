@@ -1,13 +1,13 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useLocation, useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 
 import { loginUser } from "../../redux/actions/auth/AuthAction";
 import AuthDialog from "./AuthDialog";
-import "./Auth.css";
 import { axiosInstance } from "../../services/axios";
 import { config } from "../../helperfuncs/token";
+import "./Auth.css";
 
 function Login({ authState, loginUser }) {
   const { isAuthenticated, loginFailedError } = authState;
@@ -21,6 +21,15 @@ function Login({ authState, loginUser }) {
   const [isEmailLoading, setIsEmailLoading] = React.useState(false);
 
   const alert = useAlert();
+  let location = useLocation();
+  const history = useHistory();
+
+  React.useEffect(() => {
+    if (location?.state?.registered) {
+      alert.success("succesfully registered, login please");
+      history.replace({ ...location, state: {} });
+    }
+  }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     if (loginFailedError && loginFailedError === "Email is not verified") {

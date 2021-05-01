@@ -9,12 +9,8 @@ import {
 } from "../index";
 
 import { tokenConfig, config } from "../../../helperfuncs/token";
-import { userRoleKey } from "../../../features/common/constants";
-import {
-  authTokenKey,
-  refreshTokenKey,
-} from "../../../features/common/constants";
 import { axiosInstance } from "../../../services/axios";
+import { localBrowserStorage } from "../../../services/browserStorage";
 
 export const loadUser = () => async (dispatch) => {
   dispatch({ type: USER_LOADING });
@@ -64,11 +60,9 @@ export const loginUser = (user) => (dispatch) => {
           },
         },
       });
-      // window.location.reload();
     })
     .catch((err) => {
-      const { error } = err.response.data;
-
+      const { error } = err?.response?.data;
       dispatch({
         type: LOGIN_FAILED,
         payload: { erroMessage: error },
@@ -90,10 +84,11 @@ export const logoutUser = () => (dispatch, getState) => {
         tokenConfig(getState)
       )
       .then(() => {
-        localStorage.removeItem(authTokenKey);
-        localStorage.removeItem(refreshTokenKey);
-        localStorage.removeItem(userRoleKey);
+        localBrowserStorage.clearTokensAndRole();
         dispatch({ type: LOGOUT_SUCCESS });
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
       })
       .catch(() => {
         dispatch({ type: LOGOUT_FAILED });

@@ -2,7 +2,7 @@ import axios from "axios";
 import NProgress from "nprogress";
 
 import { baseUrl } from "../features/common/constants";
-import { LocalStorageService } from "./localStorage";
+import { localBrowserStorage } from "./browserStorage";
 
 export const axiosInstance = axios.create({
   baseURL: baseUrl,
@@ -11,13 +11,11 @@ export const axiosInstance = axios.create({
 
 NProgress.configure({ easing: "ease", speed: 500 });
 
-const localStorageService = LocalStorageService.getService();
-
 axiosInstance.interceptors.request.use(
   (config) => {
     NProgress.start();
 
-    const token = localStorageService.getAccessToken();
+    const token = localBrowserStorage.getAccessToken();
     if (token) {
       config.headers["Authorization"] = "Bearer " + token;
     }
@@ -35,7 +33,7 @@ axiosInstance.interceptors.response.use(
   },
   function (error) {
     const originalRequest = error.config;
-    const refreshToken = localStorageService.getRefreshToken() || "wrongtoken";
+    const refreshToken = localBrowserStorage.getRefreshToken() || "wrongtoken";
 
     if (
       error.response.status === 401 &&
@@ -52,10 +50,10 @@ axiosInstance.interceptors.response.use(
         })
         .then((res) => {
           if (res.status === 200) {
-            localStorageService.setAccessToken(res.data.access);
+            localBrowserStorage.setAccessToken(res.data.access);
 
             axios.defaults.headers.common["Authorization"] =
-              "Bearer " + localStorageService.getAccessToken();
+              "Bearer " + localBrowserStorage.getAccessToken();
 
             return axiosInstance(originalRequest);
           }
@@ -63,6 +61,13 @@ axiosInstance.interceptors.response.use(
         })
         .catch((error) => {
           NProgress.done();
+
+          const pathName = window.location.pathname;
+          const paths = ["/home", "/jobs", "/about", "/signup", "/login"];
+
+          if (paths.indexOf(pathName) <= -1) {
+            window.location.href = "/";
+          }
           return Promise.reject(error);
         });
     }

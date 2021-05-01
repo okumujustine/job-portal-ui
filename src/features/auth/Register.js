@@ -2,6 +2,7 @@ import React from "react";
 import { useAlert } from "react-alert";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
 
+import { useHistory } from "react-router-dom";
 import { axiosInstance } from "../../services/axios";
 import RegisterTabs from "./RegisterTabs";
 import AuthDialog from "./AuthDialog";
@@ -24,6 +25,7 @@ export default function Register() {
   const [dialogMessage, setDialogMessage] = React.useState("");
 
   const alert = useAlert();
+  let history = useHistory();
 
   const closeAuthDialog = () => {
     setOpenAuthDialog(false);
@@ -94,6 +96,8 @@ export default function Register() {
         setOpenAuthDialog(true);
 
         setLoading(false);
+
+        history.push("/login", { registered: true });
       })
       .catch((err) => {
         const { error } = err.response.data;

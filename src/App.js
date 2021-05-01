@@ -6,6 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 
+import history from "./routing";
 import Login from "./features/auth/Login";
 import Register from "./features/auth/Register";
 import VerfyEmail from "./features/auth/VerfyEmail";
@@ -34,7 +35,7 @@ function App({ loadUser }) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <>
-      <Router>
+      <Router history={history}>
         <Navigation />
         <div>
           <Switch>

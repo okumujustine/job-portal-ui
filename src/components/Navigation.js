@@ -25,20 +25,7 @@ function Navbar({ authState, logoutUser }) {
     setOpenDialog(false);
   };
 
-  const nullLinks = (
-    <>
-      <li className="nav-item">
-        <button className="animate-pulse nav-bar-font px-3 py-2 flex items-center text-xs  font-bold leading-snug text-white hover:opacity-75 capitalize">
-          <span className="text-white">Sign Up</span>
-        </button>
-      </li>
-      <li className="nav-item">
-        <button className="animate-pulse nav-bar-font px-3 py-2 flex items-center text-xs capitalize font-bold leading-snug text-white hover:opacity-75">
-          <span className="text-white">Log In</span>
-        </button>
-      </li>
-    </>
-  );
+  const nullLinks = <div></div>;
 
   const authLinks = (
     <>

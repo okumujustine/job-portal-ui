@@ -1,4 +1,8 @@
-import { authTokenKey, refreshTokenKey } from "../features/common/constants";
+import {
+  authTokenKey,
+  refreshTokenKey,
+  userRoleKey,
+} from "../features/common/constants";
 
 export const LocalStorageService = (function () {
   var _service;
@@ -10,17 +14,16 @@ export const LocalStorageService = (function () {
     return _service;
   }
 
-  function _setToken(tokenObj) {
-    localStorage.setItem(authTokenKey, tokenObj.access_token);
-    localStorage.setItem(refreshTokenKey, tokenObj.refresh_token);
+  function _setAccessToken(token) {
+    localStorage.setItem(authTokenKey, token);
   }
 
-  function _setRefresToken(token) {
+  function _setRefreshToken(token) {
     localStorage.setItem(refreshTokenKey, token);
   }
 
-  function _setAccessToken(token) {
-    localStorage.setItem(authTokenKey, token);
+  function _setUserRole(role) {
+    localStorage.setItem(userRoleKey, role);
   }
 
   function _getAccessToken() {
@@ -31,18 +34,27 @@ export const LocalStorageService = (function () {
     return localStorage.getItem(refreshTokenKey);
   }
 
-  function _clearToken() {
+  function _getUserRole() {
+    localStorage.getItem(userRoleKey);
+  }
+
+  function _clearTokensAndRole() {
     localStorage.removeItem(authTokenKey);
     localStorage.removeItem(refreshTokenKey);
+    localStorage.removeItem(userRoleKey);
   }
 
   return {
     getService: _getService,
-    setToken: _setToken,
+
+    setAccessToken: _setAccessToken,
+    setRefreshToken: _setRefreshToken,
+    setUserRole: _setUserRole,
+
     getAccessToken: _getAccessToken,
     getRefreshToken: _getRefreshToken,
-    clearToken: _clearToken,
-    setRefresToken: _setRefresToken,
-    setAccessToken: _setAccessToken,
+    getUserRole: _getUserRole,
+
+    clearTokensAndRole: _clearTokensAndRole,
   };
 })();
