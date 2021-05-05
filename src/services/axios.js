@@ -63,11 +63,19 @@ axiosInstance.interceptors.response.use(
           NProgress.done();
 
           const pathName = window.location.pathname;
-          const paths = ["/home", "/jobs", "/about", "/signup", "/login"];
+          console.log("pathNamepathName", pathName);
+          // const paths = [
+          //   "/home",
+          //   "/jobs",
+          //   "/about",
+          //   "/signup",
+          //   "/login",
+          //   "/auth",
+          // ];
 
-          if (paths.indexOf(pathName) <= -1) {
-            window.location.href = "/";
-          }
+          // if (paths.indexOf(pathName) <= -1) {
+          //   window.location.href = "/";
+          // }
           return Promise.reject(error);
         });
     }
