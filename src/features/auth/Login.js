@@ -26,7 +26,9 @@ function Login({ authState, loginUser }) {
 
   React.useEffect(() => {
     if (location?.state?.registered) {
-      alert.success("succesfully registered, login please");
+      alert.success(
+        "follow the link sent to your email address to verify your account"
+      );
       history.replace({ ...location, state: {} });
     }
   }, [location]); // eslint-disable-line react-hooks/exhaustive-deps

@@ -13,7 +13,7 @@ import { store } from "./redux/store";
 
 const alertOptions = {
   position: positions.TOP_RIGHT,
-  timeout: 2000,
+  timeout: 4000,
   offset: "30px",
   transition: transitions.SCALE,
 };
