@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Redirect, useLocation, useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
+import { Link } from "react-router-dom";
 
 import { loginUser } from "../../redux/actions/auth/AuthAction";
 import AuthDialog from "./AuthDialog";
@@ -120,6 +121,7 @@ function Login({ authState, loginUser }) {
         <button className="mt-6 auth-button" type="submit">
           login
         </button>
+        <Link to={`/auth/request-password-reset`}>forgot password</Link>
       </form>
     </React.Fragment>
   );

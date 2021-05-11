@@ -75,7 +75,7 @@ export default function RegisterForm({
             onChange={(e) => onChangeConfirmPassword(e.target.value)}
           />
         </div>
-        <button className="mt-6 auth-button" type="submit">
+        <button className="mt-6 auth-button" type="submit" disabled={loading}>
           {loading ? "laoding ..." : "Register"}
         </button>
       </form>

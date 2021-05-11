@@ -27,6 +27,8 @@ import JobApplicantsDetail from "./features/admin/JobApplicantsDetail";
 import EmployeeProfile from "./features/jobs/EmployeeProfile";
 import EmployerProfile from "./features/admin/EmployerProfile";
 import EmployeeProtection from "./features/common/EmployeeProtection";
+import RequestPwdReset from "./features/auth/RequestPwdReset";
+import ConfirmPwdReset from "./features/auth/ConfirmPwdReset"
 import "./App.css";
 
 function App({ loadUser }) {
@@ -57,6 +59,12 @@ function App({ loadUser }) {
             </Route>
             <Route path="/auth/email-verify/:email/:token">
               <VerfyEmail />
+            </Route>
+            <Route path="/auth/request-password-reset">
+              <RequestPwdReset />
+            </Route>
+            <Route path="/auth/confirm-password-reset/:uidb64/:token">
+              <ConfirmPwdReset />
             </Route>
             <Route path="/login">
               <Login />
