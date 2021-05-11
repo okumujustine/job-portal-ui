@@ -121,7 +121,7 @@ function Login({ authState, loginUser }) {
         <button className="mt-6 auth-button" type="submit">
           login
         </button>
-        <Link to={`/auth/request-password-reset`}>forgot password</Link>
+        <Link className="text-blue-800 text-center font-bold" to={`/auth/request-password-reset`}>Forgot password?</Link>
       </form>
     </React.Fragment>
   );
