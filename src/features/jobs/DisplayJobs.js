@@ -20,16 +20,18 @@ export default function DisplayJobs({ jobs, isLoading, error }) {
             className=" job-card w-full rounded overflow-hidden shadow-sm p-6 flex mr-1 ml-1 mb-2 flex-col lg:flex-row md:flex-row xl:flex-row"
           >
             <Zoom>
-              <div
-                className="job-image-section ml-2 focus:outline-none"
-                style={{
-                  backgroundImage: job.company_logo
-                    ? `url(${job.company_logo})`
-                    : "url(" +
-                      "https://images.pexels.com/photos/34153/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350" +
-                      ")",
-                }}
-              ></div>
+              {job.company_logo ?
+                <div
+                  className="job-image-section ml-2 focus:outline-none"
+                  style={{
+                    backgroundImage: `url(${job.company_logo})`
+                  }}
+                ></div>
+                :
+                <div
+                  className="job-image-section ml-2 focus:outline-none border-2 border-jobBlue-100 flex justify-center items-center text-2xl text-jobBlue-700 bg-blue-200"
+                ><span>{job?.company_name.charAt(0)}</span></div>
+              }
             </Zoom>
             <div className="flex-1 flex md:justify-around lg:justify-around xl:justify-around">
               <div>

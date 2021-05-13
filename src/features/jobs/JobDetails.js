@@ -40,8 +40,8 @@ function JobDetails({ authState }) {
                 backgroundImage: job.company_logo
                   ? `url(${job.company_logo})`
                   : "url(" +
-                    "https://images.pexels.com/photos/34153/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350" +
-                    ")",
+                  "https://images.pexels.com/photos/34153/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350" +
+                  ")",
               }}
             ></div>
             <div className="pb-4 flex flex-col md:flex-row lg:flex-row xl:flex-row">
@@ -51,9 +51,9 @@ function JobDetails({ authState }) {
               <div dangerouslySetInnerHTML={{ __html: job.description }} />
             </div>
           </div>
-          <div>
+          <div className="lg:w-3/12 w-full">
             <h5 className="font-bold py-3">Overview</h5>
-            <div className="px-4 py-10 rounded-md border-2 mb-10">
+            <div className="px-4 py-10 rounded-md border-2 mb-10 min-w-2/12">
               <ul>
                 <li className="flex mb-3">
                   <p>
@@ -89,23 +89,31 @@ function JobDetails({ authState }) {
                     </span>
                   </div>
                 </li>
-                <li className="flex justify-center flex-col">
-                  {authState && authState.isAuthenticated ? (
-                    <button
-                      onClick={() => applyForJob()}
-                      className="aplply-job-button px-2 py-2 rounded-md focus:outline-none"
-                    >
-                      Apply Here
-                    </button>
-                  ) : (
-                    <Link
-                      to="/login"
-                      className="aplply-job-button px-2 py-2 rounded-md focus:outline-none text-center"
-                    >
-                      Log In to Apply
-                    </Link>
-                  )}
-                </li>
+                {!job.application_link ?
+                  <li className="flex justify-center flex-col">
+                    {authState && authState.isAuthenticated ? (
+                      <button
+                        onClick={() => applyForJob()}
+                        className="aplply-job-button px-2 py-2 rounded-md focus:outline-none"
+                      >
+                        Apply Here
+                      </button>
+                    ) : (
+                      <Link
+                        to="/login"
+                        className="aplply-job-button px-2 py-2 rounded-md focus:outline-none text-center"
+                      >
+                        Log In to Apply
+                      </Link>
+                    )}
+                  </li>
+                  :
+                  <li className="flex justify-center flex-col">
+                    <span className="font-bold underline">Follow this link to apply</span>
+                    <a target='_blank' rel="noopener noreferrer" className="font-bold text-jobBlue-200" href={job.application_link} style={{ cursor: 'pointer' }}>click me!</a>
+                  </li>
+                }
+
               </ul>
             </div>
           </div>

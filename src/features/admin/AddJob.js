@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 import Loader from "react-loader-spinner";
 import "react-quill/dist/quill.snow.css";
+import classNames from "classnames";
 
 import DashboardNavigation from "./DashboardNavigation";
 import { axiosInstance } from "../../services/axios";
@@ -32,8 +33,15 @@ function AddJob() {
   const [companyLogo, setCompanyLogo] = React.useState("");
   const [workDuration, setWorkDuration] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [applicationLink, setApplicationLink] = React.useState("here");
+  const [newLink, setNewLink] = React.useState("");
+
 
   const alert = useAlert();
+
+  const newOrApplyHere = (e) => {
+    setApplicationLink(e.target.value);
+  };
 
   const modules = {
     toolbar: [
@@ -155,17 +163,17 @@ function AddJob() {
       return;
     }
 
-    if (!companyLogo) {
-      errorAlert("Select company logo please!");
-      return;
-    }
-
-    if (companyLogo.size > 2000000) {
+    if (companyLogo && companyLogo.size > 2000000) {
       errorAlert("file size too large!, should be 2MB or less");
       return;
     }
-    if (!companyLogo.name.match(/\.(jpg|jpeg|png)$/)) {
+    if (companyLogo && !companyLogo.name.match(/\.(jpg|jpeg|png)$/)) {
       errorAlert("wrong file format (png, jpeg, jpg)!");
+      return;
+    }
+
+    if (applicationLink === "new" && !newLink) {
+      errorAlert("Enter your application link please!");
       return;
     }
 
@@ -179,6 +187,10 @@ function AddJob() {
     const addJobFormData = new FormData();
     if (workDuration) {
       addJobFormData.append("work_duration", workDuration);
+    }
+    if (applicationLink === "new" && newLink) {
+      console.log("there was a new logo added")
+      addJobFormData.append("application_link", newLink);
     }
     addJobFormData.append("category", category);
     addJobFormData.append("title", title);
@@ -199,7 +211,11 @@ function AddJob() {
     addJobFormData.append("experience_status", experienceStatus);
     addJobFormData.append("company_name", companyName);
     addJobFormData.append("company_location", companyLocation);
-    addJobFormData.append("company_logo", companyLogo, companyLogo.name);
+
+    if (companyLogo) {
+      addJobFormData.append("company_logo", companyLogo, companyLogo.name);
+    }
+
     addJobFormData.append("description", description);
 
     axiosInstance
@@ -208,9 +224,13 @@ function AddJob() {
         alert.show("job successful added!");
         setLoading(false);
       })
-      .catch(() => {
-        alert.error("failed to add job, try again later!");
+      .catch((error) => {
         setLoading(false);
+        if (error?.response?.data?.error) {
+          alert.error(error?.response?.data?.error);
+          return
+        }
+        alert.error("failed to add job, try again later!");
       });
   };
 
@@ -447,13 +467,55 @@ function AddJob() {
           </div>
           <div className="flex flex-row justify-around">
             <div className="flex flex-col mt-6 w-11/12">
-              <label>Company Logo (must be 2MB or less):</label>
+              <label>Company Logo (<b>OPTIONAL</b> and must be 2MB or less):</label>
               <input
                 className="auth-form-input"
                 type="file"
                 accept="image/png,image/jpeg"
                 onChange={(e) => setCompanyLogo(e.target.files[0])}
               />
+            </div>
+          </div>
+          <div className="flex flex-row justify-around">
+            <div className="flex flex-col mt-6 w-11/12">
+              <label>Handle applications from here or use personal link!</label>
+              <div className="flex flex-col">
+                <div className="my-3">
+                  <input
+                    type="radio"
+                    checked={applicationLink === "here"}
+                    onChange={newOrApplyHere}
+                    value="here"
+                    name="new_applic_link"
+                    id="here"
+                  />
+                  <label htmlFor="here" className={classNames("text-xl font-bold border text-blue-800 border-blue-800 py-2 px-3 lg:w-6/12 ml-2 cursor-pointer hover:bg-blue-100", { 'bg-blue-200': applicationLink === "here" })}>Handle Application from here</label>
+                </div>
+
+                <div className="my-3 cursor">
+                  <input
+                    type="radio"
+                    checked={applicationLink === "new"}
+                    onChange={newOrApplyHere}
+                    value="new"
+                    name="new_applic_link"
+                    id="new"
+                  />
+                  <label htmlFor="new" className={classNames("text-xl font-bold border text-blue-800 border-blue-800 py-2 px-3 lg:w-6/12 ml-2 cursor-pointer hover:bg-blue-100", { 'bg-blue-200': applicationLink === "new" })}>Use my Application Link</label>
+                </div>
+                {applicationLink === "new" &&
+                  <>
+                    <label>New Link:</label>
+                    <input
+                      className="auth-form-input"
+                      type="text"
+                      placeholder="personal application link ..."
+                      onChange={(e) => setNewLink(e.target.value)}
+                    />
+                  </>
+                }
+
+              </div>
             </div>
           </div>
           <div className="flex flex-row justify-around">
@@ -472,7 +534,7 @@ function AddJob() {
           </div>
           <div className="flex flex-row justify-around">
             <div className="flex flex-col my-6 w-11/12">
-              <button className=" mt-20 lg:mt-6 auth-button" type="submit">
+              <button className=" mt-20 lg:mt-6 auth-button" type="submit" disabled={loading}>
                 {loading ? "saving job .........." : "Add Job"}
               </button>
             </div>
