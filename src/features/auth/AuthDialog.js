@@ -18,7 +18,7 @@ export default function AuthDialog({
   const openDialog = (
     <div
       style={dialogStyle}
-      className={isError ? "border-2 border-red-400" : "border-2 border-blue-400 z-50"}
+      className={isError ? "border-2 border-red-400 z-50" : "border-2 border-blue-400 z-50"}
     >
       <button
         className={isError ? "bg-red-300" : "bg-blue-300"}
