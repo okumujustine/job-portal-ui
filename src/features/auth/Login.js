@@ -26,10 +26,14 @@ function Login({ authState, loginUser }) {
   const history = useHistory();
 
   React.useEffect(() => {
+    setOpenAuthDialog(true)
+    setDialogMessage("Registered, follow the link sent to your email address to verify your account");
+
+  }, [])
+
+  React.useEffect(() => {
     if (location?.state?.registered) {
-      alert.success(
-        "Registered, follow the link sent to your email address to verify your account"
-      );
+      setDialogMessage("Registered, follow the link sent to your email address to verify your account");
       history.replace({ ...location, state: {} });
     }
   }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -38,7 +42,7 @@ function Login({ authState, loginUser }) {
     if (loginFailedError && loginFailedError === "Email is not verified") {
       setIsError(true);
       setIsEmailInput(true);
-      setDialogMessage("email is not verfied, send a new verification link");
+      setDialogMessage("email is not verified, send a new verification link");
       setOpenAuthDialog(true);
       return;
     }

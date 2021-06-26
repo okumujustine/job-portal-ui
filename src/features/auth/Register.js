@@ -34,7 +34,7 @@ export default function Register() {
   const registerUser = (e) => {
     e.preventDefault();
     if (!firstName) {
-      alert.error("Firt name address must be provided!");
+      alert.error("First name address must be provided!");
       return;
     }
     if (!lastName) {

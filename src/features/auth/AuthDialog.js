@@ -1,7 +1,7 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 import { dialogStyle, dialogCloseButton } from "./AuthStyles";
-import { Link } from "react-router-dom";
 
 export default function AuthDialog({
   content,
@@ -18,9 +18,7 @@ export default function AuthDialog({
   const openDialog = (
     <div
       style={dialogStyle}
-      className={
-        isError ? "border-2 border-red-400" : "border-2 border-blue-400"
-      }
+      className={isError ? "border-2 border-red-400" : "border-2 border-blue-400 z-50"}
     >
       <button
         className={isError ? "bg-red-300" : "bg-blue-300"}
@@ -40,8 +38,6 @@ export default function AuthDialog({
         </Link>
       )}
       {isEmailInput ? (
-        //okumujustine01@gmail.com
-        // Zila0781459239
         <React.Fragment>
           <form className="flex flex-col" onSubmit={onSubmitEmail}>
             <input
@@ -61,5 +57,9 @@ export default function AuthDialog({
       ) : null}
     </div>
   );
-  return <React.Fragment>{isOpen ? openDialog : null}</React.Fragment>;
+  return <React.Fragment>
+    <div
+      className={isOpen ? "bg-red-500 fixed justify-center items-center auth-modal-open-bg" : ""}
+    >{isOpen ? openDialog : null}</div>
+  </React.Fragment>;
 }

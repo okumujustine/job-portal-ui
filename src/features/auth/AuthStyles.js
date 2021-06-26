@@ -1,5 +1,5 @@
 export const dialogStyle = {
-  width: "500px",
+  minWidth: "500px",
   maxWidth: "100%",
   margin: "0 auto",
   position: "fixed",
