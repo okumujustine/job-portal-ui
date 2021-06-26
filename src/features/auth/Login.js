@@ -25,9 +25,11 @@ function Login({ authState, loginUser }) {
   let location = useLocation();
   const history = useHistory();
 
+
   React.useEffect(() => {
     if (location?.state?.registered) {
-      setDialogMessage("Registered, follow the link sent to your email address to verify your account. (check spam if you don't see the message in about 5 mins)");
+      setOpenAuthDialog(true)
+      setDialogMessage("Registered, follow the link sent to your email address to verify your account. (check your spam if you don't see the message in about 5 mins)");
       history.replace({ ...location, state: {} });
     }
   }, [location]); // eslint-disable-line react-hooks/exhaustive-deps

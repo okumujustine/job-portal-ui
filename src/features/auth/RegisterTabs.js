@@ -20,7 +20,6 @@ export default function RegisterTabs({
 
   return (
     <>
-      <h1 className="text-center pt-6 font-bold text-3xl">Register As</h1>
       <div className="flex flex-wrap mt-6 mb-10">
         <div className="w-full lg:w-6/12 md:w-6/12 xl:w-6/12 m-auto">
           <ul
@@ -30,7 +29,7 @@ export default function RegisterTabs({
             <li className="-mb-px ml-2 lg:ml-0 mr-2 last:mr-0 flex-auto text-center border-2 border-jobBlue-100">
               <a
                 className={
-                  "text-xs font-bold uppercase px-5 py-3 shadow-sm block leading-normal " +
+                  "text-xs font-bold uppercase px-5 py-3 shadow-lg  block " +
                   (openTab === 1
                     ? "text-white bg-" + color + "-600"
                     : "text-" + color + "-600 bg-white")
@@ -47,10 +46,10 @@ export default function RegisterTabs({
                 Employee
               </a>
             </li>
-            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center border-2 border-jobBlue-100">
+            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center font-bold border-2 border-jobBlue-100">
               <a
                 className={
-                  "text-xs font-bold uppercase px-5 py-3 shadow-sm block leading-normal " +
+                  "text-xs font-bold uppercase px-5 py-3 shadow-lg block leading-normal" +
                   (openTab === 2
                     ? "text-white bg-" + color + "-600"
                     : "text-" + color + "-600 bg-white")
@@ -68,9 +67,11 @@ export default function RegisterTabs({
               </a>
             </li>
           </ul>
-          <h1 className="text-1xl text-center font-bold underline text-jobBlue-100">
-            (Registering as
-            <span className="text-jobGreen-100 capitalize">{userType}</span>)
+          <h1 className="text-2xl text-center font-bold text-black">
+            Registering as
+            {userType === 'employee' ?
+              <span className="pl-1 text-jobGreen-100 uppercase">{userType}</span> :
+              <span className="pl-1 text-red-700 uppercase">{userType}</span>}
           </h1>
           <div className="flex flex-col min-w-0 break-words bg-white w-full shadow-sm ">
             <div className="px-4 flex-auto">
