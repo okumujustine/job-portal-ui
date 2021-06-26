@@ -21,7 +21,7 @@ export default function RegisterTabs({
   return (
     <>
       <h1 className="text-center pt-6 font-bold text-3xl">Register As</h1>
-      <div className="flex flex-wrap mt-6">
+      <div className="flex flex-wrap mt-6 mb-10">
         <div className="w-full lg:w-6/12 md:w-6/12 xl:w-6/12 m-auto">
           <ul
             className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
