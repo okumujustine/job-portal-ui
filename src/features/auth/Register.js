@@ -92,7 +92,7 @@ export default function Register() {
         setIsLoginButton(false);
         setIsError(false);
         setDialogMessage(
-          "follow the link sent to your email address to verify your account"
+          "follow the link sent to your email address to verify your account. Thank you!"
         );
         setOpenAuthDialog(true);
 
